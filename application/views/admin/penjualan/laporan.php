@@ -72,29 +72,20 @@
     <div class="modal-dialog" style="max-width: 600px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Tambah Kategori</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Hapus Laporan Penjualan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <p id="alert-delete" class="text-danger text-center mt-3 d-none">Jika mengahpus kategori ini maka <b>barang</b> dengan kategori ini pun akan terhapus!</p>
+            <p id="alert-delete" class="text-danger text-center mt-3 d-none">Jika mengahpus penjualan ini maka <b>detail penjualan</b> dari nomor faktur ini pun akan terhapus!</p>
 
             <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
-                <input type="hidden" name="type" id="type">
-                <input type="hidden" name="kategori_id" id="kategori_id">
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 text-right my-auto">Nama Kategori</label>
-                        <div class="col-sm-9">
-                            <input name="kategori_nama" id="kategori_nama" class="form-control" type="text" placeholder="Nama Kategori..." required>
-                        </div>
-                    </div>
-                </div>
+                <input type="hidden" name="jual_id" id="jual_id">
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="barang_button">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="barang_button">Hapus</button>
                 </div>
             </form>
         </div>

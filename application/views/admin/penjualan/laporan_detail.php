@@ -11,6 +11,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="p-3">
+                <a href="<?= site_url('penjualan/laporan'); ?>" class="btn btn-sm btn-primary float-right tampil-modal-tambah">Kembali</a>
                 <table id="datable" class="table table-striped projects">
                     <thead>
                         <tr>
@@ -41,15 +42,13 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>No Faktur</th>
-                            <th>Tanggal</th>
-                            <th>Kasir</th>
-                            <th>Customer</th>
-                            <th>Total Harga</th>
-                            <th>Total Pembayaran</th>
-                            <th>Total Kembalian</th>
-                            <th>Keterangan</th>
-                            <th style="width:100px;text-align:center;">Aksi</th>
+                            <th>Kode Barang</th>
+                            <th>Nama Barang</th>
+                            <th>Harga Pokok</th>
+                            <th>Harga Jual</th>
+                            <th>Julmah</th>
+                            <th>Diskon</th>
+                            <th>Total</th>
                         </tr>
                     </tfoot>
                 </table>

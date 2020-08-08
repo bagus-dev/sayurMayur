@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2020 at 09:56 AM
+-- Generation Time: Aug 08, 2020 at 05:43 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -47,13 +47,13 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'BR000001.png', 'Sayur bayam', 15000, 20000, 17000, 2, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 11, 3, 1),
-('BR000002', 'default.png', 'Sayur enak', 16000, 20000, 18000, 2, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 11, 1, 1),
-('BR000003', 'default.png', 'Klem Kabel IKK No 9', 16000, 22000, 18500, 2, '2016-11-22 23:33:08', NULL, 11, 1, 1),
-('BR000004', 'BR000004.png', 'Sayur', 10000, 50000, 222, 2, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 37, 2, 1),
-('BR000005', 'default.png', ' asd', 22222, 2222, 2222, 2, '2020-07-30 12:37:06', NULL, 38, 4, 1),
-('BR000006', 'default.png', ' asd', 33, 2, 2, 2, '2020-08-01 07:25:56', NULL, 37, 5, 1),
-('BR000007', 'default.png', ' asdadasds', 2, 20000, 17000, 22, '2020-08-01 07:26:07', NULL, 37, 1, 1),
+('BR000001', 'BR000001.png', 'Sayur bayam', 15000, 20000, 17000, 0, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 11, 3, 1),
+('BR000002', 'default.png', 'Sayur enak', 16000, 20000, 18000, 0, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 11, 1, 1),
+('BR000003', 'default.png', 'Klem Kabel IKK No 9', 16000, 22000, 18500, 1, '2016-11-22 23:33:08', NULL, 11, 1, 1),
+('BR000004', 'BR000004.png', 'Sayur', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 37, 2, 1),
+('BR000005', 'default.png', ' asd', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 38, 4, 1),
+('BR000006', 'default.png', ' asd', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 37, 5, 1),
+('BR000007', 'default.png', ' asdadasds', 2, 20000, 17000, 2, '2020-08-01 07:26:07', NULL, 37, 1, 1),
 ('BR000008', 'default.png', ' hjkhjk', 2, 3333, 33333, 222, '2020-08-01 07:26:19', NULL, 37, 4, 1),
 ('BR000009', 'default.png', ' asdzxc', 33, 3333, 17000, 3, '2020-08-01 07:26:29', NULL, 37, 5, 1),
 ('BR000010', 'default.png', ' asdasd', 222, 22, 2, 1, '2020-08-01 07:26:42', NULL, 35, 1, 1);
@@ -71,6 +71,46 @@ CREATE TABLE `tbl_beli` (
   `beli_user_id` int(11) DEFAULT NULL,
   `beli_kode` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cart_jual`
+--
+
+CREATE TABLE `tbl_cart_jual` (
+  `c_jual_id` int(11) NOT NULL,
+  `c_jual_user_id` int(11) NOT NULL,
+  `c_jual_barang_id` varchar(15) NOT NULL,
+  `c_jual_barang_nama` varchar(45) NOT NULL,
+  `c_jual_barang_satuan` varchar(30) NOT NULL,
+  `c_jual_barang_harpok` double NOT NULL,
+  `c_jual_barang_harjul` double NOT NULL,
+  `c_jual_qty` int(11) NOT NULL,
+  `c_jual_diskon` double NOT NULL,
+  `c_jual_total` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_customer`
+--
+
+CREATE TABLE `tbl_customer` (
+  `customer_id` int(11) NOT NULL,
+  `customer_nama` varchar(35) DEFAULT NULL,
+  `customer_alamat` varchar(60) DEFAULT NULL,
+  `customer_notelp` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_customer`
+--
+
+INSERT INTO `tbl_customer` (`customer_id`, `customer_nama`, `customer_alamat`, `customer_notelp`) VALUES
+(1, 'Umum', 'Umum', 'Umum'),
+(4, 'zxc', 'zxc', '456');
 
 -- --------------------------------------------------------
 
@@ -112,30 +152,30 @@ CREATE TABLE `tbl_detail_jual` (
 --
 
 INSERT INTO `tbl_detail_jual` (`d_jual_id`, `d_jual_nofak`, `d_jual_barang_id`, `d_jual_barang_nama`, `d_jual_barang_satuan`, `d_jual_barang_harpok`, `d_jual_barang_harjul`, `d_jual_qty`, `d_jual_diskon`, `d_jual_total`) VALUES
-(1, '241116000001', 'BR000001', 'Klem Kabel IKK No 7', 'Bks', 15000, 20000, 1, 0, 20000),
-(2, '241116000002', 'BR000002', 'Klem Kabel IKK No 8', 'Bks', 16000, 20000, 1, 0, 20000),
-(3, '241116000003', 'BR000003', 'Klem Kabel IKK No 9', 'Bks', 16000, 22000, 1, 0, 22000),
-(4, '241116000004', 'BR000045', 'Stok Kontak Omi KK', 'PCS', 5700, 10000, 1, 0, 10000),
-(5, '241116000005', 'BR000005', 'Klem kabel dms No 6', 'Bks', 3000, 5000, 1, 0, 5000),
-(6, '241116000006', 'BR000006', 'Klem kabel dms No 7', 'Bks', 3500, 6000, 1, 0, 6000),
-(7, '241116000007', 'BR000008', 'Klem kabel dms No 9', 'Bks', 4500, 8000, 1, 0, 8000),
-(8, '241116000008', 'BR000010', 'Klem kabel Steel No 6', 'Bks', 3100, 6000, 1, 0, 6000),
-(9, '241116000008', 'BR000011', 'Klem kabel Steel No 7', 'Bks', 3400, 7000, 1, 0, 7000),
-(10, '241116000009', 'BR000013', 'Klem kabel Steel No 9', 'Bks', 5000, 6000, 1, 0, 6000),
-(11, '251116000001', 'BR000043', 'Saklar Engkel Omi KK', 'PCS', 4500, 10000, 1, 0, 10000),
-(12, '251116000001', 'BR000038', 'Saklar Arde Visalux 2L', 'PCS', 8200, 9000, 1, 0, 9000),
-(13, '291116000001', 'BR000043', 'Saklar Engkel Omi KK', 'PCS', 4500, 10000, 1, 0, 10000),
-(14, '291116000001', 'BR000056', 'Antena Digital HD 12', 'PCS', 66000, 95000, 1, 0, 95000),
-(15, '291116000002', 'BR000030', 'MCB Sheineder 20A SNI', 'PCS', 47500, 70000, 1, 2000, 68000),
-(16, '291116000003', 'BR000012', 'Klem kabel Steel No 8', 'Bks', 4200, 8000, 1, 0, 8000),
-(17, '291116000004', 'BR000032', 'Saklar Engkel Visalux B', 'PCS', 7250, 10000, 1, 0, 10000),
-(18, '291116000005', 'BR000045', 'Stok Kontak Omi KK', 'PCS', 5700, 10000, 1, 0, 10000),
-(19, '291116000006', 'BR000024', 'Stop Kontak Sheineder B', 'PCS', 16000, 20000, 1, 0, 20000),
-(20, '291116000006', 'BR000038', 'Saklar Arde Visalux 2L', 'PCS', 8200, 9000, 1, 0, 9000),
-(22, '240117000001', 'BR000043', 'Saklar Engkel Omi KK', 'PCS', 4500, 10000, 1, 0, 10000),
-(23, '240117000002', 'BR000043', 'Saklar Engkel Omi KK', 'PCS', 4500, 10000, 1, 0, 10000),
-(24, '290317000001', 'BR000034', 'Stop Kontak Visalux B', 'PCS', 10250, 12000, 1, 0, 12000),
-(25, '290317000001', 'BR000043', 'Saklar Engkel Omi KK', 'PCS', 4500, 10000, 1, 0, 10000);
+(38, 'SM2008070001', 'BR000001', 'Sayur bayam', 'Pcs', 15000, 20000, 1, 0, 20000),
+(39, 'SM2008070001', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 2, 0, 40000),
+(40, 'SM2008070002', 'BR000002', 'Sayur enak', 'Bks', 16000, 20000, 1, 0, 20000),
+(41, 'SM2008070002', 'BR000003', 'Klem Kabel IKK No 9', 'Bks', 16000, 22000, 1, 0, 22000),
+(42, 'SM2008070002', 'BR000004', 'Sayur', 'Dus', 10000, 50000, 1, 0, 50000),
+(43, 'SM2008070003', 'BR000005', ' asd', 'Kg', 22222, 2222, 1, 0, 2222),
+(44, 'SM2008070004', 'BR000006', ' asd', 'aa', 33, 2, 1, 0, 2),
+(45, 'SM2008070005', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 1, 0, 20000),
+(46, 'SM2008070006', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 1, 0, 20000),
+(47, 'SM2008070007', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 1, 0, 20000),
+(48, 'SM2008080001', 'BR000001', 'Sayur bayam', 'Pcs', 15000, 20000, 1, 0, 20000),
+(49, 'SM2008080002', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 15, 0, 300000),
+(50, 'SM2008080003', 'BR000002', 'Sayur enak', 'Bks', 16000, 20000, 1, 0, 20000);
+
+--
+-- Triggers `tbl_detail_jual`
+--
+DELIMITER $$
+CREATE TRIGGER `stock_min` AFTER INSERT ON `tbl_detail_jual` FOR EACH ROW BEGIN
+	UPDATE tbl_barang SET barang_stok = barang_stok - NEW.d_jual_qty
+    WHERE barang_id = NEW.d_jual_barang_id;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -166,10 +206,13 @@ INSERT INTO `tbl_diskon` (`diskon_id`, `diskon_harga`, `diskon_persen`) VALUES
 CREATE TABLE `tbl_jual` (
   `jual_nofak` varchar(15) NOT NULL,
   `jual_tanggal` timestamp NULL DEFAULT current_timestamp(),
+  `jual_diskon` int(11) NOT NULL,
   `jual_total` double DEFAULT NULL,
   `jual_jml_uang` double DEFAULT NULL,
   `jual_kembalian` double DEFAULT NULL,
   `jual_user_id` int(11) DEFAULT NULL,
+  `jual_customer_id` int(11) NOT NULL,
+  `jual_customer_nama` varchar(45) NOT NULL,
   `jual_keterangan` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -177,26 +220,17 @@ CREATE TABLE `tbl_jual` (
 -- Dumping data for table `tbl_jual`
 --
 
-INSERT INTO `tbl_jual` (`jual_nofak`, `jual_tanggal`, `jual_total`, `jual_jml_uang`, `jual_kembalian`, `jual_user_id`, `jual_keterangan`) VALUES
-('240117000001', '2017-01-24 15:07:07', 10000, 20000, 10000, 1, 'eceran'),
-('240117000002', '2017-01-24 15:07:26', 10000, 20000, 10000, 1, 'eceran'),
-('241116000001', '2016-11-24 17:42:06', 20000, 20000, 0, 1, 'eceran'),
-('241116000002', '2016-11-24 17:49:58', 20000, 20000, 0, 1, 'eceran'),
-('241116000003', '2016-11-24 17:55:48', 22000, 22000, 0, 1, 'eceran'),
-('241116000004', '2016-11-24 17:59:38', 10000, 10000, 0, 1, 'eceran'),
-('241116000005', '2016-11-24 18:21:24', 5000, 20000, 15000, 1, 'eceran'),
-('241116000006', '2016-11-24 18:27:01', 6000, 7000, 1000, 1, 'eceran'),
-('241116000007', '2016-11-24 18:29:43', 8000, 10000, 2000, 1, 'eceran'),
-('241116000008', '2016-11-24 18:32:01', 13000, 15000, 2000, 1, 'eceran'),
-('241116000009', '2016-11-24 19:47:50', 6000, 7000, 1000, 1, 'grosir'),
-('251116000001', '2016-11-25 22:07:15', 19000, 60000, 41000, 1, 'eceran'),
-('290317000001', '2017-03-29 13:35:49', 22000, 56000, 34000, 1, 'eceran'),
-('291116000001', '2016-11-29 19:11:48', 105000, 120000, 15000, 1, 'eceran'),
-('291116000002', '2016-11-29 19:49:20', 68000, 70000, 2000, 1, 'eceran'),
-('291116000003', '2016-11-29 19:57:17', 8000, 10000, 2000, 1, 'eceran'),
-('291116000004', '2016-11-29 19:58:35', 10000, 12000, 2000, 1, 'eceran'),
-('291116000005', '2016-11-29 22:10:10', 10000, 10000, 0, 1, 'eceran'),
-('291116000006', '2016-11-29 22:23:40', 29000, 30000, 1000, 1, 'eceran');
+INSERT INTO `tbl_jual` (`jual_nofak`, `jual_tanggal`, `jual_diskon`, `jual_total`, `jual_jml_uang`, `jual_kembalian`, `jual_user_id`, `jual_customer_id`, `jual_customer_nama`, `jual_keterangan`) VALUES
+('SM2008070001', '2020-08-06 17:00:00', 0, 60000, 300000, 240000, 1, 1, 'Umum', 'eceran'),
+('SM2008070002', '2020-08-06 17:00:00', 0, 92000, 500000, 408000, 1, 1, 'Umum', 'eceran'),
+('SM2008070003', '2020-08-06 17:00:00', 222, 2000, 2000, 0, 1, 1, 'Umum', 'eceran'),
+('SM2008070004', '2020-08-06 17:00:00', 0, 2, 4, 2, 1, 1, 'Umum', 'eceran'),
+('SM2008070005', '2020-08-06 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran'),
+('SM2008070006', '2020-08-06 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran'),
+('SM2008070007', '2020-08-06 17:00:00', 0, 20000, 20000, 0, 1, 4, 'zxc', 'eceran'),
+('SM2008080001', '2020-08-07 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran'),
+('SM2008080002', '2020-08-07 17:00:00', 0, 300000, 400000, 100000, 1, 1, 'Umum', 'eceran'),
+('SM2008080003', '2020-08-07 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran');
 
 -- --------------------------------------------------------
 
@@ -379,6 +413,18 @@ ALTER TABLE `tbl_beli`
   ADD KEY `beli_id` (`beli_kode`);
 
 --
+-- Indexes for table `tbl_cart_jual`
+--
+ALTER TABLE `tbl_cart_jual`
+  ADD PRIMARY KEY (`c_jual_id`);
+
+--
+-- Indexes for table `tbl_customer`
+--
+ALTER TABLE `tbl_customer`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
 -- Indexes for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
@@ -449,6 +495,12 @@ ALTER TABLE `tbl_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tbl_customer`
+--
+ALTER TABLE `tbl_customer`
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
@@ -458,7 +510,7 @@ ALTER TABLE `tbl_detail_beli`
 -- AUTO_INCREMENT for table `tbl_detail_jual`
 --
 ALTER TABLE `tbl_detail_jual`
-  MODIFY `d_jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `d_jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `tbl_diskon`
@@ -517,8 +569,7 @@ ALTER TABLE `tbl_barang`
 -- Constraints for table `tbl_beli`
 --
 ALTER TABLE `tbl_beli`
-  ADD CONSTRAINT `tbl_beli_ibfk_1` FOREIGN KEY (`beli_user_id`) REFERENCES `tbl_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_beli_ibfk_2` FOREIGN KEY (`beli_suplier_id`) REFERENCES `tbl_suplier` (`suplier_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_beli_ibfk_1` FOREIGN KEY (`beli_user_id`) REFERENCES `tbl_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_detail_beli`

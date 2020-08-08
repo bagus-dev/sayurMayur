@@ -70,6 +70,15 @@
     <?php $this->load->view('layout/script/ongkir'); ?>
 <?php endif; ?>
 
+<?php if (isset($penjualan)) : ?>
+    <?php $this->load->view('layout/script/penjualan'); ?>
+<?php endif; ?>
+
+<?php if (isset($penjualan_laporan)) : ?>
+    <?php $this->load->view('layout/script/penjualan_laporan'); ?>
+<?php endif; ?>
+
+
 </body>
 
 </html>
