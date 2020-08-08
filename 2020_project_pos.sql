@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2020 at 05:43 AM
+-- Generation Time: Aug 08, 2020 at 09:34 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -47,9 +47,9 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'BR000001.png', 'Sayur bayam', 15000, 20000, 17000, 0, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 11, 3, 1),
-('BR000002', 'default.png', 'Sayur enak', 16000, 20000, 18000, 0, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 11, 1, 1),
-('BR000003', 'default.png', 'Klem Kabel IKK No 9', 16000, 22000, 18500, 1, '2016-11-22 23:33:08', NULL, 11, 1, 1),
+('BR000001', 'BR000001.png', 'Sayur bayam', 15000, 20000, 17000, 17, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 11, 3, 1),
+('BR000002', 'default.png', 'Sayur enak', 16000, 20000, 18000, 11, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 11, 1, 1),
+('BR000003', 'default.png', 'Klem Kabel IKK No 9', 16000, 22000, 18500, 20, '2016-11-22 23:33:08', NULL, 11, 1, 1),
 ('BR000004', 'BR000004.png', 'Sayur', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 37, 2, 1),
 ('BR000005', 'default.png', ' asd', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 38, 4, 1),
 ('BR000006', 'default.png', ' asd', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 37, 5, 1),
@@ -65,12 +65,45 @@ INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_h
 --
 
 CREATE TABLE `tbl_beli` (
-  `beli_nofak` varchar(15) DEFAULT NULL,
-  `beli_tanggal` date DEFAULT NULL,
-  `beli_suplier_id` int(11) DEFAULT NULL,
+  `beli_nofak` varchar(15) NOT NULL,
+  `beli_tanggal` timestamp NULL DEFAULT current_timestamp(),
+  `beli_diskon` int(11) NOT NULL,
+  `beli_total` double DEFAULT NULL,
+  `beli_jml_uang` double DEFAULT NULL,
+  `beli_kembalian` double DEFAULT NULL,
   `beli_user_id` int(11) DEFAULT NULL,
-  `beli_kode` varchar(15) NOT NULL
+  `beli_suplier_id` int(11) NOT NULL,
+  `beli_suplier_nama` varchar(45) NOT NULL,
+  `beli_keterangan` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_beli`
+--
+
+INSERT INTO `tbl_beli` (`beli_nofak`, `beli_tanggal`, `beli_diskon`, `beli_total`, `beli_jml_uang`, `beli_kembalian`, `beli_user_id`, `beli_suplier_id`, `beli_suplier_nama`, `beli_keterangan`) VALUES
+('SM2008080001', '2020-08-08 00:41:51', 0, 100000, 500000, 400000, 1, 3, 'asd', 'eceran'),
+('SM2008080002', '2020-08-08 00:42:30', 0, 400000, 600000, 200000, 1, 1, 'Umum', 'eceran'),
+('SM2008080003', '2020-08-08 00:43:33', 0, 440000, 1000000, 560000, 1, 1, 'Umum', 'eceran');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cart_beli`
+--
+
+CREATE TABLE `tbl_cart_beli` (
+  `c_beli_id` int(11) NOT NULL,
+  `c_beli_user_id` int(11) NOT NULL,
+  `c_beli_barang_id` varchar(15) NOT NULL,
+  `c_beli_barang_nama` varchar(45) NOT NULL,
+  `c_beli_barang_satuan` varchar(30) NOT NULL,
+  `c_beli_barang_harpok` double NOT NULL,
+  `c_beli_barang_harjul` double NOT NULL,
+  `c_beli_qty` int(11) NOT NULL,
+  `c_beli_diskon` double NOT NULL,
+  `c_beli_total` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -122,11 +155,35 @@ CREATE TABLE `tbl_detail_beli` (
   `d_beli_id` int(11) NOT NULL,
   `d_beli_nofak` varchar(15) DEFAULT NULL,
   `d_beli_barang_id` varchar(15) DEFAULT NULL,
-  `d_beli_harga` double DEFAULT NULL,
-  `d_beli_jumlah` int(11) DEFAULT NULL,
-  `d_beli_total` double DEFAULT NULL,
-  `d_beli_kode` varchar(15) DEFAULT NULL
+  `d_beli_barang_nama` varchar(150) DEFAULT NULL,
+  `d_beli_barang_satuan` varchar(30) DEFAULT NULL,
+  `d_beli_barang_harpok` double DEFAULT NULL,
+  `d_beli_barang_harjul` double DEFAULT NULL,
+  `d_beli_qty` int(11) DEFAULT NULL,
+  `d_beli_diskon` double DEFAULT NULL,
+  `d_beli_total` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_detail_beli`
+--
+
+INSERT INTO `tbl_detail_beli` (`d_beli_id`, `d_beli_nofak`, `d_beli_barang_id`, `d_beli_barang_nama`, `d_beli_barang_satuan`, `d_beli_barang_harpok`, `d_beli_barang_harjul`, `d_beli_qty`, `d_beli_diskon`, `d_beli_total`) VALUES
+(52, 'SM2008080001', 'BR000001', 'Sayur bayam', 'Pcs', 15000, 20000, 5, 0, 100000),
+(53, 'SM2008080002', 'BR000001', 'Sayur bayam', 'Pcs', 15000, 20000, 10, 0, 200000),
+(54, 'SM2008080002', 'BR000002', 'Sayur enak', 'Bks', 16000, 20000, 10, 0, 200000),
+(55, 'SM2008080003', 'BR000003', 'Klem Kabel IKK No 9', 'Bks', 16000, 22000, 20, 0, 440000);
+
+--
+-- Triggers `tbl_detail_beli`
+--
+DELIMITER $$
+CREATE TRIGGER `stock_plus` AFTER INSERT ON `tbl_detail_beli` FOR EACH ROW BEGIN
+	UPDATE tbl_barang SET barang_stok = barang_stok + NEW.d_beli_qty
+    WHERE barang_id = NEW.d_beli_barang_id;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -163,8 +220,7 @@ INSERT INTO `tbl_detail_jual` (`d_jual_id`, `d_jual_nofak`, `d_jual_barang_id`, 
 (46, 'SM2008070006', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 1, 0, 20000),
 (47, 'SM2008070007', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 1, 0, 20000),
 (48, 'SM2008080001', 'BR000001', 'Sayur bayam', 'Pcs', 15000, 20000, 1, 0, 20000),
-(49, 'SM2008080002', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 15, 0, 300000),
-(50, 'SM2008080003', 'BR000002', 'Sayur enak', 'Bks', 16000, 20000, 1, 0, 20000);
+(49, 'SM2008080002', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 15, 0, 300000);
 
 --
 -- Triggers `tbl_detail_jual`
@@ -229,8 +285,7 @@ INSERT INTO `tbl_jual` (`jual_nofak`, `jual_tanggal`, `jual_diskon`, `jual_total
 ('SM2008070006', '2020-08-06 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran'),
 ('SM2008070007', '2020-08-06 17:00:00', 0, 20000, 20000, 0, 1, 4, 'zxc', 'eceran'),
 ('SM2008080001', '2020-08-07 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran'),
-('SM2008080002', '2020-08-07 17:00:00', 0, 300000, 400000, 100000, 1, 1, 'Umum', 'eceran'),
-('SM2008080003', '2020-08-07 17:00:00', 0, 20000, 30000, 10000, 1, 1, 'Umum', 'eceran');
+('SM2008080002', '2020-08-07 17:00:00', 0, 300000, 400000, 100000, 1, 1, 'Umum', 'eceran');
 
 -- --------------------------------------------------------
 
@@ -363,7 +418,7 @@ CREATE TABLE `tbl_suplier` (
 --
 
 INSERT INTO `tbl_suplier` (`suplier_id`, `suplier_nama`, `suplier_alamat`, `suplier_notelp`) VALUES
-(1, 'Handenbosd', 'Depak', '123123'),
+(1, 'Umum', 'Umum', 'Umum'),
 (3, 'asd', 'asd', '098');
 
 -- --------------------------------------------------------
@@ -407,10 +462,14 @@ ALTER TABLE `tbl_barang`
 -- Indexes for table `tbl_beli`
 --
 ALTER TABLE `tbl_beli`
-  ADD PRIMARY KEY (`beli_kode`),
-  ADD KEY `beli_user_id` (`beli_user_id`),
-  ADD KEY `beli_suplier_id` (`beli_suplier_id`),
-  ADD KEY `beli_id` (`beli_kode`);
+  ADD PRIMARY KEY (`beli_nofak`),
+  ADD KEY `jual_user_id` (`beli_user_id`);
+
+--
+-- Indexes for table `tbl_cart_beli`
+--
+ALTER TABLE `tbl_cart_beli`
+  ADD PRIMARY KEY (`c_beli_id`);
 
 --
 -- Indexes for table `tbl_cart_jual`
@@ -429,9 +488,8 @@ ALTER TABLE `tbl_customer`
 --
 ALTER TABLE `tbl_detail_beli`
   ADD PRIMARY KEY (`d_beli_id`),
-  ADD KEY `d_beli_barang_id` (`d_beli_barang_id`),
-  ADD KEY `d_beli_nofak` (`d_beli_nofak`),
-  ADD KEY `d_beli_kode` (`d_beli_kode`);
+  ADD KEY `d_jual_barang_id` (`d_beli_barang_id`),
+  ADD KEY `d_jual_nofak` (`d_beli_nofak`);
 
 --
 -- Indexes for table `tbl_detail_jual`
@@ -504,13 +562,13 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
-  MODIFY `d_beli_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `d_beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `tbl_detail_jual`
 --
 ALTER TABLE `tbl_detail_jual`
-  MODIFY `d_jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `d_jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `tbl_diskon`
@@ -566,17 +624,10 @@ ALTER TABLE `tbl_barang`
   ADD CONSTRAINT `tbl_barang_ibfk_3` FOREIGN KEY (`barang_satuan_id`) REFERENCES `tbl_satuan` (`satuan_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `tbl_beli`
---
-ALTER TABLE `tbl_beli`
-  ADD CONSTRAINT `tbl_beli_ibfk_1` FOREIGN KEY (`beli_user_id`) REFERENCES `tbl_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
-  ADD CONSTRAINT `tbl_detail_beli_ibfk_1` FOREIGN KEY (`d_beli_barang_id`) REFERENCES `tbl_barang` (`barang_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_detail_beli_ibfk_2` FOREIGN KEY (`d_beli_kode`) REFERENCES `tbl_beli` (`beli_kode`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_detail_beli_ibfk_1` FOREIGN KEY (`d_beli_nofak`) REFERENCES `tbl_beli` (`beli_nofak`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_detail_jual`
