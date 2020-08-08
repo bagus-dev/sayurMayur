@@ -82,6 +82,11 @@ class Penjualan extends CI_Controller
         echo json_encode($this->penjualan->getCart($this->input->post('c_jual_barang_id'))->row());
     }
 
+    public function show2()
+    {
+        echo json_encode($this->penjualan->getPenjualan($this->input->post('jual_id'))->row());
+    }
+
     public function destroy()
     {
         $c_jual_id = $this->input->post('c_jual_id');

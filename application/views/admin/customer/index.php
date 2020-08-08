@@ -1,5 +1,57 @@
 <div class="container" style="margin-top: 100px;">
-    <h1 class="pb-3 border-bottom">Data<small>Customer (Terdaftar)</small></h1>
+    <h1 class="pb-3 border-bottom">Data<small>Customer</small></h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= $this->session->flashdata('message2'); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="p-3">
+                <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-sm btn-primary float-right tampil-modal-tambah2">Tambah Customer</button>
+                <table id="datable2" class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>No Telp</th>
+                            <th style="width:100px;text-align:center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bubbling2">
+                        <?php foreach ($customerOfflines->result() as $index => $customerOffline) : ?>
+                            <tr>
+                                <td><?= ++$index; ?></td>
+                                <td><?= $customerOffline->customer_nama; ?></td>
+                                <td><?= $customerOffline->customer_alamat; ?></td>
+                                <td><?= $customerOffline->customer_notelp; ?></td>
+                                <td style="text-align:center;">
+                                    <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-xs btn-warning text-white tampil-modal-ubah2" data-customer_id="<?= $customerOffline->customer_id; ?>"><i class="fa fa-edit"></i> Edit</button>
+                                    <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-xs btn-danger text-white tampil-modal-hapus2" data-customer_id="<?= $customerOffline->customer_id; ?>"><i class="fa fa-trash"></i> Hapus</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>No Telp</th>
+                            <th style="width:100px;text-align:center;">Aksi</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- End-Card-Body -->
+        </div>
+    </div>
+
+    <!--  -->
+    <h1 class="mt-5 pb-3 border-bottom">Data<small>Customer (Pengguna)</small></h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -42,57 +94,6 @@
                             <th>Alamat</th>
                             <th>Username</th>
                             <th>Role</th>
-                            <th style="width:100px;text-align:center;">Aksi</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <!-- End-Card-Body -->
-        </div>
-    </div>
-
-    <h1 class="pb-3 border-bottom">Data<small>Customer (Didaftarkan)</small></h1>
-
-    <div class="row">
-        <div class="col-md-12">
-            <?= $this->session->flashdata('message2'); ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="p-3">
-                <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-sm btn-primary float-right tampil-modal-tambah2">Tambah Customer</button>
-                <table id="datable2" class="table table-striped projects">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>No Telp</th>
-                            <th style="width:100px;text-align:center;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bubbling2">
-                        <?php foreach ($customerOfflines->result() as $index => $customerOffline) : ?>
-                            <tr>
-                                <td><?= ++$index; ?></td>
-                                <td><?= $customerOffline->customer_nama; ?></td>
-                                <td><?= $customerOffline->customer_alamat; ?></td>
-                                <td><?= $customerOffline->customer_notelp; ?></td>
-                                <td style="text-align:center;">
-                                    <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-xs btn-warning text-white tampil-modal-ubah2" data-customer_id="<?= $customerOffline->customer_id; ?>"><i class="fa fa-edit"></i> Edit</button>
-                                    <button data-toggle="modal" data-target="#modalUniversal2" class="btn btn-xs btn-danger text-white tampil-modal-hapus2" data-customer_id="<?= $customerOffline->customer_id; ?>"><i class="fa fa-trash"></i> Hapus</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>No Telp</th>
                             <th style="width:100px;text-align:center;">Aksi</th>
                         </tr>
                     </tfoot>

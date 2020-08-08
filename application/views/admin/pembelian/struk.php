@@ -50,7 +50,7 @@
 <body onload="window.print()">
     <div class="content">
         <div class="title">
-            <strong>SayurMayur</strong>
+            <strong><?= $pembelian->beli_suplier_nama; ?></strong>
             <br>
             Jl. bla bla bla
         </div>
@@ -59,22 +59,22 @@
             <table cellspacing="0" cellpadding="0">
                 <tr>
                     <td style="width:200px">
-                        <?= Date("d/m/y", strtotime($penjualan->jual_tanggal)); ?>
+                        <?= Date("d/m/y", strtotime($pembelian->beli_tanggal)); ?>
                     </td>
                     <td>Kasir</td>
                     <td style="text-align:center; width:10px"></td>
                     <td style="text-align:right;">
-                        <?= ucfirst($penjualan->user_nama); ?>
+                        <?= ucfirst($pembelian->user_nama); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <?= $penjualan->jual_nofak; ?>
+                        <?= $pembelian->beli_nofak; ?>
                     </td>
-                    <td>Customer</td>
+                    <td>Suplier</td>
                     <td style="text-align:center;"></td>
                     <td style="text-align:right;">
-                        <?= $penjualan->jual_customer_nama; ?>
+                        <?= $pembelian->beli_suplier_nama; ?>
                     </td>
                 </tr>
             </table>
@@ -83,18 +83,18 @@
         <div class="transaction">
             <table class="transaction-table" cellspacing="0" cellpadding="0">
                 <?php $arr_diskons = []; ?>
-                <?php foreach ($penjualanDetails as $penjualanDetail) : ?>
+                <?php foreach ($pembelianDetails as $pembelianDetail) : ?>
                     <tr>
-                        <td style="width:165px;"><?= $penjualanDetail->d_jual_barang_nama; ?></td>
-                        <td><?= $penjualanDetail->d_jual_qty; ?></td>
-                        <td style="text-align:right; width:60px"><?= 'Rp. ' . number_format($penjualanDetail->d_jual_barang_harjul); ?></td>
+                        <td style="width:165px;"><?= $pembelianDetail->d_beli_barang_nama; ?></td>
+                        <td><?= $pembelianDetail->d_beli_qty; ?></td>
+                        <td style="text-align:right; width:60px"><?= 'Rp. ' . number_format($pembelianDetail->d_beli_barang_harjul); ?></td>
                         <td style="text-align:right; width:60px">
-                            <?= 'Rp. ' . number_format(($penjualanDetail->d_jual_barang_harjul - $penjualanDetail->d_jual_diskon) * $penjualanDetail->d_jual_qty); ?>
+                            <?= 'Rp. ' . number_format(($pembelianDetail->d_beli_barang_harjul - $pembelianDetail->d_beli_diskon) * $pembelianDetail->d_beli_qty); ?>
                         </td>
                     </tr>
 
-                    <?php if ($penjualanDetail->d_jual_diskon > 0) : ?>
-                        <?= $arr_diskons[] = $penjualanDetail->d_jual_diskon; ?>
+                    <?php if ($pembelianDetail->d_beli_diskon > 0) : ?>
+                        <?= $arr_diskons[] = $pembelianDetail->d_beli_diskon; ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
 
@@ -114,16 +114,16 @@
                     <td colspan="2"></td>
                     <td style="text-align: right; padding-bottom:5px">Sub Total</td>
                     <td style="text-align: right; padding-bottom:5px">
-                        <?= 'Rp. ' . number_format($penjualan->jual_total + $penjualan->jual_diskon); ?>
+                        <?= 'Rp. ' . number_format($pembelian->beli_total + $pembelian->beli_diskon); ?>
                     </td>
                 </tr>
 
-                <?php if ($penjualan->jual_diskon > 0) : ?>
+                <?php if ($pembelian->beli_diskon > 0) : ?>
                     <tr>
                         <td colspan="2"></td>
                         <td style="text-align: right; padding-bottom:5px">Disc. Sale</td>
                         <td style="text-align: right; padding-bottom:5px">
-                            <?= 'Rp. ' . number_format($penjualan->jual_diskon); ?>
+                            <?= 'Rp. ' . number_format($pembelian->beli_diskon); ?>
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -131,21 +131,21 @@
                     <td colspan="2"></td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px 0;">Grand Total</td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px 0;">
-                        <?= $penjualan->jual_total; ?>
+                        <?= $pembelian->beli_total; ?>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px;">Cash</td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px;">
-                        <?= $penjualan->jual_jml_uang; ?>
+                        <?= $pembelian->beli_jml_uang; ?>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px;">Change</td>
                     <td style="border-top:1px dashed; text-align:right; padding-top:5px;">
-                        <?= $penjualan->jual_kembalian; ?>
+                        <?= $pembelian->beli_kembalian; ?>
                     </td>
                 </tr>
             </table>
@@ -153,7 +153,7 @@
         <div class="thanks">
             --- Thank You ---
             <br>
-            SayurMayur
+            <?= $pembelian->beli_suplier_nama; ?>
         </div>
     </div>
 

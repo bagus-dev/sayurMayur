@@ -51,12 +51,12 @@
             $('#alert').removeClass('d-none');
             $('#message').text('Barang belum dipilih, silakan pilih!');
             $('#c_jual_barang_id').focus();
-        } else if (c_jual_qty < 1) {
+        } else if (c_beli_qty < 1 || c_beli_qty == '') {
             $('#alert').removeClass('d-none');
             $('#message').text('Qty tidak boleh kosong!');
             $('#c_jual_qty').val(1);
             $('#c_jual_qty').focus();
-        } else if (stok < 1 || stok < c_jual_qty + stok_cart) {
+        } else if (stok < 1 || stok < c_jual_qty + stok_cart || stok < c_beli_qty) {
             $('#alert').removeClass('d-none');
             $('#message').text('Stok Barang tidak mencukupi!');
             $('#c_jual_barang_id').focus();
@@ -90,6 +90,7 @@
                     } else {
                         $('#alert').removeClass('d-none');
                         $('#message').text('Barang gagal ditambahkan ke cart');
+                        $('#c_jual_qty').focus();
                     }
                 }
             })

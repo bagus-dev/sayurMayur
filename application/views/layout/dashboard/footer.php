@@ -74,8 +74,16 @@
     <?php $this->load->view('layout/script/penjualan'); ?>
 <?php endif; ?>
 
+<?php if (isset($pembelian)) : ?>
+    <?php $this->load->view('layout/script/pembelian'); ?>
+<?php endif; ?>
+
 <?php if (isset($penjualan_laporan)) : ?>
     <?php $this->load->view('layout/script/penjualan_laporan'); ?>
+<?php endif; ?>
+
+<?php if (isset($pembelian_laporan)) : ?>
+    <?php $this->load->view('layout/script/pembelian_laporan'); ?>
 <?php endif; ?>
 
 

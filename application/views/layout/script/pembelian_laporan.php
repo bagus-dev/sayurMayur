@@ -3,17 +3,17 @@
         $('#bubbling').on('click', '.tampil-modal-hapus', function() {
             $('#alert-delete').removeClass('d-none');
 
-            const jual_id = $(this).data('jual_id');
+            const beli_id = $(this).data('beli_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/penjualan/show2',
+                url: 'http://localhost/project/project-point-of-sale/pembelian/show2',
                 data: {
-                    jual_id: jual_id
+                    beli_id: beli_id
                 },
                 method: 'post',
                 dataType: 'json',
                 success: function(data) {
-                    $('#jual_id').val(data.jual_nofak);
+                    $('#beli_id').val(data.beli_nofak);
                 }
             });
         });

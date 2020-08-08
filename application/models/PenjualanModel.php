@@ -75,7 +75,7 @@ class PenjualanModel extends CI_Model
 
         $params = [
             'jual_nofak' => $data['jual_nofak'],
-            'jual_tanggal' => $data['jual_tanggal'],
+            'jual_tanggal' => date("Y-m-d h:i:s"),
             'jual_diskon' => $data['jual_diskon'],
             'jual_total' => $data['jual_total'],
             'jual_jml_uang' => $data['jual_jml_uang'],
