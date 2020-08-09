@@ -1,0 +1,14 @@
+html {
+    overflow-x: hidden;
+}
+
+/* keranjang kanan */
+
+.cart-right {
+    position: absolute;
+}
+
+.fix-cart {
+    position: fixed;
+    top: 150px;
+}

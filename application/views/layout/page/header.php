@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="assets/adminlte/plugins/select2/css/select2.min.css" />
     <link rel="stylesheet" href="assets/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/pos/css/page/style.css">
+
     <title><?= $title . SITE_NAME; ?></title>
 </head>
 
