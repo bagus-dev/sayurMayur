@@ -21,6 +21,7 @@ class AuthModel extends CI_Model
         if ($user) {
             // Jika user yang masuk adalah admin atau level 1
             if ($user['user_role_id'] === '4') {
+                // Logic Customer
             } else {
                 // Bandingkan password yang diinput dengan password yang ada di database
                 if (password_verify($password, $user['user_password'])) {

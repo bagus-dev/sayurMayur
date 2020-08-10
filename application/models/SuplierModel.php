@@ -16,10 +16,17 @@ class SuplierModel extends CI_Model
     public function getSuplier($suplier_id = null)
     {
         if ($suplier_id === null) {
-            $hsl = $this->db->query("SELECT * FROM tbl_suplier ORDER BY suplier_id DESC");
+            $hsl = $this->db->query("SELECT * FROM tbl_suplier WHERE suplier_id != '1' ORDER BY suplier_id DESC");
         } else {
-            $hsl = $this->db->query("SELECT * FROM tbl_suplier WHERE suplier_id = '$suplier_id'");
+            $hsl = $this->db->query("SELECT * FROM tbl_suplier WHERE suplier_id != '1' AND suplier_id = '$suplier_id'");
         }
+
+        return $hsl;
+    }
+
+    public function getAllSuplier()
+    {
+        $hsl = $this->db->query("SELECT * FROM tbl_suplier");
 
         return $hsl;
     }
