@@ -49,6 +49,10 @@
     <?php $this->load->view('layout/script/barangs'); ?>
 <?php endif; ?>
 
+<?php if (isset($keranjangs)) : ?>
+    <?php $this->load->view('layout/script/barangs'); ?>
+<?php endif; ?>
+
 <?php if (isset($kategori)) : ?>
     <?php $this->load->view('layout/script/kategori'); ?>
 <?php endif; ?>

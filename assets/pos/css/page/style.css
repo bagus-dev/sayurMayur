@@ -1,4 +1,4 @@
-html {
+html,body {
     overflow-x: hidden;
 }
 
@@ -11,4 +11,16 @@ html {
 .fix-cart {
     position: fixed;
     top: 150px;
+}
+
+/* style sweet alert */
+
+.nama_barang_swal {
+    font-size: 15pt;
+}
+#minus_barang:hover, #plus_barang:hover {
+    background-color: #d6d6d6;
+}
+#minus_barang:active, #plus_barang:active {
+    background-color: #b1b1b1;
 }
