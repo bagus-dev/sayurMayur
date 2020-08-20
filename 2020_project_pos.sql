@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Agu 2020 pada 04.06
+-- Waktu pembuatan: 20 Agu 2020 pada 04.38
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -353,6 +353,13 @@ CREATE TABLE `tbl_keranjang` (
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tbl_keranjang`
+--
+
+INSERT INTO `tbl_keranjang` (`id`, `barang_id`, `total_kuantitas`, `total_harga`, `ip_address`, `waktu_ditambahkan`) VALUES
+(19, 'BR000001', 1, 20000, '::1', '2020-08-20 09:32:51');
+
 -- --------------------------------------------------------
 
 --
@@ -370,7 +377,12 @@ CREATE TABLE `tbl_ongkir` (
 --
 
 INSERT INTO `tbl_ongkir` (`ongkir_id`, `ongkir_lokasi`, `ongkir_harga`) VALUES
-(4, 'Serang', 10000);
+(1, 'Cipocok', 10000),
+(2, 'Curug', 10000),
+(3, 'Kasemen', 10000),
+(4, 'Serang', 10000),
+(5, 'Taktakan', 10000),
+(6, 'Walantaka', 10000);
 
 -- --------------------------------------------------------
 
@@ -446,6 +458,9 @@ CREATE TABLE `tbl_user` (
   `user_id` int(11) NOT NULL,
   `user_nama` varchar(35) DEFAULT NULL,
   `user_alamat` text NOT NULL,
+  `ongkir_id` int(11) NOT NULL,
+  `user_nohp` varchar(13) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
   `user_username` varchar(30) DEFAULT NULL,
   `user_password` varchar(128) DEFAULT NULL,
   `user_role_id` int(11) NOT NULL
@@ -455,10 +470,11 @@ CREATE TABLE `tbl_user` (
 -- Dumping data untuk tabel `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `user_nama`, `user_alamat`, `user_username`, `user_password`, `user_role_id`) VALUES
-(1, 'Mochamad Natsir', 'Jl. Raya Cilegon No.Km. 5, Taman, Drangong, Kec. Taktakan, Kota Serang, Banten 42162', 'superadmin', '$2y$10$afqzZuBiOvmCHJDjCE8Tc.oH2d7vZz9G1pHHcUdUuNRAjA/uyEYp6', 1),
-(3, 'Handoko Adji Pangestu', 'Jl. Raya Jakarta No.Km. 5, Taman, Drangong, Kec. Cipocok Jaya, Kota Serang, Banten 42122', 'admin', '$2y$10$PssETE4hc5Njym9wudpTMu1F9kBe.kdkKXxLqKsTRLvdTmxITlXSi', 2),
-(11, 'zxc', 'zxc', 'zxc', '9bb319215b59ada160c2d56d14ddd677', 4);
+INSERT INTO `tbl_user` (`user_id`, `user_nama`, `user_alamat`, `ongkir_id`, `user_nohp`, `user_email`, `user_username`, `user_password`, `user_role_id`) VALUES
+(1, 'Mochamad Natsir', 'Jl. Raya Cilegon No.Km. 5, Taman, Drangong, Kec. Taktakan, Kota Serang, Banten 42162', 0, '', '', 'superadmin', '$2y$10$afqzZuBiOvmCHJDjCE8Tc.oH2d7vZz9G1pHHcUdUuNRAjA/uyEYp6', 1),
+(3, 'Handoko Adji Pangestu', 'Jl. Raya Jakarta No.Km. 5, Taman, Drangong, Kec. Cipocok Jaya, Kota Serang, Banten 42122', 0, '', '', 'admin', '$2y$10$PssETE4hc5Njym9wudpTMu1F9kBe.kdkKXxLqKsTRLvdTmxITlXSi', 2),
+(11, 'zxc', 'zxc', 0, '', '', 'zxc', '9bb319215b59ada160c2d56d14ddd677', 4),
+(16, 'Bagus Puji Rahardjo', 'Jl. Perjuangan II RT.01 RW.15 Kel.Drangong, Kec.Taktakan, Serang, Banten (Kingkost Baladika Kamar A 02)', 5, '089507456916', 'bagus.rahardjo6@gmail.com', 'bagus', '$2y$10$uyy4i6trgFvVfLv47Rp5quxhc6q.vCO81Et3ZB0KZGEfCTYf1eafK', 4);
 
 --
 -- Indexes for dumped tables
@@ -607,13 +623,13 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`
 --
 ALTER TABLE `tbl_ongkir`
-  MODIFY `ongkir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ongkir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_role`
@@ -637,7 +653,7 @@ ALTER TABLE `tbl_suplier`
 -- AUTO_INCREMENT untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
