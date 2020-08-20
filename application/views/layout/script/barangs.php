@@ -393,7 +393,7 @@
                                             $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
                                             $("<td>").html('<input type="number" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
                                             $("<td>").html('Rp. <span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
                                         )
                                     );
 
@@ -405,7 +405,7 @@
                                             $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
                                             $("<td>").html('<input type="number" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
                                             $("<td>").html('Rp. <span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
                                         )
                                     );
                                 }
@@ -544,4 +544,29 @@
             }
         })
     }
+
+    $("#btn-login").click(function() {
+        window.open('<?= base_url()."auth"; ?>', '_self');
+    });
+
+    $("#btn-cekout").click(function() {
+        window.open('<?= base_url()."checkout"; ?>', '_self');
+    });
+
+    $("#btn-logout").click(function() {
+        Swal.fire({
+            icon: 'question',
+            title: 'Keluar Akun',
+            text: 'Yakin untuk Keluar Akun ?',
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Ya, Keluar Akun",
+            cancelButtonText: "Batal",
+            cancelButtonColor: "#d33",
+        }).then((result) => {
+            if(result.value) {
+                window.open('<?= base_url()."auth/logout"; ?>','_self')
+            }
+        })
+    });
 </script>
