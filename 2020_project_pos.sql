@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Agu 2020 pada 04.38
+-- Waktu pembuatan: 23 Agu 2020 pada 13.22
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -123,6 +123,30 @@ CREATE TABLE `tbl_cart_jual` (
   `c_jual_diskon` double NOT NULL,
   `c_jual_total` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_checkout`
+--
+
+CREATE TABLE `tbl_checkout` (
+  `id` int(11) NOT NULL,
+  `no_invoice` varchar(20) NOT NULL,
+  `barang_id` varchar(15) NOT NULL,
+  `kuantitas` int(7) NOT NULL,
+  `subtotal` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_checkout`
+--
+
+INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
+(1, 'SM000001', 'BR000001', 2, 40000),
+(2, 'SM000002', 'BR000001', 1, 20000),
+(3, 'SM000003', 'BR000001', 1, 20000),
+(4, 'SM000004', 'BR000001', 1, 20000);
 
 -- --------------------------------------------------------
 
@@ -256,6 +280,33 @@ INSERT INTO `tbl_diskon` (`diskon_id`, `diskon_harga`, `diskon_persen`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tbl_invoice`
+--
+
+CREATE TABLE `tbl_invoice` (
+  `no_invoice` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `jenis_kirim` int(1) NOT NULL,
+  `jenis_bayar` int(1) NOT NULL,
+  `total_bayar` int(10) NOT NULL,
+  `bukti_transfer` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL,
+  `waktu_ditambahkan` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_invoice`
+--
+
+INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `jenis_kirim`, `jenis_bayar`, `total_bayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`) VALUES
+('SM000001', 16, 1, 1, 50000, '', 0, '2020-08-23 16:15:08'),
+('SM000002', 16, 1, 2, 30000, '', 0, '2020-08-23 16:57:39'),
+('SM000003', 16, 2, 1, 20000, '', 0, '2020-08-23 16:58:03'),
+('SM000004', 16, 2, 2, 20000, '', 0, '2020-08-23 16:58:18');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tbl_jual`
 --
 
@@ -352,13 +403,6 @@ CREATE TABLE `tbl_keranjang` (
   `ip_address` varchar(10) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_keranjang`
---
-
-INSERT INTO `tbl_keranjang` (`id`, `barang_id`, `total_kuantitas`, `total_harga`, `ip_address`, `waktu_ditambahkan`) VALUES
-(19, 'BR000001', 1, 20000, '::1', '2020-08-20 09:32:51');
 
 -- --------------------------------------------------------
 
@@ -509,6 +553,12 @@ ALTER TABLE `tbl_cart_jual`
   ADD PRIMARY KEY (`c_jual_id`);
 
 --
+-- Indeks untuk tabel `tbl_checkout`
+--
+ALTER TABLE `tbl_checkout`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
@@ -535,6 +585,12 @@ ALTER TABLE `tbl_detail_jual`
 --
 ALTER TABLE `tbl_diskon`
   ADD PRIMARY KEY (`diskon_id`);
+
+--
+-- Indeks untuk tabel `tbl_invoice`
+--
+ALTER TABLE `tbl_invoice`
+  ADD PRIMARY KEY (`no_invoice`);
 
 --
 -- Indeks untuk tabel `tbl_jual`
@@ -590,6 +646,12 @@ ALTER TABLE `tbl_user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `tbl_checkout`
+--
+ALTER TABLE `tbl_checkout`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
@@ -623,7 +685,7 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`

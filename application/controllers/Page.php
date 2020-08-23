@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Page extends CI_Controller
 {
+    protected $required = '{field} harus diisi!';
+
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +19,7 @@ class Page extends CI_Controller
         $data["keranjang"] = $this->barang->get_keranjang();
         $data["total_harga_keranjang"] = $this->barang->total_harga_cart();
         $this->barang->delete_cart_date();
+        $this->barang->cancel_invoice();
 
         $this->load->view('layout/page/header', $data);
         $this->load->view('customer/page/index');
@@ -144,9 +147,89 @@ class Page extends CI_Controller
         $data["keranjangs"] = $this->barang->get_keranjang();
         $data["total_harga_keranjang"] = $this->barang->total_harga_cart();
         $this->barang->delete_cart_date();
+        $this->barang->cancel_invoice();
 
         $this->load->view('layout/page/header', $data);
         $this->load->view('customer/page/cart');
         $this->load->view('layout/dashboard/footer');
+    }
+
+    function profile() {
+        if(isset($_SESSION["user_id"])){
+            $data['title'] = 'Profil';
+            $data["user"] = $this->barang->get_user();
+            $data["invoice"] = $this->barang->get_invoice();
+            $data["keranjang"] = $this->barang->get_keranjang();
+            $this->barang->delete_cart_date();
+            $this->barang->cancel_invoice();
+
+            $this->load->view('layout/page/header',$data);
+            $this->load->view('customer/page/profile');
+            $this->load->view('layout/dashboard/footer');
+        }
+        else {
+            redirect(site_url());
+        }
+    }
+
+    function check_invoice() {
+        if(isset($_SESSION["user_id"])){
+            if(isset($_GET["no_invoice"])) {
+                $no_invoice = $this->input->get("no_invoice",true);
+
+                $data['title'] = 'Detail Invoice';
+                $data['detail_invoice'] = $this->barang->get_detail_invoice($no_invoice);
+                $data['user'] = $this->barang->get_user();
+                $data['checkout'] = $this->barang->get_checkout($no_invoice);
+                $data["keranjang"] = $this->barang->get_keranjang();
+                $this->barang->delete_cart_date();
+                $this->barang->cancel_invoice();
+
+                $this->load->view('layout/page/header',$data);
+                $this->load->view('customer/page/check_invoice');
+                $this->load->view('layout/dashboard/footer');
+            }
+            else {
+                redirect(site_url("page/profile"));
+            }
+        }
+        else {
+            redirect(site_url());
+        }
+    }
+
+    function upload_trf() {
+        if(isset($_SESSION["user_id"])){
+            if(isset($_GET["no_invoice"])) {
+                if(isset($_POST["submit"])) {
+                    $this->barang->upload_trf();
+                }
+                else {
+                    $no_invoice = $this->input->get("no_invoice",true);
+
+                    $data['title'] = 'Unggah Bukti Transfer';
+                    $data['detail_invoice'] = $this->barang->get_detail_invoice($no_invoice);
+                    $data["keranjang"] = $this->barang->get_keranjang();
+                    $this->barang->delete_cart_date();
+                    $this->barang->cancel_invoice();
+
+                    $this->load->view('layout/page/header',$data);
+                    $this->load->view('customer/page/upload_trf');
+                    $this->load->view('layout/dashboard/footer');
+                }
+            }
+            else {
+                redirect(site_url("page/profile"));
+            }
+        }
+        else {
+            redirect(site_url());
+        }
+    }
+
+    function get_bukti_trf() {
+        $no_invoice = $this->input->post("no_invoice",true);
+
+        $this->barang->get_bukti_trf($no_invoice);
     }
 }

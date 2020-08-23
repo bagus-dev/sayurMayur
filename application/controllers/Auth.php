@@ -31,6 +31,8 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Form Login';
+            $this->auth->delete_cart_date();
+            $this->auth->cancel_invoice();
 
             $this->load->view('layout/auth/header', $data);
             $this->load->view('admin/auth/login');
@@ -84,6 +86,8 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Form Register';
             $data['ongkir'] = $this->auth->get_ongkir();
+            $this->auth->delete_cart_date();
+            $this->auth->cancel_invoice();
 
             $this->load->view('layout/auth/header', $data);
             $this->load->view('admin/auth/register_customer');

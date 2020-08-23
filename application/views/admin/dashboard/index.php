@@ -118,11 +118,11 @@
             </a>
         </div>
         <div class="col-md-3">
-            <a href="<?= site_url(); ?>">
+            <a href="<?= site_url(); ?>penjualan-online">
                 <div class="card p-4 light-color shadows-box text-white">
                     <div class="text-center">
                         <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:4em"></i>
-                        <h5 class="mt-3">Penjualan Online(belum selesai)</h5>
+                        <h5 class="mt-3">Penjualan Online</h5>
                     </div>
                 </div>
             </a>
@@ -161,7 +161,7 @@
                 <div class="card p-4 light-color shadows-box text-white">
                     <div class="text-center">
                         <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:4em"></i>
-                        <h5 class="mt-3">Penjualan Online(belum selesai)</h5>
+                        <h5 class="mt-3">Penjualan Online</h5>
                     </div>
                 </div>
             </a>

@@ -15,4 +15,11 @@
             autoWidth: false,
         });
     });
+
+    $(function() {
+        $(".datable").DataTable({
+            responsive: true,
+            autoWidth: false,
+        });
+    });
 </script>

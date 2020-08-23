@@ -133,4 +133,74 @@ class AuthModel extends CI_Model
 
         redirect(site_url('auth'));
     }
+
+    function delete_cart_date() {
+        if($this->db->query("DELETE FROM tbl_keranjang WHERE DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function cancel_invoice() {
+        $get1 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 2 AND status = 1 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+        
+        if($get1->num_rows() > 0) {
+            foreach($get1->result() as $g1) {
+                $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g1->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 2 AND status = 1 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+            }
+
+            $get2 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+            if($get2->num_rows() > 0) {
+                foreach($get2->result() as $g2) {
+                    $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g2->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                }
+
+                $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+                if($get3->num_rows() > 0) {
+                    foreach($get3->result() as $g3) {
+                        $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                    }
+                }
+            }
+            else {
+                $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+                if($get3->num_rows() > 0) {
+                    foreach($get3->result() as $g3) {
+                        $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                    }
+                }
+            }
+        }
+        else {
+            $get2 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+            if($get2->num_rows() > 0) {
+                foreach($get2->result() as $g2) {
+                    $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g2->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                }
+
+                $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+                if($get3->num_rows() > 0) {
+                    foreach($get3->result() as $g3) {
+                        $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                    }
+                }
+            }
+            else {
+                $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND status = 0 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+
+                if($get3->num_rows() > 0) {
+                    foreach($get3->result() as $g3) {
+                        $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
+                    }
+                }
+            }
+        }
+    }
 }

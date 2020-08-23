@@ -97,6 +97,18 @@
     <?php $this->load->view('layout/script/pembelian_laporan'); ?>
 <?php endif; ?>
 
+<?php if (isset($invoice)) : ?>
+    <?php $this->load->view('layout/script/profile_customer'); ?>
+<?php endif; ?>
+
+<?php if (isset($detail_invoice)) : ?>
+    <?php $this->load->view('layout/script/check_invoice'); ?>
+<?php endif; ?>
+
+<?php if ($title == 'Unggah Bukti Transfer') : ?>
+    <?php $this->load->view('layout/script/upload_trf'); ?>
+<?php endif; ?>
+
 
 </body>
 

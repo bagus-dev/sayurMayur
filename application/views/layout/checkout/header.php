@@ -51,7 +51,7 @@
             <div class="dropdown">
                 <button class="btn btn-primary btn-sm ml-3 dropdown-toggle" data-toggle="dropdown" type="button">Halo, <?= $this->session->userdata("user_nama"); ?></button>
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Profil</a>
+                    <a href="<?= base_url().'page/profile'; ?>" class="dropdown-item"><i class="fas fa-user"></i> Profil</a>
                     <a href="javascript:void(0)" class="dropdown-item" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Keluar Akun</a>
                 </div>
             </div>
