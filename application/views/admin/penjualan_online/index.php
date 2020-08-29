@@ -14,7 +14,7 @@
                                 <th>Nama Pemesan</th>
                                 <th>Jenis Pengiriman</th>
                                 <th>Jenis Pembayaran</th>
-                                <th>Total Pembayaran</th>
+                                <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -93,7 +93,7 @@
                                             $bln_invoice = "Desember";
                                         }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice;
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
                                     ?>
                                 </td>
                                 <td><button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $ds->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button></td>
@@ -115,7 +115,7 @@
                                 <th>Nama Pemesan</th>
                                 <th>Jenis Pengiriman</th>
                                 <th>Jenis Pembayaran</th>
-                                <th>Total Pembayaran</th>
+                                <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -194,7 +194,7 @@
                                             $bln_invoice = "Desember";
                                         }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice;
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
                                     ?>
                                 </td>
                                 <td><button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $dv->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button></td>
@@ -216,7 +216,7 @@
                                 <th>Nama Pemesan</th>
                                 <th>Jenis Pengiriman</th>
                                 <th>Jenis Pembayaran</th>
-                                <th>Total Pembayaran</th>
+                                <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -296,14 +296,14 @@
                                             $bln_invoice = "Desember";
                                         }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice;
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
                                     ?>
                                 </td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $di->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button>
                                         <?php if($di->jenis_bayar == 1) { ?>
-                                            <button class="btn btn-warning text-white" type="button" data-toggle="modal" data-target="#modalWarning" data-no_invoice="<?= $i->no_invoice; ?>">Lihat Bukti Transfer</button>
+                                            <button class="btn btn-warning text-white" type="button" data-toggle="modal" data-target="#modalWarning" data-no_invoice="<?= $di->no_invoice; ?>">Lihat Bukti Transfer</button>
                                         <?php } ?>
                                     </div>
                                 </td>
@@ -325,7 +325,7 @@
                                 <th>Nama Pemesan</th>
                                 <th>Jenis Pengiriman</th>
                                 <th>Jenis Pembayaran</th>
-                                <th>Total Pembayaran</th>
+                                <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -404,7 +404,7 @@
                                             $bln_invoice = "Desember";
                                         }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice;
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
                                     ?>
                                 </td>
                                 <td><button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $du->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button></td>
@@ -426,7 +426,7 @@
                                 <th>Nama Pemesan</th>
                                 <th>Jenis Pengiriman</th>
                                 <th>Jenis Pembayaran</th>
-                                <th>Total Pembayaran</th>
+                                <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -505,7 +505,7 @@
                                             $bln_invoice = "Desember";
                                         }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice;
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
                                     ?>
                                 </td>
                                 <td><button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $db->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button></td>
@@ -516,5 +516,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalWarning">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" id="warningModal"></div>
     </div>
 </div>

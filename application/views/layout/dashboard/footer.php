@@ -85,6 +85,14 @@
     <?php $this->load->view('layout/script/penjualan'); ?>
 <?php endif; ?>
 
+<?php if (isset($penjualanonline)) : ?>
+    <?php $this->load->view('layout/script/penjualanonline'); ?>
+<?php endif; ?>
+
+<?php if (isset($detailinvoice)) : ?>
+    <?php $this->load->view('layout/script/detail_invoice'); ?>
+<?php endif; ?>
+
 <?php if (isset($pembelian)) : ?>
     <?php $this->load->view('layout/script/pembelian'); ?>
 <?php endif; ?>
@@ -95,6 +103,10 @@
 
 <?php if (isset($pembelian_laporan)) : ?>
     <?php $this->load->view('layout/script/pembelian_laporan'); ?>
+<?php endif; ?>
+
+<?php if (isset($laporanpenjualanonline)) : ?>
+    <?php $this->load->view('layout/script/penjualan_online_laporan'); ?>
 <?php endif; ?>
 
 <?php if (isset($invoice)) : ?>

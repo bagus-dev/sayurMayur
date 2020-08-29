@@ -186,6 +186,8 @@ class BarangModel extends CI_Model
     }
 
     function delete_cart_date() {
+        date_default_timezone_set("Asia/Jakarta");
+
         if($this->db->query("DELETE FROM tbl_keranjang WHERE DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1")) {
             return true;
         }
@@ -275,6 +277,8 @@ class BarangModel extends CI_Model
     }
 
     function cancel_invoice() {
+        date_default_timezone_set("Asia/Jakarta");
+        
         $get1 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 2 AND status = 1 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
         
         if($get1->num_rows() > 0) {

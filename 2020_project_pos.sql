@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Agu 2020 pada 13.22
+-- Waktu pembuatan: 29 Agu 2020 pada 04.23
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -137,16 +137,6 @@ CREATE TABLE `tbl_checkout` (
   `kuantitas` int(7) NOT NULL,
   `subtotal` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_checkout`
---
-
-INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
-(1, 'SM000001', 'BR000001', 2, 40000),
-(2, 'SM000002', 'BR000001', 1, 20000),
-(3, 'SM000003', 'BR000001', 1, 20000),
-(4, 'SM000004', 'BR000001', 1, 20000);
 
 -- --------------------------------------------------------
 
@@ -289,20 +279,11 @@ CREATE TABLE `tbl_invoice` (
   `jenis_kirim` int(1) NOT NULL,
   `jenis_bayar` int(1) NOT NULL,
   `total_bayar` int(10) NOT NULL,
+  `dibayar` int(10) NOT NULL,
   `bukti_transfer` varchar(255) NOT NULL,
   `status` int(1) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_invoice`
---
-
-INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `jenis_kirim`, `jenis_bayar`, `total_bayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`) VALUES
-('SM000001', 16, 1, 1, 50000, '', 0, '2020-08-23 16:15:08'),
-('SM000002', 16, 1, 2, 30000, '', 0, '2020-08-23 16:57:39'),
-('SM000003', 16, 2, 1, 20000, '', 0, '2020-08-23 16:58:03'),
-('SM000004', 16, 2, 2, 20000, '', 0, '2020-08-23 16:58:18');
 
 -- --------------------------------------------------------
 
@@ -649,7 +630,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT untuk tabel `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_customer`
@@ -685,7 +666,7 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`

@@ -157,7 +157,7 @@
             </a>
         </div>
         <div class="col-md-3">
-            <a href="<?= site_url(); ?>">
+            <a href="<?= site_url("penjualan_online/laporan"); ?>">
                 <div class="card p-4 light-color shadows-box text-white">
                     <div class="text-center">
                         <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:4em"></i>
