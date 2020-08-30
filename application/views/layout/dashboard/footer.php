@@ -109,6 +109,10 @@
     <?php $this->load->view('layout/script/penjualan_online_laporan'); ?>
 <?php endif; ?>
 
+<?php if (isset($howtotrf)) : ?>
+    <?php $this->load->view('layout/script/howtotrf'); ?>
+<?php endif; ?>
+
 <?php if (isset($invoice)) : ?>
     <?php $this->load->view('layout/script/profile_customer'); ?>
 <?php endif; ?>

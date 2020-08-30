@@ -335,3 +335,20 @@
 		display: inline-block;
 	}
 }
+
+/* detail invoice penjualan online */
+
+@media (max-width: 767px) {
+    #text1 {
+        font-size: 25pt;
+    }
+    #text2 {
+        font-size: 13pt;
+    }
+    #text3 {
+        font-size: 10pt;
+    }
+    #text4 {
+        font-size: 20pt;
+    }
+}

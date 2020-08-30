@@ -232,4 +232,18 @@ class Page extends CI_Controller
 
         $this->barang->get_bukti_trf($no_invoice);
     }
+
+    function how_to_trf() {
+        if(isset($_SESSION["user_id"])) {
+            $data['title'] = 'Cara Transfer SayurMayur';
+            $data['howtotrf'] = true;
+
+            $this->load->view('layout/page/header',$data);
+            $this->load->view('customer/page/how_to_trf');
+            $this->load->view('layout/dashboard/footer');
+        }
+        else {
+            redirect(site_url('auth'));
+        }
+    }
 }

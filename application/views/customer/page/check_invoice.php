@@ -56,7 +56,7 @@
                         <br>
                         <b><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></b>
                         <br>
-                        Lihat <a href="#">Cara Transfer</a> SayurMayur.
+                        Lihat <a href="<?= base_url().'page/how_to_trf'; ?>">Cara Transfer</a> SayurMayur.
                     </center>
                     <hr class="mt-5">
                 </div>
@@ -94,40 +94,48 @@
             ?>
             <div class="row">
                 <div class="col-6">
-                    <h1 class="text-dark">Sayur<small class="text-danger">Mayur</small></h1>
-                    <h5>Kota Serang, Banten</h5>
+                    <h1 class="text-dark" id="text1">Sayur<small class="text-danger">Mayur</small></h1>
+                    <h5 id="text2">Kota Serang, Banten</h5>
                 </div>
                 <div class="col-6">
-                    <h1 class="text-dark float-right">INVOICE</h1>
+                    <h1 class="text-dark float-right" id="text1">INVOICE</h1>
                     <br><br><br>
-                    <span class="float-right"><b>Jatuh Tempo: </b><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></span>
-                    <br>
-                    <span class="float-right"><b>No. Invoice: </b><?= $i->no_invoice; ?></span>
-                    <br>
+                    <table class="float-right table">
+                        <tr>
+                            <td><b>Jatuh Tempo</b></td>
+                            <td><b>:</b></td>
+                            <td><span id="text3"><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></span></td>
+                        </tr>
+                        <tr>
+                            <td><b>No. Invoice</b></td>
+                            <td><b>:</b></td>
+                            <td><span id="text3"><?= $i->no_invoice; ?></span></td>
+                        </tr>
+                    </table>
                     <?php
                         if($i->jenis_bayar == 1) {
                             if($i->status == 0 AND $i->bukti_transfer == "") {
-                                echo "<h2 class='text-warning float-right'>Belum Dibayar</h2>";
+                                echo "<h2 class='text-warning float-right' id='text4'>Belum Dibayar</h2>";
                             }
                             else if($i->status == 0 AND $i->bukti_transfer <> "") {
-                                echo "<h2 class='text-warning float-right'>Belum Divalidasi</h2>";
+                                echo "<h2 class='text-warning float-right' id='text4'>Belum Divalidasi</h2>";
                             }
                             else if($i->status == 1 AND $i->bukti_transfer <> "") {
-                                echo "<h2 class='text-success float-right'>Sudah Tervalidasi</h2>";
+                                echo "<h2 class='text-success float-right' id='text4'>Sudah Tervalidasi</h2>";
                             }
                             elseif($i->status == 2) {
-                                echo "<h2 class='text-danger float-right'>Dibatalkan</h2>";
+                                echo "<h2 class='text-danger float-right' id='text4'>Dibatalkan</h2>";
                             }
                         }
                         else {
                             if($i->status == 0) {
-                                echo "<h2 class='text-warning float-right'>Belum Divalidasi</h2>";
+                                echo "<h2 class='text-warning float-right' id='text4'>Belum Divalidasi</h2>";
                             }
                             else if($i->status == 1) {
-                                echo "<h2 class='text-success float-right'>Sudah Tervalidasi</h2>";
+                                echo "<h2 class='text-success float-right' id='text4'>Sudah Tervalidasi</h2>";
                             }
                             elseif($i->status == 2) {
-                                echo "<h2 class='text-danger float-right'>Dibatalkan</h2>";
+                                echo "<h2 class='text-danger float-right' id='text4'>Dibatalkan</h2>";
                             }
                         }
                     ?>
