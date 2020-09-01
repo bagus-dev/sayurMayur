@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 31 Agu 2020 pada 12.30
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.6
+-- Generation Time: Sep 01, 2020 at 04:49 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_barang`
+-- Table structure for table `tbl_barang`
 --
 
 CREATE TABLE `tbl_barang` (
@@ -43,7 +43,7 @@ CREATE TABLE `tbl_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_barang`
+-- Dumping data for table `tbl_barang`
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
@@ -61,7 +61,7 @@ INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_h
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_beli`
+-- Table structure for table `tbl_beli`
 --
 
 CREATE TABLE `tbl_beli` (
@@ -78,7 +78,7 @@ CREATE TABLE `tbl_beli` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_beli`
+-- Dumping data for table `tbl_beli`
 --
 
 INSERT INTO `tbl_beli` (`beli_nofak`, `beli_tanggal`, `beli_diskon`, `beli_total`, `beli_jml_uang`, `beli_kembalian`, `beli_user_id`, `beli_suplier_id`, `beli_suplier_nama`, `beli_keterangan`) VALUES
@@ -89,7 +89,7 @@ INSERT INTO `tbl_beli` (`beli_nofak`, `beli_tanggal`, `beli_diskon`, `beli_total
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_cart_beli`
+-- Table structure for table `tbl_cart_beli`
 --
 
 CREATE TABLE `tbl_cart_beli` (
@@ -108,7 +108,7 @@ CREATE TABLE `tbl_cart_beli` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_cart_jual`
+-- Table structure for table `tbl_cart_jual`
 --
 
 CREATE TABLE `tbl_cart_jual` (
@@ -127,7 +127,7 @@ CREATE TABLE `tbl_cart_jual` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_checkout`
+-- Table structure for table `tbl_checkout`
 --
 
 CREATE TABLE `tbl_checkout` (
@@ -139,17 +139,28 @@ CREATE TABLE `tbl_checkout` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_checkout`
+-- Dumping data for table `tbl_checkout`
 --
 
 INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
-(1, 'SM000001', 'BR000001', 1, 20000),
-(2, 'SM000001', 'BR000002', 1, 20000);
+(1, 'SM000001', 'BR000001', 2, 40000),
+(2, 'SM000002', 'BR000001', 1, 20000),
+(3, 'SM000003', 'BR000001', 1, 20000),
+(4, 'SM000004', 'BR000001', 1, 20000),
+(5, 'SM000005', 'BR000001', 1, 20000),
+(6, 'SM000006', 'BR000003', 2, 44000),
+(7, 'SM000006', 'BR000002', 1, 20000),
+(8, 'SM000007', 'BR000001', 1, 20000),
+(9, 'SM000008', 'BR000002', 1, 20000),
+(10, 'SM000009', 'BR000001', 1, 20000),
+(11, 'SM000010', 'BR000001', 1, 20000),
+(12, 'SM000010', 'BR000002', 1, 20000),
+(13, 'SM000011', 'BR000002', 1, 20000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_customer`
+-- Table structure for table `tbl_customer`
 --
 
 CREATE TABLE `tbl_customer` (
@@ -160,7 +171,7 @@ CREATE TABLE `tbl_customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_customer`
+-- Dumping data for table `tbl_customer`
 --
 
 INSERT INTO `tbl_customer` (`customer_id`, `customer_nama`, `customer_alamat`, `customer_notelp`) VALUES
@@ -170,7 +181,7 @@ INSERT INTO `tbl_customer` (`customer_id`, `customer_nama`, `customer_alamat`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_detail_beli`
+-- Table structure for table `tbl_detail_beli`
 --
 
 CREATE TABLE `tbl_detail_beli` (
@@ -187,7 +198,7 @@ CREATE TABLE `tbl_detail_beli` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_detail_beli`
+-- Dumping data for table `tbl_detail_beli`
 --
 
 INSERT INTO `tbl_detail_beli` (`d_beli_id`, `d_beli_nofak`, `d_beli_barang_id`, `d_beli_barang_nama`, `d_beli_barang_satuan`, `d_beli_barang_harpok`, `d_beli_barang_harjul`, `d_beli_qty`, `d_beli_diskon`, `d_beli_total`) VALUES
@@ -197,7 +208,7 @@ INSERT INTO `tbl_detail_beli` (`d_beli_id`, `d_beli_nofak`, `d_beli_barang_id`, 
 (55, 'SM2008080003', 'BR000003', 'Klem Kabel IKK No 9', 'Bks', 16000, 22000, 20, 0, 440000);
 
 --
--- Trigger `tbl_detail_beli`
+-- Triggers `tbl_detail_beli`
 --
 DELIMITER $$
 CREATE TRIGGER `stock_plus` AFTER INSERT ON `tbl_detail_beli` FOR EACH ROW BEGIN
@@ -210,7 +221,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_detail_jual`
+-- Table structure for table `tbl_detail_jual`
 --
 
 CREATE TABLE `tbl_detail_jual` (
@@ -227,7 +238,7 @@ CREATE TABLE `tbl_detail_jual` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_detail_jual`
+-- Dumping data for table `tbl_detail_jual`
 --
 
 INSERT INTO `tbl_detail_jual` (`d_jual_id`, `d_jual_nofak`, `d_jual_barang_id`, `d_jual_barang_nama`, `d_jual_barang_satuan`, `d_jual_barang_harpok`, `d_jual_barang_harjul`, `d_jual_qty`, `d_jual_diskon`, `d_jual_total`) VALUES
@@ -245,7 +256,7 @@ INSERT INTO `tbl_detail_jual` (`d_jual_id`, `d_jual_nofak`, `d_jual_barang_id`, 
 (49, 'SM2008080002', 'BR000007', ' asdadasds', 'Bks', 2, 20000, 15, 0, 300000);
 
 --
--- Trigger `tbl_detail_jual`
+-- Triggers `tbl_detail_jual`
 --
 DELIMITER $$
 CREATE TRIGGER `stock_min` AFTER INSERT ON `tbl_detail_jual` FOR EACH ROW BEGIN
@@ -258,7 +269,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_diskon`
+-- Table structure for table `tbl_diskon`
 --
 
 CREATE TABLE `tbl_diskon` (
@@ -268,7 +279,7 @@ CREATE TABLE `tbl_diskon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_diskon`
+-- Dumping data for table `tbl_diskon`
 --
 
 INSERT INTO `tbl_diskon` (`diskon_id`, `diskon_harga`, `diskon_persen`) VALUES
@@ -278,7 +289,7 @@ INSERT INTO `tbl_diskon` (`diskon_id`, `diskon_harga`, `diskon_persen`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_invoice`
+-- Table structure for table `tbl_invoice`
 --
 
 CREATE TABLE `tbl_invoice` (
@@ -287,23 +298,32 @@ CREATE TABLE `tbl_invoice` (
   `jenis_kirim` int(1) NOT NULL,
   `jenis_bayar` int(1) NOT NULL,
   `total_bayar` int(10) NOT NULL,
-  `dibayar` int(10) NOT NULL,
   `bukti_transfer` varchar(255) NOT NULL,
   `status` int(1) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_invoice`
+-- Dumping data for table `tbl_invoice`
 --
 
-INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `jenis_kirim`, `jenis_bayar`, `total_bayar`, `dibayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`) VALUES
-('SM000001', 16, 1, 1, 50000, 0, '', 2, '2020-08-30 10:19:44');
+INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `jenis_kirim`, `jenis_bayar`, `total_bayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`) VALUES
+('SM000001', 16, 1, 1, 50000, '', 2, '2020-08-23 16:15:08'),
+('SM000002', 16, 1, 2, 30000, '', 0, '2020-08-23 16:57:39'),
+('SM000003', 16, 2, 1, 20000, '', 2, '2020-08-23 16:58:03'),
+('SM000004', 16, 2, 2, 20000, '', 0, '2020-08-23 16:58:18'),
+('SM000005', 17, 1, 1, 30000, '', 2, '2020-08-30 17:17:07'),
+('SM000006', 17, 1, 2, 74000, '', 0, '2020-08-30 17:34:16'),
+('SM000007', 17, 1, 1, 30000, '', 2, '2020-08-30 17:34:41'),
+('SM000008', 17, 1, 1, 30000, '', 2, '2020-08-30 17:35:23'),
+('SM000009', 17, 1, 1, 30000, '', 2, '2020-08-30 17:38:41'),
+('SM000010', 17, 1, 1, 50000, '', 2, '2020-08-30 17:39:11'),
+('SM000011', 17, 1, 1, 30000, '', 2, '2020-08-30 17:45:25');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_jual`
+-- Table structure for table `tbl_jual`
 --
 
 CREATE TABLE `tbl_jual` (
@@ -320,7 +340,7 @@ CREATE TABLE `tbl_jual` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_jual`
+-- Dumping data for table `tbl_jual`
 --
 
 INSERT INTO `tbl_jual` (`jual_nofak`, `jual_tanggal`, `jual_diskon`, `jual_total`, `jual_jml_uang`, `jual_kembalian`, `jual_user_id`, `jual_customer_id`, `jual_customer_nama`, `jual_keterangan`) VALUES
@@ -337,7 +357,7 @@ INSERT INTO `tbl_jual` (`jual_nofak`, `jual_tanggal`, `jual_diskon`, `jual_total
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_kategori`
+-- Table structure for table `tbl_kategori`
 --
 
 CREATE TABLE `tbl_kategori` (
@@ -346,7 +366,7 @@ CREATE TABLE `tbl_kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_kategori`
+-- Dumping data for table `tbl_kategori`
 --
 
 INSERT INTO `tbl_kategori` (`kategori_id`, `kategori_nama`) VALUES
@@ -388,7 +408,7 @@ INSERT INTO `tbl_kategori` (`kategori_id`, `kategori_nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_keranjang`
+-- Table structure for table `tbl_keranjang`
 --
 
 CREATE TABLE `tbl_keranjang` (
@@ -400,19 +420,10 @@ CREATE TABLE `tbl_keranjang` (
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `tbl_keranjang`
---
-
-INSERT INTO `tbl_keranjang` (`id`, `barang_id`, `total_kuantitas`, `total_harga`, `ip_address`, `waktu_ditambahkan`) VALUES
-(3, 'BR000001', 1, 20000, '::1', '2020-08-31 16:35:43'),
-(4, 'BR000001', 1, 20000, '::1', '2020-08-31 16:50:44'),
-(5, 'BR000001', 1, 20000, '::1', '2020-08-31 16:54:52');
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_ongkir`
+-- Table structure for table `tbl_ongkir`
 --
 
 CREATE TABLE `tbl_ongkir` (
@@ -422,7 +433,7 @@ CREATE TABLE `tbl_ongkir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_ongkir`
+-- Dumping data for table `tbl_ongkir`
 --
 
 INSERT INTO `tbl_ongkir` (`ongkir_id`, `ongkir_lokasi`, `ongkir_harga`) VALUES
@@ -436,7 +447,7 @@ INSERT INTO `tbl_ongkir` (`ongkir_id`, `ongkir_lokasi`, `ongkir_harga`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_role`
+-- Table structure for table `tbl_role`
 --
 
 CREATE TABLE `tbl_role` (
@@ -445,7 +456,7 @@ CREATE TABLE `tbl_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_role`
+-- Dumping data for table `tbl_role`
 --
 
 INSERT INTO `tbl_role` (`role_id`, `role_nama`) VALUES
@@ -457,7 +468,7 @@ INSERT INTO `tbl_role` (`role_id`, `role_nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_satuan`
+-- Table structure for table `tbl_satuan`
 --
 
 CREATE TABLE `tbl_satuan` (
@@ -466,7 +477,7 @@ CREATE TABLE `tbl_satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_satuan`
+-- Dumping data for table `tbl_satuan`
 --
 
 INSERT INTO `tbl_satuan` (`satuan_id`, `satuan_nama`) VALUES
@@ -479,7 +490,7 @@ INSERT INTO `tbl_satuan` (`satuan_id`, `satuan_nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_suplier`
+-- Table structure for table `tbl_suplier`
 --
 
 CREATE TABLE `tbl_suplier` (
@@ -490,7 +501,7 @@ CREATE TABLE `tbl_suplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_suplier`
+-- Dumping data for table `tbl_suplier`
 --
 
 INSERT INTO `tbl_suplier` (`suplier_id`, `suplier_nama`, `suplier_alamat`, `suplier_notelp`) VALUES
@@ -500,7 +511,7 @@ INSERT INTO `tbl_suplier` (`suplier_id`, `suplier_nama`, `suplier_alamat`, `supl
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_user`
+-- Table structure for table `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
@@ -516,21 +527,42 @@ CREATE TABLE `tbl_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tbl_user`
+-- Dumping data for table `tbl_user`
 --
 
 INSERT INTO `tbl_user` (`user_id`, `user_nama`, `user_alamat`, `ongkir_id`, `user_nohp`, `user_email`, `user_username`, `user_password`, `user_role_id`) VALUES
 (1, 'Mochamad Natsir', 'Jl. Raya Cilegon No.Km. 5, Taman, Drangong, Kec. Taktakan, Kota Serang, Banten 42162', 0, '', '', 'superadmin', '$2y$10$afqzZuBiOvmCHJDjCE8Tc.oH2d7vZz9G1pHHcUdUuNRAjA/uyEYp6', 1),
 (3, 'Handoko Adji Pangestu', 'Jl. Raya Jakarta No.Km. 5, Taman, Drangong, Kec. Cipocok Jaya, Kota Serang, Banten 42122', 0, '', '', 'admin', '$2y$10$PssETE4hc5Njym9wudpTMu1F9kBe.kdkKXxLqKsTRLvdTmxITlXSi', 2),
 (11, 'zxc', 'zxc', 0, '', '', 'zxc', '9bb319215b59ada160c2d56d14ddd677', 4),
-(16, 'Bagus Puji Rahardjo', 'Jl. Perjuangan II RT.01 RW.15 Kel.Drangong, Kec.Taktakan, Serang, Banten (Kingkost Baladika Kamar A 02)', 5, '089507456916', 'bagus.rahardjo6@gmail.com', 'bagus', '$2y$10$uyy4i6trgFvVfLv47Rp5quxhc6q.vCO81Et3ZB0KZGEfCTYf1eafK', 4);
+(16, 'Bagus Puji Rahardjo', 'Jl. Perjuangan II RT.01 RW.15 Kel.Drangong, Kec.Taktakan, Serang, Banten (Kingkost Baladika Kamar A 02)', 5, '089507456916', 'bagus.rahardjo6@gmail.com', 'bagus', '$2y$10$uyy4i6trgFvVfLv47Rp5quxhc6q.vCO81Et3ZB0KZGEfCTYf1eafK', 4),
+(17, 'Handoko Adji Pangestu', 'test', 1, '089650574913', 'handokoadjipangestu@gmail.com', 'handoko', '$2y$10$qGdcqEniLEBP.DWVJC.CGOptRJheKVgj55Ird8WaZWVCJkH7DI5CO', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_waktu`
+--
+
+CREATE TABLE `tbl_waktu` (
+  `waktu_id` int(11) NOT NULL,
+  `waktu_nama` varchar(20) NOT NULL,
+  `waktu_awal` varchar(20) NOT NULL,
+  `waktu_akhir` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_waktu`
+--
+
+INSERT INTO `tbl_waktu` (`waktu_id`, `waktu_nama`, `waktu_awal`, `waktu_akhir`) VALUES
+(2, 'Siang', '03:33', '22:22');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `tbl_barang`
+-- Indexes for table `tbl_barang`
 --
 ALTER TABLE `tbl_barang`
   ADD PRIMARY KEY (`barang_id`),
@@ -539,38 +571,38 @@ ALTER TABLE `tbl_barang`
   ADD KEY `tbl_barang_ibfk_3` (`barang_satuan_id`);
 
 --
--- Indeks untuk tabel `tbl_beli`
+-- Indexes for table `tbl_beli`
 --
 ALTER TABLE `tbl_beli`
   ADD PRIMARY KEY (`beli_nofak`),
   ADD KEY `jual_user_id` (`beli_user_id`);
 
 --
--- Indeks untuk tabel `tbl_cart_beli`
+-- Indexes for table `tbl_cart_beli`
 --
 ALTER TABLE `tbl_cart_beli`
   ADD PRIMARY KEY (`c_beli_id`);
 
 --
--- Indeks untuk tabel `tbl_cart_jual`
+-- Indexes for table `tbl_cart_jual`
 --
 ALTER TABLE `tbl_cart_jual`
   ADD PRIMARY KEY (`c_jual_id`);
 
 --
--- Indeks untuk tabel `tbl_checkout`
+-- Indexes for table `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tbl_customer`
+-- Indexes for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indeks untuk tabel `tbl_detail_beli`
+-- Indexes for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
   ADD PRIMARY KEY (`d_beli_id`),
@@ -578,7 +610,7 @@ ALTER TABLE `tbl_detail_beli`
   ADD KEY `d_jual_nofak` (`d_beli_nofak`);
 
 --
--- Indeks untuk tabel `tbl_detail_jual`
+-- Indexes for table `tbl_detail_jual`
 --
 ALTER TABLE `tbl_detail_jual`
   ADD PRIMARY KEY (`d_jual_id`),
@@ -586,167 +618,179 @@ ALTER TABLE `tbl_detail_jual`
   ADD KEY `d_jual_nofak` (`d_jual_nofak`);
 
 --
--- Indeks untuk tabel `tbl_diskon`
+-- Indexes for table `tbl_diskon`
 --
 ALTER TABLE `tbl_diskon`
   ADD PRIMARY KEY (`diskon_id`);
 
 --
--- Indeks untuk tabel `tbl_invoice`
+-- Indexes for table `tbl_invoice`
 --
 ALTER TABLE `tbl_invoice`
   ADD PRIMARY KEY (`no_invoice`);
 
 --
--- Indeks untuk tabel `tbl_jual`
+-- Indexes for table `tbl_jual`
 --
 ALTER TABLE `tbl_jual`
   ADD PRIMARY KEY (`jual_nofak`),
   ADD KEY `jual_user_id` (`jual_user_id`);
 
 --
--- Indeks untuk tabel `tbl_kategori`
+-- Indexes for table `tbl_kategori`
 --
 ALTER TABLE `tbl_kategori`
   ADD PRIMARY KEY (`kategori_id`);
 
 --
--- Indeks untuk tabel `tbl_keranjang`
+-- Indexes for table `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tbl_ongkir`
+-- Indexes for table `tbl_ongkir`
 --
 ALTER TABLE `tbl_ongkir`
   ADD PRIMARY KEY (`ongkir_id`);
 
 --
--- Indeks untuk tabel `tbl_role`
+-- Indexes for table `tbl_role`
 --
 ALTER TABLE `tbl_role`
   ADD PRIMARY KEY (`role_id`);
 
 --
--- Indeks untuk tabel `tbl_satuan`
+-- Indexes for table `tbl_satuan`
 --
 ALTER TABLE `tbl_satuan`
   ADD PRIMARY KEY (`satuan_id`);
 
 --
--- Indeks untuk tabel `tbl_suplier`
+-- Indexes for table `tbl_suplier`
 --
 ALTER TABLE `tbl_suplier`
   ADD PRIMARY KEY (`suplier_id`);
 
 --
--- Indeks untuk tabel `tbl_user`
+-- Indexes for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- Indexes for table `tbl_waktu`
+--
+ALTER TABLE `tbl_waktu`
+  ADD PRIMARY KEY (`waktu_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_checkout`
+-- AUTO_INCREMENT for table `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_customer`
+-- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
   MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_detail_beli`
+-- AUTO_INCREMENT for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
   MODIFY `d_beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_detail_jual`
+-- AUTO_INCREMENT for table `tbl_detail_jual`
 --
 ALTER TABLE `tbl_detail_jual`
   MODIFY `d_jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_diskon`
+-- AUTO_INCREMENT for table `tbl_diskon`
 --
 ALTER TABLE `tbl_diskon`
   MODIFY `diskon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_kategori`
+-- AUTO_INCREMENT for table `tbl_kategori`
 --
 ALTER TABLE `tbl_kategori`
   MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_keranjang`
+-- AUTO_INCREMENT for table `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_ongkir`
+-- AUTO_INCREMENT for table `tbl_ongkir`
 --
 ALTER TABLE `tbl_ongkir`
   MODIFY `ongkir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_role`
+-- AUTO_INCREMENT for table `tbl_role`
 --
 ALTER TABLE `tbl_role`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_satuan`
+-- AUTO_INCREMENT for table `tbl_satuan`
 --
 ALTER TABLE `tbl_satuan`
   MODIFY `satuan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_suplier`
+-- AUTO_INCREMENT for table `tbl_suplier`
 --
 ALTER TABLE `tbl_suplier`
   MODIFY `suplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_user`
+-- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- AUTO_INCREMENT for table `tbl_waktu`
+--
+ALTER TABLE `tbl_waktu`
+  MODIFY `waktu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `tbl_barang`
+-- Constraints for table `tbl_barang`
 --
 ALTER TABLE `tbl_barang`
   ADD CONSTRAINT `tbl_barang_ibfk_2` FOREIGN KEY (`barang_kategori_id`) REFERENCES `tbl_kategori` (`kategori_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tbl_barang_ibfk_3` FOREIGN KEY (`barang_satuan_id`) REFERENCES `tbl_satuan` (`satuan_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tbl_detail_beli`
+-- Constraints for table `tbl_detail_beli`
 --
 ALTER TABLE `tbl_detail_beli`
   ADD CONSTRAINT `tbl_detail_beli_ibfk_1` FOREIGN KEY (`d_beli_nofak`) REFERENCES `tbl_beli` (`beli_nofak`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tbl_detail_jual`
+-- Constraints for table `tbl_detail_jual`
 --
 ALTER TABLE `tbl_detail_jual`
   ADD CONSTRAINT `tbl_detail_jual_ibfk_2` FOREIGN KEY (`d_jual_nofak`) REFERENCES `tbl_jual` (`jual_nofak`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tbl_jual`
+-- Constraints for table `tbl_jual`
 --
 ALTER TABLE `tbl_jual`
   ADD CONSTRAINT `tbl_jual_ibfk_1` FOREIGN KEY (`jual_user_id`) REFERENCES `tbl_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
