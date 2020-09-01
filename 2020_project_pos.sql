@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Agu 2020 pada 04.23
+-- Waktu pembuatan: 31 Agu 2020 pada 12.30
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -137,6 +137,14 @@ CREATE TABLE `tbl_checkout` (
   `kuantitas` int(7) NOT NULL,
   `subtotal` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_checkout`
+--
+
+INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
+(1, 'SM000001', 'BR000001', 1, 20000),
+(2, 'SM000001', 'BR000002', 1, 20000);
 
 -- --------------------------------------------------------
 
@@ -285,6 +293,13 @@ CREATE TABLE `tbl_invoice` (
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tbl_invoice`
+--
+
+INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `jenis_kirim`, `jenis_bayar`, `total_bayar`, `dibayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`) VALUES
+('SM000001', 16, 1, 1, 50000, 0, '', 2, '2020-08-30 10:19:44');
+
 -- --------------------------------------------------------
 
 --
@@ -384,6 +399,15 @@ CREATE TABLE `tbl_keranjang` (
   `ip_address` varchar(10) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_keranjang`
+--
+
+INSERT INTO `tbl_keranjang` (`id`, `barang_id`, `total_kuantitas`, `total_harga`, `ip_address`, `waktu_ditambahkan`) VALUES
+(3, 'BR000001', 1, 20000, '::1', '2020-08-31 16:35:43'),
+(4, 'BR000001', 1, 20000, '::1', '2020-08-31 16:50:44'),
+(5, 'BR000001', 1, 20000, '::1', '2020-08-31 16:54:52');
 
 -- --------------------------------------------------------
 
@@ -630,7 +654,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT untuk tabel `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_customer`
@@ -666,7 +690,7 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`
