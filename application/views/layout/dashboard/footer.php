@@ -81,6 +81,10 @@
     <?php $this->load->view('layout/script/ongkir'); ?>
 <?php endif; ?>
 
+<?php if (isset($waktu)) : ?>
+    <?php $this->load->view('layout/script/waktu'); ?>
+<?php endif; ?>
+
 <?php if (isset($penjualan)) : ?>
     <?php $this->load->view('layout/script/penjualan'); ?>
 <?php endif; ?>

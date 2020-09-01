@@ -88,6 +88,16 @@
                 </div>
             </a>
         </div>
+        <div class="col-md-3">
+            <a href="<?= site_url(); ?>waktu">
+                <div class="card p-4 blue shadows-box text-white">
+                    <div class="text-center">
+                        <i class="fas fa-clock" aria-hidden="true" style="font-size:4em"></i>
+                        <h5 class="mt-3">Waktu</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 
     <div class="row mt-5">

@@ -119,20 +119,22 @@ class BarangModel extends CI_Model
     }
 
     // Mengambil data Keranjang
-    function get_keranjang() {
-        function get_client_ip() {
+    function get_keranjang()
+    {
+        function get_client_ip()
+        {
             $ipaddress = '';
             if (isset($_SERVER['HTTP_CLIENT_IP']))
                 $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
                 $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            else if (isset($_SERVER['HTTP_X_FORWARDED']))
                 $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-            else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
                 $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_FORWARDED']))
+            else if (isset($_SERVER['HTTP_FORWARDED']))
                 $ipaddress = $_SERVER['HTTP_FORWARDED'];
-            else if(isset($_SERVER['REMOTE_ADDR']))
+            else if (isset($_SERVER['REMOTE_ADDR']))
                 $ipaddress = $_SERVER['REMOTE_ADDR'];
             else
                 $ipaddress = 'UNKNOWN';
@@ -143,33 +145,36 @@ class BarangModel extends CI_Model
         $this->db->select("tbl_barang.barang_nama,tbl_keranjang.total_kuantitas,tbl_keranjang.total_harga,tbl_keranjang.id");
         $this->db->from("tbl_keranjang");
         $this->db->where(array("ip_address" => $ip_address));
-        $this->db->join("tbl_barang","tbl_barang.barang_id = tbl_keranjang.barang_id");
+        $this->db->join("tbl_barang", "tbl_barang.barang_id = tbl_keranjang.barang_id");
 
         return $this->db->get();
     }
 
     // Mengambil total harga Keranjang
-    function total_harga_cart() {
+    function total_harga_cart()
+    {
         $ip_address = get_client_ip();
 
         return $this->db->query("SELECT SUM(`total_harga`) AS total_harga FROM `tbl_keranjang` WHERE `ip_address` = '$ip_address'");
     }
 
     // Menghapus barang di Keranjang
-    function delete_cart($id) {
-        function get_client_ip() {
+    function delete_cart($id)
+    {
+        function get_client_ip()
+        {
             $ipaddress = '';
             if (isset($_SERVER['HTTP_CLIENT_IP']))
                 $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
                 $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            else if (isset($_SERVER['HTTP_X_FORWARDED']))
                 $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-            else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
                 $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_FORWARDED']))
+            else if (isset($_SERVER['HTTP_FORWARDED']))
                 $ipaddress = $_SERVER['HTTP_FORWARDED'];
-            else if(isset($_SERVER['REMOTE_ADDR']))
+            else if (isset($_SERVER['REMOTE_ADDR']))
                 $ipaddress = $_SERVER['REMOTE_ADDR'];
             else
                 $ipaddress = 'UNKNOWN';
@@ -177,35 +182,36 @@ class BarangModel extends CI_Model
         }
         $ip_address = get_client_ip();
 
-        if($this->db->delete("tbl_keranjang", array("id" => $id, "ip_address" => $ip_address))) {
+        if ($this->db->delete("tbl_keranjang", array("id" => $id, "ip_address" => $ip_address))) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    function delete_cart_date() {
+    function delete_cart_date()
+    {
         date_default_timezone_set("Asia/Jakarta");
 
-        if($this->db->query("DELETE FROM tbl_keranjang WHERE DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1")) {
+        if ($this->db->query("DELETE FROM tbl_keranjang WHERE DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1")) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    function get_user() {
+    function get_user()
+    {
         $this->db->select("tbl_user.user_nama,tbl_user.user_alamat,tbl_user.user_nohp,tbl_user.user_email,tbl_ongkir.ongkir_lokasi,tbl_ongkir.ongkir_harga");
         $this->db->from("tbl_user");
         $this->db->where(array("user_id" => $this->session->userdata("user_id")));
-        $this->db->join("tbl_ongkir","tbl_ongkir.ongkir_id = tbl_user.ongkir_id");
+        $this->db->join("tbl_ongkir", "tbl_ongkir.ongkir_id = tbl_user.ongkir_id");
 
         return $this->db->get();
     }
 
-    function get_invoice() {
+    function get_invoice()
+    {
         $this->db->select("*");
         $this->db->from("tbl_invoice");
         $this->db->where(array("user_id" => $this->session->userdata("user_id")));
@@ -214,52 +220,55 @@ class BarangModel extends CI_Model
         return $this->db->get();
     }
 
-    function get_detail_invoice($no_invoice) {
-        return $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice));
+    function get_detail_invoice($no_invoice)
+    {
+        return $this->db->get_where("tbl_invoice", array("no_invoice" => $no_invoice));
     }
 
-    function get_checkout($no_invoice) {
+    function get_checkout($no_invoice)
+    {
         $this->db->select("tbl_checkout.barang_id,tbl_checkout.kuantitas,tbl_checkout.subtotal,tbl_barang.barang_nama,tbl_barang.barang_harjul");
         $this->db->from("tbl_checkout");
         $this->db->where(array("no_invoice" => $no_invoice));
-        $this->db->join("tbl_barang","tbl_barang.barang_id = tbl_checkout.barang_id");
+        $this->db->join("tbl_barang", "tbl_barang.barang_id = tbl_checkout.barang_id");
 
         return $this->db->get();
     }
 
-    function upload_trf() {
-        $no_invoice = $this->input->get("no_invoice",true);
+    function upload_trf()
+    {
+        $no_invoice = $this->input->get("no_invoice", true);
 
         $config['upload_path'] = './assets/source/images/bukti_transfer/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = 500;
 
-        $this->load->library("upload",$config);
+        $this->load->library("upload", $config);
 
-        if(!$this->upload->do_upload("bukti_trf")) {
+        if (!$this->upload->do_upload("bukti_trf")) {
             $this->session->set_flashdata('message', $this->_alert($this->upload->display_errors(), 'danger'));
 
-            redirect(site_url('page/upload_trf?no_invoice='.$no_invoice));
-        }
-        else {
+            redirect(site_url('page/upload_trf?no_invoice=' . $no_invoice));
+        } else {
             $bukti_transfer = $this->upload->data("file_name");
 
             $data = array(
                 "bukti_transfer" => $bukti_transfer
             );
 
-            if($this->db->update("tbl_invoice",$data,array("no_invoice" => $no_invoice))) {
+            if ($this->db->update("tbl_invoice", $data, array("no_invoice" => $no_invoice))) {
                 redirect(site_url('page/profile?upload_trf'));
             }
         }
     }
 
-    function get_bukti_trf($no_invoice) {
+    function get_bukti_trf($no_invoice)
+    {
         $get_invoice = $this->db->get_where("tbl_invoice", array("no_invoice" => $no_invoice))->row();
 
         echo '
             <div class="modal-header">
-                <h4 class="modal-title">Bukti Transfer No. Invoice '.$no_invoice.'</h4>
+                <h4 class="modal-title">Bukti Transfer No. Invoice ' . $no_invoice . '</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -268,7 +277,7 @@ class BarangModel extends CI_Model
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <img src="'.base_url().'assets/source/images/bukti_transfer/'.$get_invoice->bukti_transfer.'" alt="Bukti Transfer" class="img-fluid img-thumbnail">
+                            <img src="' . base_url() . 'assets/source/images/bukti_transfer/' . $get_invoice->bukti_transfer . '" alt="Bukti Transfer" class="img-fluid img-thumbnail">
                         </div>
                     </div>
                 </div>
@@ -276,62 +285,60 @@ class BarangModel extends CI_Model
         ';
     }
 
-    function cancel_invoice() {
+    function cancel_invoice()
+    {
         date_default_timezone_set("Asia/Jakarta");
-        
+
         $get1 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 2 AND status = 1 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
-        
-        if($get1->num_rows() > 0) {
-            foreach($get1->result() as $g1) {
+
+        if ($get1->num_rows() > 0) {
+            foreach ($get1->result() as $g1) {
                 $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g1->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 2 AND status = 1 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
             }
 
             $get2 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-            if($get2->num_rows() > 0) {
-                foreach($get2->result() as $g2) {
+            if ($get2->num_rows() > 0) {
+                foreach ($get2->result() as $g2) {
                     $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g2->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                 }
 
                 $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-                if($get3->num_rows() > 0) {
-                    foreach($get3->result() as $g3) {
+                if ($get3->num_rows() > 0) {
+                    foreach ($get3->result() as $g3) {
                         $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                     }
                 }
-            }
-            else {
+            } else {
                 $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-                if($get3->num_rows() > 0) {
-                    foreach($get3->result() as $g3) {
+                if ($get3->num_rows() > 0) {
+                    foreach ($get3->result() as $g3) {
                         $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                     }
                 }
             }
-        }
-        else {
+        } else {
             $get2 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-            if($get2->num_rows() > 0) {
-                foreach($get2->result() as $g2) {
+            if ($get2->num_rows() > 0) {
+                foreach ($get2->result() as $g2) {
                     $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g2->no_invoice' AND jenis_kirim = 2 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                 }
 
                 $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-                if($get3->num_rows() > 0) {
-                    foreach($get3->result() as $g3) {
+                if ($get3->num_rows() > 0) {
+                    foreach ($get3->result() as $g3) {
                         $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                     }
                 }
-            }
-            else {
+            } else {
                 $get3 = $this->db->query("SELECT * FROM tbl_invoice WHERE jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND status = 0 AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
 
-                if($get3->num_rows() > 0) {
-                    foreach($get3->result() as $g3) {
+                if ($get3->num_rows() > 0) {
+                    foreach ($get3->result() as $g3) {
                         $this->db->query("UPDATE tbl_invoice SET status = 2 WHERE no_invoice = '$g3->no_invoice' AND jenis_kirim = 1 AND jenis_bayar = 1 AND bukti_transfer = '' AND DATEDIFF(CURDATE(), waktu_ditambahkan) >= 1");
                     }
                 }
