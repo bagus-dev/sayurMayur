@@ -15,15 +15,40 @@ class Page extends CI_Controller
     public function index()
     {
         $data['title'] = 'Beranda';
-        $data['barangs'] = $this->barang->getBarang();
+        $data['barangs_sayur'] = $this->barang->getBarangSayur();
         $data["keranjang"] = $this->barang->get_keranjang();
         $data["total_harga_keranjang"] = $this->barang->total_harga_cart();
+
+        $data['page'] = true;
+
         $this->barang->delete_cart_date();
         $this->barang->cancel_invoice();
 
         $this->load->view('layout/page/header', $data);
         $this->load->view('customer/page/index');
         $this->load->view('layout/dashboard/footer');
+    }
+
+    function bumbu() {
+        $data['title'] = 'Beranda';
+        $data['barangs_bumbu'] = $this->barang->getBarangBumbu();
+        $data["keranjang"] = $this->barang->get_keranjang();
+        $data["total_harga_keranjang"] = $this->barang->total_harga_cart();
+
+        $data['page'] = true;
+
+        $this->barang->delete_cart_date();
+        $this->barang->cancel_invoice();
+
+        $this->load->view('layout/page/header',$data);
+        $this->load->view('customer/page/bumbu');
+        $this->load->view('layout/dashboard/footer');
+    }
+
+    function update_stock() {
+        $barang_kategori_id = $this->input->post('barang_kategori_id',true);
+
+        $this->barang->update_stock($barang_kategori_id);
     }
 
     function insert_cart() {
@@ -83,42 +108,49 @@ class Page extends CI_Controller
 
         $get_barang_id = $this->db->get_where("tbl_keranjang", array("id" => $id))->row();
         $cek_harga = $this->db->get_where("tbl_barang", array("barang_id" => $get_barang_id->barang_id))->row();
-        $fix_harga = $cek_harga->barang_harjul * $total_kuantitas;
 
-        $data = array(
-            "total_kuantitas" => $total_kuantitas,
-            "total_harga" => $fix_harga
-        );
+        if($total_kuantitas <= $cek_harga->barang_stok) {
+            $fix_harga = $cek_harga->barang_harjul * $total_kuantitas;
 
-        if($this->db->update("tbl_keranjang", $data, array("id" => $id))) {
-            function get_client_ip() {
-                $ipaddress = '';
-                if (isset($_SERVER['HTTP_CLIENT_IP']))
-                    $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-                else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-                    $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                else if(isset($_SERVER['HTTP_X_FORWARDED']))
-                    $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-                else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-                    $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-                else if(isset($_SERVER['HTTP_FORWARDED']))
-                    $ipaddress = $_SERVER['HTTP_FORWARDED'];
-                else if(isset($_SERVER['REMOTE_ADDR']))
-                    $ipaddress = $_SERVER['REMOTE_ADDR'];
-                else
-                    $ipaddress = 'UNKNOWN';
-                return $ipaddress;
+            $data = array(
+                "total_kuantitas" => $total_kuantitas,
+                "total_harga" => $fix_harga
+            );
+
+            if($this->db->update("tbl_keranjang", $data, array("id" => $id))) {
+                function get_client_ip() {
+                    $ipaddress = '';
+                    if (isset($_SERVER['HTTP_CLIENT_IP']))
+                        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+                    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+                        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+                        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+                    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+                        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+                    else if(isset($_SERVER['HTTP_FORWARDED']))
+                        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+                    else if(isset($_SERVER['REMOTE_ADDR']))
+                        $ipaddress = $_SERVER['REMOTE_ADDR'];
+                    else
+                        $ipaddress = 'UNKNOWN';
+                    return $ipaddress;
+                }
+                $ip_address = get_client_ip();
+
+                $total_harga = $this->db->query("SELECT SUM(`total_harga`) AS total_harga FROM `tbl_keranjang` WHERE `ip_address` = '$ip_address'")->row();
+                
+                $response["status"] = 1;
+                $response["subtotal"] = $fix_harga;
+                $response["total_harga"] = $total_harga->total_harga;
             }
-            $ip_address = get_client_ip();
-
-            $total_harga = $this->db->query("SELECT SUM(`total_harga`) AS total_harga FROM `tbl_keranjang` WHERE `ip_address` = '$ip_address'")->row();
-            
-            $response["status"] = 1;
-            $response["subtotal"] = $fix_harga;
-            $response["total_harga"] = $total_harga->total_harga;
+            else {
+                $response["status"] = 0;
+            }
         }
         else {
-            $response["status"] = 0;
+            $response["status"] = 2;
+            $response["stok"] = $cek_harga->barang_stok;
         }
 
         echo json_encode($response);

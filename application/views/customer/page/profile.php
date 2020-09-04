@@ -18,14 +18,6 @@
                                     <b class="border-bottom">Nama Lengkap:</b>
                                     <br>
                                     <?= $u->user_nama; ?>
-                                    <br><br>
-                                    <b class="border-bottom">Alamat Lengkap:</b>
-                                    <br>
-                                    <?= $u->user_alamat; ?>
-                                    <br><br>
-                                    <b class="border-bottom">Kecamatan Tempat Tinggal:</b>
-                                    <br>
-                                    <?= $u->ongkir_lokasi; ?>
                                 </div>
                                 <div class="col-6">
                                     <b class="border-bottom">Nomor HP:</b>

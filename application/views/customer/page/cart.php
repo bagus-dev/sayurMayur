@@ -12,7 +12,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Barang</th>
-                                <th scope="col">Unit</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Subtotal</th>
                                 <th scope="col">Opsi</th>
                             </tr>

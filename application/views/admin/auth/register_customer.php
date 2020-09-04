@@ -1,4 +1,3 @@
-<br><br><br><br>
 <!-- Login-Box -->
 <a href="<?= base_url(); ?>">
     <h1 class="text-dark mt-5" align="center">Sayur<small class="text-danger">Mayur</small></h1>
@@ -25,35 +24,6 @@
                     </div>
                 </div>
                 <?= form_error('nama', '<small class="text-danger">', '</small>'); ?>
-
-                <!-- Alamat Lengkap -->
-                <div class="input-group mt-3">
-                    <textarea name="alamat" rows="3" class="form-control b-left" placeholder="Alamat Lengkap"></textarea>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-map-marked-alt"></span>
-                        </div>
-                    </div>
-                </div>
-                <?= form_error('alamat', '<small class="text-danger">', '</small>'); ?>
-
-                <!-- Kecamatan Tempat Tinggal -->
-                <div class="input-group mt-3">
-                    <select name="kecamatan" class="custom-select b-left">
-                        <option value="0">Kecamatan Tempat Tinggal</option>
-                        <?php
-                            foreach($ongkir->result() as $o) {
-                        ?>
-                        <option value="<?= $o->ongkir_id; ?>"><?= $o->ongkir_lokasi; ?></option>
-                        <?php } ?>
-                    </select>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-home"></span>
-                        </div>
-                    </div>
-                </div>
-                <?= form_error('kecamatan', '<small class="text-danger">', '</small>'); ?>
 
                 <!-- No HP -->
                 <div class="input-group mt-3">

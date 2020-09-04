@@ -1,16 +1,63 @@
 html,body {
     overflow-x: hidden;
 }
+.overlay-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+/* index */
+
+.btn-kategori-active {
+    border: 2px solid #17a2b8;
+}
+.btn-kategori-active:focus {
+    background: #ffc107;
+    border: 2px solid #17a2b8;
+}
+.select-kategori {
+    position: absolute;
+    left: 7px;
+    top: 0px;
+    font-size: 7pt;
+}
+@media(max-width: 767px) {
+    .title-kategori {
+        font-size: 14pt;
+    }
+    .select-kategori {
+        left: 8px;
+    }
+}
 
 /* keranjang kanan */
 
 .cart-right {
-    position: absolute;
+    position: relative;
 }
-
+@media(min-width: 768px) {
+    .cart-right {
+        max-height: 419px;
+        overflow-y: auto;
+    }
+    .fix-cart {
+        max-height: 419px;
+        overflow-y: auto;
+    }
+}
 .fix-cart {
     position: fixed;
     top: 150px;
+}
+.qty_input:focus {
+    background-color: #05deff;
+    color: white;
 }
 
 /* style sweet alert */

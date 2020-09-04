@@ -38,7 +38,6 @@
 <body style="background-image: url('<?= base_url(); ?>assets/pos/img/background.png');">
     <nav class="navbar navbar-expand-lg navbar fixed-top navbar-light bg-light shadows">
         <div class="container">
-
             <a class="navbar-brand" href="<?= site_url(); ?>"><b>Sayur</b>Mayur</a>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">

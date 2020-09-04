@@ -20,9 +20,151 @@
                         $("#cart-right").addClass("cart-right");
                     }
                 });
+
+                $("#kat_1").removeClass("btn-xs");
+                $("#kat_2").removeClass("btn-xs");
+                $(".title-kategori").addClass("pb-3");
+                $(".title-kategori").removeClass("pb-4");
+            }
+            else {
+                $("#kat_1").addClass("btn-sm");
+                $("#kat_2").addClass("btn-sm");
+                $(".title-kategori").removeClass("pb-3");
+                $(".title-kategori").addClass("pb-4");
             }
         }
     })();
+
+    $("#kat_1").click(function() {
+        window.open('<?= base_url(); ?>','_self');
+    });
+
+    $("#kat_2").click(function() {
+        window.open('<?= base_url()."kategori/bumbu"; ?>','_self');
+    });
+
+    function qtyInput(e) {
+        const key = e.key;
+        var value = e.target.value;
+        var id = e.target.dataset.barang_id;
+        var no = e.target.dataset.no;
+        var stok = $("#stok-" + no).text();
+
+        if(key !== "Backspace" && key !== "Delete") {
+            if((/^[0-9]+$/.test(value.trim()))) {
+                if(value >= 1) {
+                    if(value > parseInt(stok)) {
+                        e.target.value = stok;
+                    }
+
+                    $("#btn-simpan-" + id).removeAttr("disabled");
+                }
+                else {
+                    $("#btn-simpan-" + id).attr("disabled","disabled");
+                }
+            }
+        }
+        else if(key == "Backspace" || key == "Delete") {
+            if(value.trim() == "" || value.trim() < 1) {
+                $("#btn-simpan-" + id).attr("disabled","disabled");
+            }
+        }
+    }
+
+    function qtyInput2(e) {
+        var value = parseInt(e.target.value);
+        var id = e.target.dataset.barang_id;
+        var no = e.target.dataset.no;
+        var stok = $("#stok-" + no).text();
+
+        if(value >= 1) {
+            if(value > parseInt(stok)) {
+                e.target.value = stok;
+            }
+
+            $("#btn-simpan-" + id).removeAttr("disabled");
+        }
+        else {
+            $("#btn-simpan-" + id).attr("disabled","disabled");
+        }
+    }
+
+    function simpan_barang(e) {
+        var id = e.target.dataset.barang_id;
+        var barang_nama = e.target.dataset.barang_nama;
+        var barang_harjul = e.target.dataset.barang_harjul;
+        var kuantitas = $("#qty_input_" + id).val();
+        var total_kuantitas = parseInt(kuantitas);
+        var total_harga = parseInt(barang_harjul) * total_kuantitas;
+
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url().'page/insert_cart'; ?>",
+            data: {barang_id: id, total_kuantitas: total_kuantitas, total_harga: total_harga},
+            dataType: "json",
+            beforeSend: function() {
+                $("#loading-section2").removeAttr("style");
+            },
+            success: function(response) {
+                if(response.status == 1) {
+                    var cek = $("#barang_cart_right").find('.text-center');
+                    if(cek.length > 0) {
+                        $("#barang_cart_right").html(
+                            $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
+                                $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
+                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
+                                $("<td>").html('<span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                            )
+                        );
+
+                        $("#btn-cekout").removeAttr("disabled");
+                    }
+                    else {
+                        $("#barang_cart_right").append(
+                            $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
+                                $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
+                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
+                                $("<td>").html('<span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                            )
+                        );
+                    }
+
+                    var harga_cur = document.getElementById("total_harga_cart_right").innerHTML;
+                    var total_harga_cur = parseInt(harga_cur.replace(/,/g, ''));
+                    var fix_harga_cur = total_harga_cur + total_harga;
+                    $("#total_harga_cart_right").text(numberWithCommas(fix_harga_cur));
+                    $("#badge_cart").text(response.num_rows);
+                    $("#qty_input_" + id).val("");
+                    $("#btn-simpan-" + id).attr("disabled","disabled");
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    })
+
+                    Toast.fire({
+                        icon: "success",
+                        title: "Barang Berhasil Ditambah ke Keranjang"
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Ada kesalahan pada server...'
+                    });
+                }
+            },
+            complete: function() {
+                $("#loading-section2").attr("style","display:none");
+            }
+        })
+    }
 
     function getPageList(totalPages, page, maxLength) {
         if (maxLength < 5) throw "maxLength must be at least 5";
@@ -161,6 +303,15 @@
                                 subtotal.innerHTML = numberWithCommas(response.subtotal);
                                 $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                             }
+                            else if(response.status = 2) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Jumlah Barang Melebihi Stok...'
+                                });
+
+                                e.target.value = response.stok;
+                            }
                             else {
                                 Swal.fire({
                                     icon: 'error',
@@ -259,6 +410,15 @@
                         subtotal.innerHTML = numberWithCommas(response.subtotal);
                         $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                     }
+                    else if(response.status = 2) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Jumlah Barang Melebihi Stok...'
+                        });
+
+                        e.target.value = response.stok;
+                    }
                     else {
                         Swal.fire({
                             icon: 'error',
@@ -336,170 +496,6 @@
         }
     }
 
-    function detail_barang(e) {
-        var count = $("#barang_cart_right tr").length;
-        
-        if(count < 4) {
-            var barang_id = e.target.getAttribute("barang_id");
-            var barang_nama = e.target.getAttribute("barang_nama");
-            var barang_harjul = e.target.getAttribute("barang_harjul");
-            var barang_gambar = e.target.getAttribute("barang_gambar");
-
-            Swal.fire({
-                imageUrl: '<?php echo base_url()."assets/source/images/barang/"; ?>' + barang_gambar,
-                imageWidth: 500,
-                imageHeight: 250,
-                imageAlt: barang_nama,
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText: '<i class="fa fa-plus"></i> Total Harga: Rp. <span id="total_harga_barang">' + numberWithCommas(barang_harjul) + '</span>',
-                cancelButtonText: 'Batal',
-                cancelButtonColor: '#d33',
-                html:
-                    '<div class="row">' +
-                    '   <div class="col-6">' +
-                    '       <b class="nama_barang_swal">' + barang_nama + '</b>' +
-                    '   </div>' +
-                    '   <div class="col-6">' +
-                    '       <b class="nama_barang_swal">Rp. <span id="harga_barang_swal">' + numberWithCommas(barang_harjul) + '</span></b>' +
-                    '   </div>' +
-                    '   <div class="col-4 mt-5">' +
-                    '       <button type="button" class="btn btn-sm border float-right" id="minus_barang"><i class="fa fa-minus"></i></button>' +
-                    '   </div>' +
-                    '   <div class="col-4 mt-5">' +
-                    '       <b class="nama_barang_swal"><span id="total_kuantitas_barang">1</span></b>' +
-                    '   </div>' +
-                    '   <div class="col-4 mt-5">' +
-                    '       <button type="button" class="btn btn-sm border float-left" id="plus_barang"><i class="fa fa-plus"></i></button>' +
-                    '   </div>' +
-                    '</div>',
-                showLoaderOnConfirm: true,
-                allowOutsideClick: () => !Swal.isLoading(),
-                preConfirm: () => {
-                    var total_kuantitas = parseInt(document.getElementById("total_kuantitas_barang").innerHTML);
-                    var total_harga = parseInt(barang_harjul) * total_kuantitas;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "<?= base_url().'page/insert_cart'; ?>",
-                        data: {barang_id: barang_id, total_kuantitas: total_kuantitas, total_harga: total_harga},
-                        dataType: "json",
-                        success: function(response) {
-                            if(response.status == 1) {
-                                var cek = $("#barang_cart_right").find('.text-center');
-                                if(cek.length > 0) {
-                                    $("#barang_cart_right").html(
-                                        $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
-                                            $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
-                                            $("<td>").html('<input type="number" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                            $("<td>").html('Rp. <span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
-                                        )
-                                    );
-
-                                    $("#btn-cekout").removeAttr("disabled");
-                                }
-                                else {
-                                    $("#barang_cart_right").append(
-                                        $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
-                                            $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
-                                            $("<td>").html('<input type="number" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                            $("<td>").html('Rp. <span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                            $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
-                                        )
-                                    );
-                                }
-
-                                var harga_cur = document.getElementById("total_harga_cart_right").innerHTML;
-                                var total_harga_cur = parseInt(harga_cur.replace(/,/g, ''));
-                                var fix_harga_cur = total_harga_cur + total_harga;
-                                $("#total_harga_cart_right").text(numberWithCommas(fix_harga_cur));
-                                $("#badge_cart").text(response.num_rows);
-
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    timerProgressBar: true
-                                })
-
-                                Toast.fire({
-                                    icon: "success",
-                                    title: "Barang Berhasil Ditambah ke Keranjang"
-                                })
-                            }
-                            else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal',
-                                    text: 'Ada kesalahan pada server...'
-                                });
-                            }
-                        },
-                        error: function (jqXHR, exception) {
-                            var msg = '';
-                            if (jqXHR.status === 0) {
-                                msg = 'Not connect.\n Verify Network.';
-                            } else if (jqXHR.status == 404) {
-                                msg = 'Requested page not found. [404]';
-                            } else if (jqXHR.status == 500) {
-                                msg = 'Internal Server Error [500].';
-                            } else if (exception === 'parsererror') {
-                                msg = 'Requested JSON parse failed.';
-                            } else if (exception === 'timeout') {
-                                msg = 'Time out error.';
-                            } else if (exception === 'abort') {
-                                msg = 'Ajax request aborted.';
-                            } else {
-                                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                            }
-                            console.log(msg);
-                        }
-                    });
-                }
-            });
-
-            $("#minus_barang").click(function() {
-                var total_kuantitas = parseInt(document.getElementById("total_kuantitas_barang").innerHTML);
-                var harga_barang = parseInt(barang_harjul);
-                var cek_kuantitas = total_kuantitas - 1;
-                var total_harga_barang;
-
-                if(cek_kuantitas >= 1) {
-                    total_harga_barang = harga_barang * (total_kuantitas - 1);
-                    var fix_total_harga_barang = numberWithCommas(total_harga_barang);
-                    var fix_total_kuantitas = total_kuantitas - 1;
-
-                    $("#total_kuantitas_barang").text(fix_total_kuantitas);
-                    $("#total_harga_barang").text(fix_total_harga_barang);
-                }
-            });
-
-            $("#plus_barang").click(function() {
-                var total_kuantitas = parseInt(document.getElementById("total_kuantitas_barang").innerHTML);
-                var harga_barang = parseInt(barang_harjul);
-                var total_harga_barang;
-
-                if(total_kuantitas >= 1) {
-                    total_harga_barang = harga_barang * (total_kuantitas + 1);
-                    var fix_total_harga_barang = numberWithCommas(total_harga_barang);
-                    var fix_total_kuantitas = total_kuantitas + 1;
-
-                    $("#total_kuantitas_barang").text(fix_total_kuantitas);
-                    $("#total_harga_barang").text(fix_total_harga_barang);
-                }
-            });
-        }
-        else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Keranjang Sudah Penuh',
-                text: 'Maksimal barang belanja yang ada di keranjang adalah 4 (empat)'
-            });
-        }
-    }
-
     function hapusCart(e) {
         var id = e.target.dataset.id;
         var barang_nama = document.getElementById("nama-" + id);
@@ -570,6 +566,58 @@
 
     $("#btn-cekout").click(function() {
         window.open('<?= base_url()."checkout"; ?>', '_self');
+    });
+</script>
+<?php
+    if($this->uri->segment(2) == "") {
+?>
+<script>
+    function updateStock() {
+        var barang_kategori_id = 1;
+
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url().'page/update_stock'; ?>",
+            data: "barang_kategori_id="+barang_kategori_id,
+            dataType: "json",
+            success: function(response) {
+                var ii = 1;
+
+                for(var i = 0; i < response.data.length; i++) {
+                    $("#stok-" + ii++).text(response.data[i].stok);
+                }
+            }
+        });
+    }
+</script>
+<?php
+    }
+    elseif($this->uri->segment(2) == "bumbu") {
+?>
+<script>
+    function updateStock() {
+        var barang_kategori_id = 2;
+
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url().'page/update_stock'; ?>",
+            data: "barang_kategori_id="+barang_kategori_id,
+            dataType: "json",
+            success: function(response) {
+                var ii = 1;
+                for(var i = 0; i < response.data.length; i++) {
+                    $("#stok-" + ii++).text(response.data[i].stok);
+                }
+            }
+        });
+    }
+</script>
+<?php
+    }
+?>
+<script>
+    $(document).ready(function() {
+        setInterval(function(){updateStock();}, 1000);
     });
 
     $("#btn-logout").click(function() {

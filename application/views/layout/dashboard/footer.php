@@ -45,7 +45,7 @@
     <?php $this->load->view('layout/script/barang'); ?>
 <?php endif; ?>
 
-<?php if (isset($barangs)) : ?>
+<?php if (isset($page)) : ?>
     <?php $this->load->view('layout/script/barangs'); ?>
 <?php endif; ?>
 

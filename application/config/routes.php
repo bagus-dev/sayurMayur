@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = TRUE;
 
 // Penjualan Online
 
+$route['kategori/bumbu'] = 'page/bumbu';
+
 $route['penjualan-online'] = 'penjualanonline/index';
 $route['penjualan-online/(:any)'] = 'penjualanonline/detail_invoice/$1';
 $route['penjualan-online/status/check'] = 'penjualanonline/cek_status';

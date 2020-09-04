@@ -12,16 +12,16 @@
                     <h3 class="pb-3 title-kategori">Kategori Barang:</h3>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-warning text-white py-2 px-5 btn-kategori-active" id="kat_1" type="button">
-                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-1">
+                    <button class="btn btn-default py-2 px-5" id="kat_1" type="button">
+                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-1" style="display:none;">
                             <i class="fas fa-check"></i> Dipilih
                         </span>
                         Sayur
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-default py-2 px-5" id="kat_2" type="button">
-                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-2" style="display:none;">
+                    <button class="btn btn-warning text-white py-2 px-5 btn-kategori-active" id="kat_2" type="button">
+                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-2">
                             <i class="fas fa-check"></i> Dipilih
                         </span>
                         Bumbu
@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-8" id="col-left">
             <div class="row" id="row-data">
-                <?php $no = 1; foreach ($barangs_sayur->result() as $barang) : ?>
+                <?php $no = 1; foreach ($barangs_bumbu->result() as $barang) : ?>
                     <div class="col-md-4 col-6" id="col-data">
                         <div class="card" style="margin-bottom: 30px;">
                             <img class="card-img-top" src="<?= base_url(); ?>assets/source/images/barang/<?= $barang->barang_gambar ?>" alt="<?= $barang->barang_id; ?>" style="width:100%; height:200px; object-fit:cover">
