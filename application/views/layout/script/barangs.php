@@ -25,12 +25,14 @@
                 $("#kat_2").removeClass("btn-xs");
                 $(".title-kategori").addClass("pb-3");
                 $(".title-kategori").removeClass("pb-4");
+                $("#parent-cart").removeClass("mt-3");
             }
             else {
-                $("#kat_1").addClass("btn-sm");
-                $("#kat_2").addClass("btn-sm");
+                $("#kat_1").addClass("btn-xs");
+                $("#kat_2").addClass("btn-xs");
                 $(".title-kategori").removeClass("pb-3");
                 $(".title-kategori").addClass("pb-4");
+                $("#parent-cart").addClass("mt-3");
             }
         }
     })();
@@ -311,6 +313,8 @@
                                 });
 
                                 e.target.value = response.stok;
+                                subtotal.innerHTML = numberWithCommas(response.subtotal);
+                                $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                             }
                             else {
                                 Swal.fire({
@@ -383,7 +387,25 @@
                             })
                         }
                         else if(result.dismiss === Swal.DismissReason.cancel) {
-                            $("#input_kuantitas_cart_" + id).val(1);
+                            var qty = 1;
+
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= base_url().'page/change_kuantitas'; ?>",
+                                data: {"total_kuantitas": qty,"id": id},
+                                dataType: "json",
+                                beforeSend: function() {
+                                    $("#loading-section").removeAttr("style");
+                                },
+                                success: function(response) {
+                                    $("#input_kuantitas_cart_" + id).val(1);
+                                    subtotal.innerHTML = numberWithCommas(response.subtotal);
+                                    $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
+                                },
+                                complete: function() {
+                                    $("#loading-section").css("display","none");
+                                }
+                            });
                         }
                     })
                 }
@@ -418,6 +440,8 @@
                         });
 
                         e.target.value = response.stok;
+                        subtotal.innerHTML = numberWithCommas(response.subtotal);
+                        $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                     }
                     else {
                         Swal.fire({
@@ -490,7 +514,25 @@
                     })
                 }
                 else if(result.dismiss === Swal.DismissReason.cancel) {
-                    $("#input_kuantitas_cart_" + id).val(1);
+                    var qty = 1;
+                            
+                    $.ajax({
+                        type: "POST",
+                        url: "<?= base_url().'page/change_kuantitas'; ?>",
+                        data: {"total_kuantitas": qty,"id": id},
+                        dataType: "json",
+                        beforeSend: function() {
+                            $("#loading-section").removeAttr("style");
+                        },
+                        success: function(response) {
+                            $("#input_kuantitas_cart_" + id).val(1);
+                            subtotal.innerHTML = numberWithCommas(response.subtotal);
+                            $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
+                        },
+                        complete: function() {
+                            $("#loading-section").css("display","none");
+                        }
+                    });
                 }
             })
         }
@@ -553,9 +595,6 @@
                     icon: "success",
                     title: "Barang Berhasil Dihapus"
                 })
-            }
-            else if(result.dismiss === Swal.DismissReason.cancel) {
-                $("#input_kuantitas_cart_" + id).val(1);
             }
         })
     }

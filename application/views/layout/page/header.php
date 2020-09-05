@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/pos/css/page/style.css">
+    <link rel="stylesheet" href="<?= base_url().'assets/pos/css/page/style.css?ts='.time(); ?>">
 
     <title><?= $title . SITE_NAME; ?></title>
 </head>

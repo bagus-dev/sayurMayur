@@ -82,7 +82,12 @@
 
                 <!-- Button -->
                 <div class="row mt-3">
-                    <div class="offset-7 col-5">
+                    <div class="col-4">
+                        <a href="<?= base_url().'auth'; ?>" id="btn-register" class="btn btn-primary btn-block">
+                            Kembali
+                        </a>
+                    </div>
+                    <div class="offset-3 col-5">
                         <button type="submit" class="btn btn-default btn-block">
                             Daftar Akun
                         </button>

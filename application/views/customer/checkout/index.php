@@ -3,7 +3,7 @@
     <h1 class="text-dark" align="center">Sayur<small class="text-danger">Mayur</small></h1>
     <div class="card">
         <div class="card-body">
-            <h1 class="pb-3 border-bottom">Checkout<small>Barang</small></h1>
+            <h1 class="pb-1 border-bottom title-page">Checkout<small>Barang</small></h1>
             <div class="overlay-wrapper" style="height:100%">
                 <div class="overlay" style="display:none;height:100%;" id="loading-section">
                     <i class="fas fa-3x fa-sync-alt fa-spin"></i>

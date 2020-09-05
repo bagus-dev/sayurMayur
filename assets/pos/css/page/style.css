@@ -29,10 +29,16 @@ html,body {
 }
 @media(max-width: 767px) {
     .title-kategori {
-        font-size: 14pt;
+        font-size: 10pt;
     }
     .select-kategori {
         left: 8px;
+    }
+    .nama_barang {
+        font-size: 16pt;
+    }
+    .title-page {
+        font-size: 24pt;
     }
 }
 

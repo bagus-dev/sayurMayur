@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Sep 2020 pada 15.40
+-- Waktu pembuatan: 05 Sep 2020 pada 12.38
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -47,16 +47,16 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'bayam.jpg', 'Bayam', 15000, 20000, 17000, 17, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
-('BR000002', 'kangkung.jpg', 'Kangkung', 16000, 20000, 18000, 11, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
-('BR000003', 'genjer.jpg', 'Genjer', 16000, 22000, 18500, 20, '2016-11-22 23:33:08', NULL, 1, 4, 1),
-('BR000004', 'buncis.jpg', 'Buncis', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 1, 4, 1),
-('BR000005', 'timun.jpg', 'Timun', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 1, 4, 1),
-('BR000006', 'merica.jpg', 'Merica', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 2, 5, 1),
-('BR000007', 'cabai.jpg', 'Cabai', 2, 20000, 17000, 2, '2020-08-01 07:26:07', NULL, 2, 1, 1),
-('BR000008', 'jahe.jpg', 'Jahe', 2, 3333, 33333, 222, '2020-08-01 07:26:19', NULL, 2, 4, 1),
-('BR000009', 'lengkuas.jpg', 'Lengkuas', 33, 3333, 17000, 3, '2020-08-01 07:26:29', NULL, 2, 5, 1),
-('BR000010', 'kunyit.jpg', 'Kunyit', 222, 22, 2, 1, '2020-08-01 07:26:42', NULL, 2, 1, 1),
+('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 17, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
+('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 11, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
+('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 20, '2016-11-22 23:33:08', NULL, 1, 4, 1),
+('BR000004', 'BR000004.jpg', 'Buncis', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 1, 4, 1),
+('BR000005', 'BR000005.jpg', 'Timun', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 1, 4, 1),
+('BR000006', 'BR000006.jpg', 'Merica', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 2, 5, 1),
+('BR000007', 'BR000007.jpg', 'Cabai', 2, 20000, 17000, 2, '2020-08-01 07:26:07', NULL, 2, 1, 1),
+('BR000008', 'BR000008.jpg', 'Jahe', 2, 3333, 33333, 222, '2020-08-01 07:26:19', NULL, 2, 4, 1),
+('BR000009', 'BR000009.jpg', 'Lengkuas', 33, 3333, 17000, 3, '2020-08-01 07:26:29', NULL, 2, 5, 1),
+('BR000010', 'BR000010.jpg', 'Kunyit', 222, 22, 2, 1, '2020-08-01 07:26:42', NULL, 2, 1, 1),
 ('BR000011', 'BR000011.jpg', ' Singkong', 15000, 20000, 18000, 20, '2020-09-03 08:28:25', NULL, 1, 4, 1),
 ('BR000012', 'BR000012.jpg', ' Pare', 5000, 8000, 7000, 20, '2020-09-03 08:30:27', NULL, 1, 4, 1),
 ('BR000013', 'BR000013.jpg', ' Seledri', 3000, 5000, 4000, 20, '2020-09-03 08:30:59', NULL, 1, 4, 1),
@@ -353,7 +353,7 @@ CREATE TABLE `tbl_keranjang` (
   `barang_id` varchar(15) NOT NULL,
   `total_kuantitas` int(7) NOT NULL,
   `total_harga` int(10) NOT NULL,
-  `ip_address` varchar(10) NOT NULL,
+  `ip_address` varchar(20) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
