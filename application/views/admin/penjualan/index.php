@@ -12,23 +12,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="card text-left p-2 shadows">
-                <div class="form-group row m-0 p-0">
-                    <label for="keterangan" class="col-sm-4 col-form-label text-right">Penjualan Keterangan</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" id="keterangan">
-                            <option value="eceran">Eceran</option>
-                            <option value="grosir">Grosir</option>
-                        </select>
-                    </div>
-                </div>
-                <input type="hidden" name="keterangan_hidden" id="keterangan_hidden" value="eceran">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card text-left p-3 shadows">
                 <div class="form-group row">
                     <label for="jual_tanggal" class="col-sm-4 col-form-label">Date</label>
@@ -56,10 +40,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="card text-left p-3 shadows">
+                <input type="hidden" name="jual_nofak" id="jual_nofak" value="<?= $nofak; ?>">
+                <p class="text-black-50 text-right">Invoice <span class="text-dark"><?= $nofak; ?></span></p>
+                <h2 class="text-right" style="font-size: 95px;" id="grandtotal2">0</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="card text-left p-3 shadows">
                 <div class="form-group row">
-                    <label for="c_jual_barang_id" class="col-sm-4 col-form-label">Kode Barang</label>
+                    <label for="keterangan" class="col-sm-4 col-form-label"><span style="color: red;">* </span>Penjualan Keterangan</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="keterangan">
+                            <option value="eceran">Eceran</option>
+                            <option value="grosir">Grosir</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="keterangan_hidden" id="keterangan_hidden" value="eceran">
+
+                <div class="form-group row">
+                    <label for="c_jual_barang_id" class="col-sm-4 col-form-label"><span style="color: red;">* </span>Kode Barang</label>
                     <div class="col-sm-8 input-group">
                         <input type="hidden" id="c_jual_barang_nama">
                         <input type="hidden" id="c_jual_barang_satuan">
@@ -76,23 +80,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="c_jual_qty" class="col-sm-4 col-form-label">Qty</label>
+                    <label for="c_jual_qty" class="col-sm-4 col-form-label"><span style="color: red;">* </span>Qty</label>
                     <div class="col-sm-8">
                         <input type="number" class="form-control" id="c_jual_qty" value="1">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8 col-md-12 offset-sm-4">
-                        <button class="btn btn-primary" id="add_cart">Add</button>
+                        <button class="btn btn-primary" id="add_cart">Tambah</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-left p-3 shadows">
-                <input type="hidden" name="jual_nofak" id="jual_nofak" value="<?= $nofak; ?>">
-                <p class="text-black-50 text-right">Invoice <span class="text-dark"><?= $nofak; ?></span></p>
-                <h2 class="text-right" style="font-size: 95px;" id="grandtotal2">0</h2>
             </div>
         </div>
     </div>
@@ -120,7 +117,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card text-left p-3 shadows">
                 <div class="form-group row">
                     <label for="subtotal" class="col-sm-4 col-form-label">Sub Total</label>
@@ -147,7 +144,7 @@
                 <div class="form-group row">
                     <label for="grandtotal" class="col-sm-4 col-form-label">Grand Total</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Rp.</div>
                             </div>
@@ -157,16 +154,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card text-left p-3 shadows">
                 <div class="form-group row">
-                    <label for="pembayaran" class="col-sm-4 col-form-label">Pembayaran</label>
+                    <label for="pembayaran" class="col-sm-4 col-form-label"><span style="color: red;">* </span>Pembayaran</label>
                     <div class="col-sm-8">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text" style="margin-bottom:14px">Rp.</div>
                             </div>
-                            <input type="text" class="form-control" style="margin-bottom:14px" id="pembayaran" value="0">
+                            <input type="text" class="form-control" style="margin-bottom:14px" id="pembayaran" value="0" required>
                         </div>
                     </div>
                 </div>
@@ -180,12 +177,8 @@
                             <input type="text" class="form-control" id="kembalian" readonly>
                         </div>
                     </div>
+                    <button class="btn btn-block btn-primary mt-3" id="payment_proses">Payment Proses</button>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-left p-3 shadows">
-                <button class="btn btn-block btn-primary" id="payment_proses">Payment Proses</button>
             </div>
         </div>
     </div>
@@ -202,6 +195,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <small class="mx-3 mt-3"><span style="color: red;">*</span>Jika berwarna merah maka stok hampir habis, perlu tambah stok</small>
             <div class="modal-body table-responsive">
                 <table id="datable" class="table table-bordered table-striped projects">
                     <thead>
@@ -218,7 +212,7 @@
                     </thead>
                     <tbody id="bubbling">
                         <?php foreach ($barangs->result() as $index => $barang) : ?>
-                            <tr>
+                            <tr <?= $barang->barang_stok <= 10 ? 'style="background-color: rgba(255,0,0,.3);"' : ''; ?>>
                                 <td><?= ++$index; ?></td>
                                 <td><?= $barang->barang_id; ?></td>
                                 <td><?= $barang->barang_nama; ?></td>
@@ -248,7 +242,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
     </div>

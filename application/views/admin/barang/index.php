@@ -1,5 +1,6 @@
 <div class="container" style="margin-top: 100px;">
     <h1 class="pb-3 border-bottom">Data<small>Barang</small></h1>
+    <small><span style="color: red;">*</span>Jika berwarna merah maka stok akan habis, silakan klik edit untuk menambah stok atau bisa ke transaksi <a href="<?= site_url('pembelian'); ?>">Pembelian</a></small>
 
     <div class="row">
         <div class="col-md-12">
@@ -29,7 +30,7 @@
                     </thead>
                     <tbody id="bubbling">
                         <?php foreach ($barangs->result() as $index => $barang) : ?>
-                            <tr>
+                            <tr <?= $barang->barang_stok <= 10 ? 'style="background-color: rgba(255,0,0,.3);"' : ''; ?>>
                                 <td><?= ++$index; ?></td>
                                 <td><?= $barang->barang_id; ?></td>
                                 <td style="text-align:center;"><img src="<?= base_url(); ?>assets/source/images/barang/<?= $barang->barang_gambar ?>" alt="<?= $barang->barang_id; ?>" style="width: 80px; height:80px; object-fit:cover;"></td>

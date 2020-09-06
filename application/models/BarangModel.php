@@ -68,10 +68,12 @@ class BarangModel extends CI_Model
     }
 
     // Menampilkan semua barang dan juga bisa menampilkan barang dengan barang_id/kode barang
-    public function getBarang($barang_id = null)
+    public function getBarang($barang_id = null, $qty = null)
     {
-        if ($barang_id === null) {
-            $hsl = $this->db->query("SELECT * FROM tbl_barang JOIN tbl_kategori ON barang_kategori_id=kategori_id JOIN tbl_satuan ON barang_satuan_id=satuan_id ORDER BY barang_id ASC");
+        if ($qty !== null) {
+            $hsl = $this->db->query("SELECT * FROM tbl_barang JOIN tbl_kategori ON barang_kategori_id=kategori_id JOIN tbl_satuan ON barang_satuan_id=satuan_id WHERE barang_stok <= $qty");
+        } else if ($barang_id === null) {
+            $hsl = $this->db->query("SELECT * FROM tbl_barang JOIN tbl_kategori ON barang_kategori_id=kategori_id JOIN tbl_satuan ON barang_satuan_id=satuan_id ORDER BY barang_stok ASC");
         } else {
             $hsl = $this->db->query("SELECT * FROM tbl_barang JOIN tbl_kategori ON barang_kategori_id=kategori_id JOIN tbl_satuan ON barang_satuan_id=satuan_id WHERE barang_id = '$barang_id'");
         }
@@ -218,11 +220,11 @@ class BarangModel extends CI_Model
         $get_keranjang = $this->db->get("tbl_keranjang");
         $date2 = date_create();
 
-        foreach($get_keranjang->result() as $k) {
+        foreach ($get_keranjang->result() as $k) {
             $date1 = date_create($k->waktu_ditambahkan);
-            $diff = date_diff($date1,$date2);
+            $diff = date_diff($date1, $date2);
 
-            if($diff->format("%a") >= 1) {
+            if ($diff->format("%a") >= 1) {
                 $this->db->delete("tbl_keranjang", array("id" => $k->id));
             }
         }
@@ -318,14 +320,14 @@ class BarangModel extends CI_Model
             $date2_get1 = date_create();
             foreach ($get1->result() as $g1) {
                 $date1_get1 = date_create($g1->waktu_ditambahkan);
-                $diff_1 = date_diff($date1_get1,$date2_get1);
+                $diff_1 = date_diff($date1_get1, $date2_get1);
 
-                if($diff_1->format("%a") >= 1) {
+                if ($diff_1->format("%a") >= 1) {
                     $data1 = array(
                         "status" => 2
                     );
 
-                    $this->db->update('tbl_invoice',$data1,array("no_invoice" => $g1->no_invoice));
+                    $this->db->update('tbl_invoice', $data1, array("no_invoice" => $g1->no_invoice));
                 }
             }
 
@@ -335,14 +337,14 @@ class BarangModel extends CI_Model
                 $date2_get2 = date_create();
                 foreach ($get2->result() as $g2) {
                     $date1_get2 = date_create($g2->waktu_ditambahkan);
-                    $diff_2 = date_diff($date1_get2,$date2_get2);
+                    $diff_2 = date_diff($date1_get2, $date2_get2);
 
-                    if($diff_2->format("%a") >= 1) {
+                    if ($diff_2->format("%a") >= 1) {
                         $data2 = array(
                             "status" => 2
                         );
 
-                        $this->db->update('tbl_invoice',$data2,array("no_invoice" => $g2->no_invoice));
+                        $this->db->update('tbl_invoice', $data2, array("no_invoice" => $g2->no_invoice));
                     }
                 }
 
@@ -352,14 +354,14 @@ class BarangModel extends CI_Model
                     $date2_get3 = date_create();
                     foreach ($get3->result() as $g3) {
                         $date1_get3 = date_create($g3->waktu_ditambahkan);
-                        $diff_3 = date_diff($date1_get3,$date2_get3);
+                        $diff_3 = date_diff($date1_get3, $date2_get3);
 
-                        if($diff_3->format("%a") >= 1) {
+                        if ($diff_3->format("%a") >= 1) {
                             $data3 = array(
                                 "status" => 2
                             );
 
-                            $this->db->update('tbl_invoice',$data3,array("no_invoice" => $g3->no_invoice));
+                            $this->db->update('tbl_invoice', $data3, array("no_invoice" => $g3->no_invoice));
                         }
                     }
                 }
@@ -370,14 +372,14 @@ class BarangModel extends CI_Model
                     $date2_get3 = date_create();
                     foreach ($get3->result() as $g3) {
                         $date1_get3 = date_create($g3->waktu_ditambahkan);
-                        $diff_3 = date_diff($date1_get3,$date2_get3);
+                        $diff_3 = date_diff($date1_get3, $date2_get3);
 
-                        if($diff_3->format("%a") >= 1) {
+                        if ($diff_3->format("%a") >= 1) {
                             $data3 = array(
                                 "status" => 2
                             );
 
-                            $this->db->update('tbl_invoice',$data3,array("no_invoice" => $g3->no_invoice));
+                            $this->db->update('tbl_invoice', $data3, array("no_invoice" => $g3->no_invoice));
                         }
                     }
                 }
@@ -389,14 +391,14 @@ class BarangModel extends CI_Model
                 $date2_get2 = date_create();
                 foreach ($get2->result() as $g2) {
                     $date1_get2 = date_create($g2->waktu_ditambahkan);
-                    $diff_2 = date_diff($date1_get2,$date2_get2);
+                    $diff_2 = date_diff($date1_get2, $date2_get2);
 
-                    if($diff_2->format("%a") >= 1) {
+                    if ($diff_2->format("%a") >= 1) {
                         $data2 = array(
                             "status" => 2
                         );
 
-                        $this->db->update('tbl_invoice',$data2,array("no_invoice" => $g2->no_invoice));
+                        $this->db->update('tbl_invoice', $data2, array("no_invoice" => $g2->no_invoice));
                     }
                 }
 
@@ -406,14 +408,14 @@ class BarangModel extends CI_Model
                     $date2_get3 = date_create();
                     foreach ($get3->result() as $g3) {
                         $date1_get3 = date_create($g3->waktu_ditambahkan);
-                        $diff_3 = date_diff($date1_get3,$date2_get3);
+                        $diff_3 = date_diff($date1_get3, $date2_get3);
 
-                        if($diff_3->format("%a") >= 1) {
+                        if ($diff_3->format("%a") >= 1) {
                             $data3 = array(
                                 "status" => 2
                             );
 
-                            $this->db->update('tbl_invoice',$data3,array("no_invoice" => $g3->no_invoice));
+                            $this->db->update('tbl_invoice', $data3, array("no_invoice" => $g3->no_invoice));
                         }
                     }
                 }
@@ -424,14 +426,14 @@ class BarangModel extends CI_Model
                     $date2_get3 = date_create();
                     foreach ($get3->result() as $g3) {
                         $date1_get3 = date_create($g3->waktu_ditambahkan);
-                        $diff_3 = date_diff($date1_get3,$date2_get3);
+                        $diff_3 = date_diff($date1_get3, $date2_get3);
 
-                        if($diff_3->format("%a") >= 1) {
+                        if ($diff_3->format("%a") >= 1) {
                             $data3 = array(
                                 "status" => 2
                             );
 
-                            $this->db->update('tbl_invoice',$data3,array("no_invoice" => $g3->no_invoice));
+                            $this->db->update('tbl_invoice', $data3, array("no_invoice" => $g3->no_invoice));
                         }
                     }
                 }
@@ -439,11 +441,12 @@ class BarangModel extends CI_Model
         }
     }
 
-    function update_stock($barang_kategori_id) {
+    function update_stock($barang_kategori_id)
+    {
         $get_barang = $this->db->get_where("tbl_barang", array("barang_kategori_id" => $barang_kategori_id));
         $json["data"] = array();
 
-        foreach($get_barang->result() as $b) {
+        foreach ($get_barang->result() as $b) {
             $data["stok"] = $b->barang_stok;
 
             array_push($json["data"], $data);

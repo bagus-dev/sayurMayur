@@ -1,7 +1,56 @@
 <div class="container" style="margin-top: 100px;">
     <h1 class="pb-3 border-bottom">Selamat Datang <small>Point of Sale</small></h1>
 
-    <div class="row mt-5">
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Barang Hampir Habis
+                        <br><small>Silahkan tambah stok di data master <a href="<?= site_url('barang') ?>">Barang</a> atau di transaksi <a href="<?= site_url('pembelian'); ?>">Pembelian</a></small>
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Barang</th>
+                                <th>Gambar Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Kategori</th>
+                                <th>Satuan</th>
+                                <th>Harga Pokok</th>
+                                <th>Harga (Eceran)</th>
+                                <th>Harga (Grosir)</th>
+                                <th>Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($barangs->result() as $index => $barang) : ?>
+                                <tr>
+                                    <td><?= ++$index; ?></td>
+                                    <td><?= $barang->barang_id; ?></td>
+                                    <td style="text-align:center;"><img src="<?= base_url(); ?>assets/source/images/barang/<?= $barang->barang_gambar ?>" alt="<?= $barang->barang_id; ?>" style="width: 80px; height:80px; object-fit:cover;"></td>
+                                    <td><?= $barang->barang_nama; ?></td>
+                                    <td><?= $barang->kategori_nama; ?></td>
+                                    <td><?= $barang->satuan_nama; ?></td>
+                                    <td><?= 'Rp. ' . number_format($barang->barang_harpok); ?></td>
+                                    <td><?= 'Rp. ' . number_format($barang->barang_harjul); ?></td>
+                                    <td><?= 'Rp. ' . number_format($barang->barang_harjul_grosir); ?></td>
+                                    <td><?= $barang->barang_stok; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row mt-3">
         <div class="col-md-12">
             <h2><small class="text-secondary">Data Master</small></h2>
         </div>

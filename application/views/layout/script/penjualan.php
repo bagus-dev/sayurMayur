@@ -250,10 +250,12 @@
         if (jual_subtotal < 1) {
             $('#alert').removeClass('d-none');
             $('#message').text('Tidak ada barang yang dipilih masuk kedalam cart!');
+            alert('Tidak ada barang yang dipilih masuk kedalam cart!');
         } else if (jual_jml_uang < 1) {
             $('#alert').removeClass('d-none');
             $('#message').text('Belum input pembayaran!');
             $('#pembayaran').focus();
+            alert('Belum input pembayaran!');
         } else {
             $('#alert').addClass('d-none');
             if (confirm('Yakin proses transaksi ini?')) {
@@ -275,7 +277,7 @@
                     success: function(result) {
                         console.log(result);
                         if (result.success == true) {
-                            if (confirm('Ingin cetak struk?')) {
+                            if (confirm('Transaksi Berhasil, Ingin cetak struk?')) {
                                 window.open('<?= site_url('penjualan/struk_print') ?>' + '/' + result.jual_nofak, '_blank');
                             }
                         } else {
