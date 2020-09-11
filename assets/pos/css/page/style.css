@@ -14,25 +14,43 @@ html,body {
 
 /* index */
 
-.btn-kategori-active {
+.btn-pilih-active {
     border: 2px solid #17a2b8;
 }
-.btn-kategori-active:focus {
+.btn-pilih-active:focus {
     background: #ffc107;
     border: 2px solid #17a2b8;
 }
-.select-kategori {
+.select-pilih {
     position: absolute;
     left: 7px;
     top: 0px;
+    font-size: 7pt;
+}
+.select-pilih-2 {
+    position: absolute;
+    left: 8px;
+    top: 0px;
+    font-size: 7pt;
+}
+.select-pilih-3 {
+    position: absolute;
+    left: 8px;
+    top: 4px;
     font-size: 7pt;
 }
 @media(max-width: 767px) {
     .title-kategori {
         font-size: 10pt;
     }
-    .select-kategori {
+    .select-pilih {
         left: 8px;
+    }
+    .select-pilih-2 {
+        left: 9px;
+    }
+    .select-pilih-3 {
+        left: 9px;
     }
     .nama_barang {
         font-size: 16pt;

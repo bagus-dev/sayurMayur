@@ -228,6 +228,8 @@ class Page extends CI_Controller
                 $data['user'] = $this->barang->get_user();
                 $data['checkout'] = $this->barang->get_checkout($no_invoice);
                 $data["keranjang"] = $this->barang->get_keranjang();
+                $data["ongkir"] = $this->barang->get_ongkir($no_invoice);
+                $data["waktu"] = $this->barang->get_waktu($no_invoice);
                 $this->barang->delete_cart_date();
                 $this->barang->cancel_invoice();
 
@@ -244,52 +246,9 @@ class Page extends CI_Controller
         }
     }
 
-    function upload_trf() {
-        if(isset($_SESSION["user_id"])){
-            if(isset($_GET["no_invoice"])) {
-                if(isset($_POST["submit"])) {
-                    $this->barang->upload_trf();
-                }
-                else {
-                    $no_invoice = $this->input->get("no_invoice",true);
-
-                    $data['title'] = 'Unggah Bukti Transfer';
-                    $data['detail_invoice'] = $this->barang->get_detail_invoice($no_invoice);
-                    $data["keranjang"] = $this->barang->get_keranjang();
-                    $this->barang->delete_cart_date();
-                    $this->barang->cancel_invoice();
-
-                    $this->load->view('layout/page/header',$data);
-                    $this->load->view('customer/page/upload_trf');
-                    $this->load->view('layout/dashboard/footer');
-                }
-            }
-            else {
-                redirect(site_url("page/profile"));
-            }
-        }
-        else {
-            redirect(site_url());
-        }
-    }
-
     function get_bukti_trf() {
         $no_invoice = $this->input->post("no_invoice",true);
 
         $this->barang->get_bukti_trf($no_invoice);
-    }
-
-    function how_to_trf() {
-        if(isset($_SESSION["user_id"])) {
-            $data['title'] = 'Cara Transfer SayurMayur';
-            $data['howtotrf'] = true;
-
-            $this->load->view('layout/page/header',$data);
-            $this->load->view('customer/page/how_to_trf');
-            $this->load->view('layout/dashboard/footer');
-        }
-        else {
-            redirect(site_url('auth'));
-        }
     }
 }

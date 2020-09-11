@@ -12,8 +12,8 @@
                     <h3 class="pb-3 title-kategori">Kategori Barang:</h3>
                 </div>
                 <div class="col-5 col-md-2">
-                    <button class="btn btn-warning text-white py-2 px-5 btn-kategori-active" id="kat_1" type="button">
-                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-1">
+                    <button class="btn btn-warning text-white py-2 px-5 btn-pilih-active" id="kat_1" type="button">
+                        <span class="select-pilih bg-info p-1 rounded">
                             <i class="fas fa-check"></i> Dipilih
                         </span>
                         Sayur
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-5 col-md-2">
                     <button class="btn btn-default py-2 px-5" id="kat_2" type="button">
-                        <span class="select-kategori bg-info p-1 rounded" id="select-kategori-2" style="display:none;">
+                        <span class="select-pilih bg-info p-1 rounded" style="display:none;">
                             <i class="fas fa-check"></i> Dipilih
                         </span>
                         Bumbu

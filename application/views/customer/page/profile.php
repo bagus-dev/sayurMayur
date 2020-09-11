@@ -44,7 +44,8 @@
                             <tr>
                                 <th>No.</th>
                                 <th>No. Invoice</th>
-                                <th>Jenis Pengiriman</th>
+                                <th>Tanggal Invoice</th>
+                                <th>Cara Bayar</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Total Pembayaran</th>
                                 <th>Status Pesanan</th>
@@ -61,11 +62,57 @@
                                 <td><?= $i->no_invoice; ?></td>
                                 <td>
                                     <?php
-                                        if($i->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
+                                        $tgl_invoice = date("d",strtotime($i->waktu_ditambahkan));
+                                        $bln_invoice = date("m",strtotime($i->waktu_ditambahkan));
+                                        $thn_invoice = date("Y",strtotime($i->waktu_ditambahkan));
+                    
+                                        if($bln_invoice == "01") {
+                                            $bln_invoice = "Januari";
+                                        }
+                                        else if($bln_invoice == "02") {
+                                            $bln_invoice = "Februari";
+                                        }
+                                        else if($bln_invoice == "03") {
+                                            $bln_invoice = "Maret";
+                                        }
+                                        else if($bln_invoice == "04") {
+                                            $bln_invoice = "April";
+                                        }
+                                        else if($bln_invoice == "05") {
+                                            $bln_invoice = "Mei";
+                                        }
+                                        else if($bln_invoice == "06") {
+                                            $bln_invoice = "Juni";
+                                        }
+                                        else if($bln_invoice == "07") {
+                                            $bln_invoice = "Juli";
+                                        }
+                                        else if($bln_invoice == "08") {
+                                            $bln_invoice = "Agustus";
+                                        }
+                                        else if($bln_invoice == "09") {
+                                            $bln_invoice = "September";
+                                        }
+                                        else if($bln_invoice == "10") {
+                                            $bln_invoice = "Oktober";
+                                        }
+                                        else if($bln_invoice == "11") {
+                                            $bln_invoice = "November";
+                                        }
+                                        else if($bln_invoice == "12") {
+                                            $bln_invoice = "Desember";
+                                        }
+
+                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice;
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                        if($i->cara_bayar == 1) {
+                                            echo "Di Toko";
                                         }
                                         else {
-                                            echo "Ambil di tempat";
+                                            echo "Di Tempat";
                                         }
                                     ?>
                                 </td>
@@ -83,15 +130,7 @@
                                 <td>
                                     <?php
                                         if($i->status == 0) {
-                                            if($i->jenis_bayar == 1 AND $i->bukti_transfer == "") {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Dibayar</font></span>";
-                                            }
-                                            else if($i->jenis_bayar == 1 AND $i->bukti_transfer <> "") {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
-                                            }
-                                            else if($i->jenis_bayar == 2) {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
-                                            }
+                                            echo "<span class='bg-warning p-2 rounded'><font style='color:white'>Belum Divalidasi</font></span>";
                                         }
                                         else if($i->status == 1) {
                                             echo "<span class='bg-success p-2 rounded'>Sudah Tervalidasi</span>";

@@ -16,12 +16,6 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>assets/adminlte/dist/js/adminlte.js"></script>
 
-<!-- DataTables -->
-<script src="<?= base_url(); ?>assets/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?= base_url(); ?>assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url(); ?>assets/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?= base_url(); ?>assets/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
 <!-- Select2 -->
 <script src="<?= base_url(); ?>assets/adminlte/plugins/select2/js/select2.full.min.js"></script>
 

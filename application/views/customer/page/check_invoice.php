@@ -3,12 +3,11 @@
         <div class="card-body">
             <?php
                 foreach($detail_invoice->result() as $i) {
-                    $tomorrow = new DateTime($i->waktu_ditambahkan);
-                    $tomorrow->modify('+1 day');
-                    $tgl_invoice = $tomorrow->format('d');
-                    $bln_invoice = $tomorrow->format('m');
-                    $thn_invoice = $tomorrow->format('Y');
-                    $waktu_invoice = $tomorrow->format('H:i:s');
+                    foreach($waktu->result() as $w) {
+                    $tgl_invoice = date("d",strtotime($i->waktu_ditambahkan));
+                    $bln_invoice = date("m",strtotime($i->waktu_ditambahkan));
+                    $thn_invoice = date("Y",strtotime($i->waktu_ditambahkan));
+                    $waktu_invoice = date("H:i:s",strtotime($i->waktu_ditambahkan));
 
                     if($bln_invoice == "01") {
                         $bln_invoice = "Januari";
@@ -47,16 +46,14 @@
                         $bln_invoice = "Desember";
                     }
 
-                    if($i->jenis_bayar == 1 AND $i->bukti_transfer == "" AND $i->status == 0) {
+                    if($i->status == 0) {
             ?>
             <div class="row">
                 <div class="col-12 text-danger">
                     <center>
-                        <h3>Batas Akhir Transfer Sebelum</h3>
+                        <h3>Transaksi Belum Divalidasi Oleh Admin</h3>
                         <br>
-                        <b><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></b>
-                        <br>
-                        Lihat <a href="<?= base_url().'page/how_to_trf'; ?>">Cara Transfer</a> SayurMayur.
+                        <b>Tunggu Admin memvalidasi transaksi Anda.</b>
                     </center>
                     <hr class="mt-5">
                 </div>
@@ -69,29 +66,70 @@
             </div>
             <?php
                 }
-                if($i->jenis_kirim == 2) {
-                    if($i->jenis_bayar == 2 AND $i->status == 1) {
-            ?>
-            <div class="row">
-                <div class="col-12 text-danger">
-                    <center>
-                        <h3>Batas Akhir Pengambilan Pesanan Sebelum</h3>
-                        <br>
-                        <b><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></b>
-                    </center>
-                    <hr class="mt-5">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h1 align="center">DETAIL INVOICE</h1>
-                    <hr>
-                </div>
-            </div>
-            <?php
+                elseif($i->status == 1 AND $i->cara_bayar == 1) {
+                    $tomorrow_validasi = new DateTime($i->waktu_validasi);
+                    $tomorrow_validasi->modify('+1 day');
+
+                    $tgl_validasi = $tomorrow_validasi->format('d');
+                    $bln_validasi = $tomorrow_validasi->format('m');
+                    $thn_validasi = $tomorrow_validasi->format('Y');
+
+                    if($bln_validasi == "01") {
+                        $bln_validasi = "Januari";
                     }
-                }
+                    else if($bln_validasi == "02") {
+                        $bln_validasi = "Februari";
+                    }
+                    else if($bln_validasi == "03") {
+                        $bln_validasi = "Maret";
+                    }
+                    else if($bln_validasi == "04") {
+                        $bln_validasi = "April";
+                    }
+                    else if($bln_validasi == "05") {
+                        $bln_validasi = "Mei";
+                    }
+                    else if($bln_validasi == "06") {
+                        $bln_validasi = "Juni";
+                    }
+                    else if($bln_validasi == "07") {
+                        $bln_validasi = "Juli";
+                    }
+                    else if($bln_validasi == "08") {
+                        $bln_validasi = "Agustus";
+                    }
+                    else if($bln_validasi == "09") {
+                        $bln_validasi = "September";
+                    }
+                    else if($bln_validasi == "10") {
+                        $bln_validasi = "Oktober";
+                    }
+                    else if($bln_validasi == "11") {
+                        $bln_validasi = "November";
+                    }
+                    else if($bln_validasi == "12") {
+                        $bln_validasi = "Desember";
+                    }
             ?>
+            <div class="row">
+                <div class="col-12 text-danger">
+                    <center>
+                        <h3>Silakan Mengambil Pesanan Anda Sebelum Waktu Di Bawah Ini.</h3>
+                        <br>
+                        <b><?= $tgl_validasi." ".$bln_validasi." ".$thn_validasi." - ".$w->waktu_akhir." WIB"; ?></b>
+                        <br>
+                        Waktu Pengambilan Anda: Jam <?= $w->waktu_awal." s/d ".$w->waktu_akhir." WIB"; ?>
+                    </center>
+                    <hr class="mt-5">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h1 align="center">DETAIL INVOICE</h1>
+                    <hr>
+                </div>
+            </div>
+            <?php } ?>
             <div class="row">
                 <div class="col-6">
                     <h1 class="text-dark" id="text1">Sayur<small class="text-danger">Mayur</small></h1>
@@ -102,41 +140,28 @@
                     <br><br><br>
                     <table class="float-right table">
                         <tr>
-                            <td><b>Jatuh Tempo</b></td>
-                            <td><b>:</b></td>
-                            <td><span id="text3"><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></span></td>
-                        </tr>
-                        <tr>
                             <td><b>No. Invoice</b></td>
                             <td><b>:</b></td>
                             <td><span id="text3"><?= $i->no_invoice; ?></span></td>
                         </tr>
+                        <tr>
+                            <td><b>Tanggal Pembuatan Invoice</b></td>
+                            <td><b>:</b></td>
+                            <td><span id="text3"><?= $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB"; ?></span></td>
+                        </tr>
                     </table>
                     <?php
-                        if($i->jenis_bayar == 1) {
-                            if($i->status == 0 AND $i->bukti_transfer == "") {
-                                echo "<h2 class='text-warning float-right' id='text4'>Belum Dibayar</h2>";
-                            }
-                            else if($i->status == 0 AND $i->bukti_transfer <> "") {
-                                echo "<h2 class='text-warning float-right' id='text4'>Belum Divalidasi</h2>";
-                            }
-                            else if($i->status == 1 AND $i->bukti_transfer <> "") {
-                                echo "<h2 class='text-success float-right' id='text4'>Sudah Tervalidasi</h2>";
-                            }
-                            elseif($i->status == 2) {
-                                echo "<h2 class='text-danger float-right' id='text4'>Dibatalkan</h2>";
-                            }
+                        if($i->status == 0) {
+                            echo "<h2 class='text-warning float-right' id='text4'>Belum Divalidasi</h2>";
                         }
-                        else {
-                            if($i->status == 0) {
-                                echo "<h2 class='text-warning float-right' id='text4'>Belum Divalidasi</h2>";
-                            }
-                            else if($i->status == 1) {
-                                echo "<h2 class='text-success float-right' id='text4'>Sudah Tervalidasi</h2>";
-                            }
-                            elseif($i->status == 2) {
-                                echo "<h2 class='text-danger float-right' id='text4'>Dibatalkan</h2>";
-                            }
+                        else if($i->status == 1) {
+                            echo "<h2 class='text-success float-right' id='text4'>Sudah Tervalidasi</h2>";
+                        }
+                        elseif($i->status == 2) {
+                            echo "<h2 class='text-danger float-right' id='text4'>Dibatalkan</h2>";
+                        }
+                        elseif($i->status == 3) {
+                            echo "<h2 class='text-primary float-right' id='text4'>Selesai</h2>";
                         }
                     ?>
                 </div>
@@ -146,31 +171,57 @@
                 <div class="col-6 border-right mt-3">
                     <b>Tagihan Kepada:</b>
                     <br>
+                    <span class="d-none d-sm-block">
                     <?php
                         foreach($user->result() as $u) {
-                            echo $u->user_nama."<br>".$u->user_alamat;
+                            echo $u->user_nama." - ".$u->user_email." - ".$u->user_nohp;
                         }
                     ?>
-                    <br><br>
+                    </span>
+                    <span class="d-block d-sm-none"><?= $u->user_nama."<br>".$u->user_email."<br>".$u->user_nohp; ?></span>
+                    <br>
                     <b>Metode Pembayaran:</b>
                     <br>
                     <?php
                         if($i->jenis_bayar == 1) {
-                            echo "Transfer";
+                            if($i->cara_bayar == 1) {
+                                echo "Transfer Di Toko";
+                            }
+                            else {
+                                echo "Transfer Di Tempat";
+                            }
                         }
                         else {
-                            echo "Tunai";
+                            if($i->cara_bayar == 1) {
+                                echo "Tunai Di Toko";
+                            }
+                            else {
+                                echo "Tunai Di Tempat";
+                            }
                         }
                     ?>
+                    <?php
+                        if($i->cara_bayar == 2) {
+                    ?>
                     <br><br>
-                    <b>Tanggal Pembuatan Invoice:</b>
+                    <b>Tempat Pengiriman:</b>
                     <br>
                     <?php
-                        $invoice_date = new DateTime($i->waktu_ditambahkan);
-                        $tgl_invoice = $invoice_date->format('d');
-
-                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice;
+                        foreach($ongkir->result() as $o) {
+                            echo $o->ongkir_lokasi;
+                        }
                     ?>
+                    <?php } ?>
+                    <br><br>
+                    <b>Waktu Pengiriman / Pengambilan:</b>
+                    <br>
+                    <?= $w->waktu_nama. " Jam ".$w->waktu_awal." s/d ".$w->waktu_akhir. " WIB"; ?>
+                    <?php if($i->cara_bayar == 2) { ?>
+                    <br><br>
+                    <b>Detail Pengiriman:</b>
+                    <br>
+                    <?= $i->detail_kirim; ?>
+                    <?php } ?>
                 </div>
                 <div class="col-6 mt-3">
                     <b class="float-right">Pembayaran Kepada:</b>
@@ -201,40 +252,17 @@
                                 <td class="text-center"><?= "Rp. ".number_format($c->barang_harjul); ?></td>
                                 <td class="text-center"><?= "Rp. ".number_format($c->subtotal); ?></td>
                             </tr>
-                            <?php } ?>
+                            <?php
+                                }
+                                if($i->cara_bayar == 2) {
+                            ?>
                             <tr>
-                                <td>
-                                    <?php
-                                        if($i->jenis_kirim == 1) {
-                                            echo "Ongkos Kirim Kec. ".$u->ongkir_lokasi." (Antar ke rumah)";
-                                        }
-                                        else {
-                                            echo "Ongkos Kirim (Ambil di tempat)";
-                                        }
-                                    ?>
-                                </td>
+                                <td><?= "Ongkos Kirim ".$o->ongkir_lokasi; ?></td>
                                 <td class="text-center">1</td>
-                                <td class="text-center">
-                                    <?php
-                                        if($i->jenis_kirim == 1) {
-                                            echo "Rp. ".number_format($u->ongkir_harga); 
-                                        }
-                                        else {
-                                            echo "Rp. 0";
-                                        }
-                                    ?>
-                                </td>
-                                <td class="text-center">
-                                    <?php
-                                        if($i->jenis_kirim == 1) {
-                                            echo "Rp. ".number_format($u->ongkir_harga); 
-                                        }
-                                        else {
-                                            echo "Rp. 0";
-                                        }
-                                    ?>
-                                </td>
+                                <td class="text-center"><?= "Rp. ".number_format($o->ongkir_harga); ?></td>
+                                <td class="text-center"><?= "Rp. ".number_format($o->ongkir_harga); ?></td>
                             </tr>
+                            <?php } ?>
                             <tr>
                                 <th class="text-right pr-5" colspan="3">TOTAL</th>
                                 <th class="text-center bg-light">
@@ -245,7 +273,7 @@
                     </table>
                 </div>
             </div>
-            <?php } ?>
+            <?php }} ?>
         </div>
     </div>
 </div>

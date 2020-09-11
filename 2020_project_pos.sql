@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Sep 2020 pada 12.38
+-- Waktu pembuatan: 11 Sep 2020 pada 12.55
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -47,9 +47,9 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 17, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
-('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 11, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
-('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 20, '2016-11-22 23:33:08', NULL, 1, 4, 1),
+('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 15, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
+('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 9, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
+('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 18, '2016-11-22 23:33:08', NULL, 1, 4, 1),
 ('BR000004', 'BR000004.jpg', 'Buncis', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 1, 4, 1),
 ('BR000005', 'BR000005.jpg', 'Timun', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 1, 4, 1),
 ('BR000006', 'BR000006.jpg', 'Merica', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 2, 5, 1),
@@ -281,12 +281,16 @@ INSERT INTO `tbl_diskon` (`diskon_id`, `diskon_harga`, `diskon_persen`) VALUES
 CREATE TABLE `tbl_invoice` (
   `no_invoice` varchar(20) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `jenis_kirim` int(1) NOT NULL,
+  `cara_bayar` int(1) NOT NULL,
+  `tempat_kirim` int(11) NOT NULL,
+  `waktu_kirim` int(11) NOT NULL,
+  `detail_kirim` text NOT NULL,
   `jenis_bayar` int(1) NOT NULL,
   `total_bayar` int(10) NOT NULL,
   `bukti_transfer` varchar(255) NOT NULL,
   `status` int(1) NOT NULL,
-  `waktu_ditambahkan` datetime NOT NULL
+  `waktu_ditambahkan` datetime NOT NULL,
+  `waktu_validasi` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -374,12 +378,10 @@ CREATE TABLE `tbl_ongkir` (
 --
 
 INSERT INTO `tbl_ongkir` (`ongkir_id`, `ongkir_lokasi`, `ongkir_harga`) VALUES
-(1, 'Cipocok', 10000),
-(2, 'Curug', 10000),
-(3, 'Kasemen', 10000),
-(4, 'Serang', 10000),
-(5, 'Taktakan', 10000),
-(6, 'Walantaka', 10000);
+(1, 'Kramat', 5000),
+(2, 'Serdang', 3000),
+(4, 'Taktakan', 7000),
+(5, 'Legok', 10000);
 
 -- --------------------------------------------------------
 
@@ -490,7 +492,9 @@ CREATE TABLE `tbl_waktu` (
 --
 
 INSERT INTO `tbl_waktu` (`waktu_id`, `waktu_nama`, `waktu_awal`, `waktu_akhir`) VALUES
-(2, 'Siang', '03:33', '22:22');
+(1, 'Pagi', '06:00', '08:00'),
+(2, 'Siang', '12:00', '02:00'),
+(3, 'Sore', '03:00', '18:00');
 
 --
 -- Indexes for dumped tables
@@ -669,7 +673,7 @@ ALTER TABLE `tbl_keranjang`
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`
 --
 ALTER TABLE `tbl_ongkir`
-  MODIFY `ongkir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ongkir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_role`
@@ -699,7 +703,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT untuk tabel `tbl_waktu`
 --
 ALTER TABLE `tbl_waktu`
-  MODIFY `waktu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `waktu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
