@@ -31,6 +31,10 @@
 <!-- SweetAlert2 -->
 <script src="<?= base_url(); ?>assets/pos/js/page/sweetalert2.all.min.js"></script>
 
+<!-- Moment + Tempus Dominus -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+
 <?php if (isset($datable)) : ?>
     <?php $this->load->view('layout/script/datable'); ?>
 <?php endif; ?>

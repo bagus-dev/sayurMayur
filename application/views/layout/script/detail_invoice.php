@@ -5,9 +5,10 @@
         if(dibayar) {
             var dibayarVal = dibayar.value;
 
-            if(dibayarVal.trim() !== "" && !/\D/.test(dibayarVal)) {
+            if(dibayarVal.trim() !== "") {
                 var no_invoice = "<?= $this->uri->segment(2); ?>";
                 var status = document.getElementById("status").value;
+                var dibayarFix = parseInt(dibayar.value.replace(/,/g, ''));
 
                 $.ajax({
                     type: "POST",
@@ -18,7 +19,7 @@
                             $.ajax({
                                 type: "POST",
                                 url: "<?= base_url().'penjualan-online/status/change'; ?>",
-                                data: {"no_invoice": no_invoice,"status": status,"dibayar": dibayarVal},
+                                data: {"no_invoice": no_invoice,"status": status,"dibayar": dibayarFix},
                                 success: function(response) {
                                     if(response == "OK") {
                                         window.open('<?= base_url()."penjualan-online?change_status"; ?>','_self')

@@ -238,7 +238,7 @@ class BarangModel extends CI_Model
         $date2 = date_create();
 
         foreach ($invoice->result() as $i) {
-            if($i->status == 1) {
+            if($i->status == 1 AND $i->cara_bayar == 1 AND $i->jenis_bayar == 2) {
                 $tgl_validasi = date("d",strtotime($i->waktu_validasi));
                 $bln_validasi = date("m",strtotime($i->waktu_validasi));
                 $thn_validasi = date("Y",strtotime($i->waktu_validasi));
@@ -253,7 +253,8 @@ class BarangModel extends CI_Model
 
                 if($diff->format("%a") >= 1) {
                     $data = array(
-                        "status" => 2
+                        "status" => 2,
+                        "waktu_batal" => date("Y-m-d H:i:s")
                     );
 
                     $this->db->update("tbl_invoice",$data,array("no_invoice" => $i->no_invoice));

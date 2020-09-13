@@ -84,7 +84,7 @@
                 <tr>
                     <th style="width:125px;text-align:left;">Item</th>
                     <th>Qty</th>
-                    <th style="text-align:center; width:90px">Price per pc</th>
+                    <th style="text-align:center; width:90px">Price per Item</th>
                     <th style="text-align:right; width:70px">Subtotal</th>
                 </tr>
                 <?php
@@ -97,39 +97,28 @@
                     <td style="text-align:right;"><?= "Rp. ".number_format($c->subtotal); ?></td>
                 </tr>
                 <?php $no++; } ?>
+                <?php if($i->cara_bayar == 2) { ?>
                 <tr>
                     <td>
                         <?php
-                            if($i->jenis_kirim == 1) {
-                                echo "Ongkos Kirim Kec. ".$u->ongkir_lokasi." (Antar ke rumah)";
-                            }
-                            else {
-                                echo "Ongkos Kirim (Ambil di tempat)";
+                            foreach($ongkir->result() as $o) {
+                                echo "Ongkos Kirim ".$o->ongkir_lokasi;
                             }
                         ?>
                     </td>
                     <td style="text-align:center">1</td>
                     <td style="text-align:center">
                         <?php
-                            if($i->jenis_kirim == 1) {
-                                echo "Rp. ".number_format($u->ongkir_harga); 
-                            }
-                            else {
-                                echo "Rp. 0";
-                            }
+                            echo "Rp. ".number_format($o->ongkir_harga);
                         ?>
                     </td>
                     <td style="text-align:right">
                         <?php
-                            if($i->jenis_kirim == 1) {
-                                echo "Rp. ".number_format($u->ongkir_harga); 
-                            }
-                            else {
-                                echo "Rp. 0";
-                            }
+                            echo "Rp. ".number_format($o->ongkir_harga);
                         ?>
                     </td>
                 </tr>
+                <?php } ?>
                 <tr>
                     <td colspan="4" style="border-bottom:1px dashed; padding-top:5px;"></td>
                 </tr>

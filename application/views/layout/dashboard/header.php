@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/select2/css/select2.min.css" />
     <link rel="stylesheet" href="<?= base_url(); ?>assets/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
 
+    <!-- Tempus Dominus -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
     <title><?= $title . SITE_NAME; ?></title>
 </head>
 

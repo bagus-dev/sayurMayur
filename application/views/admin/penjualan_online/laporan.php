@@ -5,135 +5,161 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-bordered table-striped datable dt-responsive nowrap">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>No. Invoice</th>
-                                <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
-                                <th>Jenis Pembayaran</th>
-                                <th>Total Tagihan</th>
-                                <th>Total Dibayar</th>
-                                <th>Status Pesanan</th>
-                                <th>Tanggal Pembuatan Invoice</th>
-                                <th>Tombol Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $no = 1;
-                                foreach($invoice_laporan->result() as $i) {
-                            ?>
-                            <tr>
-                                <td><?= $no++."."; ?></td>
-                                <td><?= $i->no_invoice; ?></td>
-                                <td><?= $i->user_nama; ?></td>
-                                <td>
+                    <h3>Cetak Laporan</h3>
+                    <hr class="mt-0 pb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Tanggal Mulai</label>
+                                <input type="text" name="tgl_mulai" id="tgl_mulai" placeholder="dd/mm/yyyy" onchange="btnCheck(event);" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" data-target="#tgl_mulai">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Tanggal Akhir</label>
+                                <input type="text" name="tgl_akhir" id="tgl_akhir" placeholder="dd/mm/yyyy" onchange="btnCheck(event);" class="form-control datetimepicker-input datetimepicker" data-toggle="datetimepicker" data-target="#tgl_akhir">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <button class="btn btn-primary mt-2 w-100" id="btn-laporan" onclick="cetakLaporan();" disabled>Cetak Laporan</button>
+                        </div>
+                    </div>
+                    <h3 class="mt-4">Transaksi</h3>
+                    <hr class="mt-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered table-striped datable dt-responsive nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>No. Invoice</th>
+                                        <th>Nama Pemesan</th>
+                                        <th>Cara Bayar</th>
+                                        <th>Jenis Pembayaran</th>
+                                        <th>Total Tagihan</th>
+                                        <th>Total Dibayar</th>
+                                        <th>Status Pesanan</th>
+                                        <th>Tanggal Pembuatan Invoice</th>
+                                        <th>Tombol Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php
-                                        if($i->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
-                                        }
-                                        else {
-                                            echo "Ambil di tempat";
-                                        }
+                                        $no = 1;
+                                        foreach($invoice_laporan->result() as $i) {
                                     ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        if($i->jenis_bayar == 1) {
-                                            echo "Transfer";
-                                        }
-                                        else {
-                                            echo "Tunai";
-                                        }
-                                    ?>    
-                                </td>
-                                <td><?= "Rp. ".number_format($i->total_bayar); ?></td>
-                                <td><?= "Rp. ".number_format($i->dibayar); ?></td>
-                                <td>
-                                    <?php
-                                        if($i->status == 0) {
-                                            if($i->jenis_bayar == 1 AND $i->bukti_transfer == "") {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Dibayar</font></span>";
-                                            }
-                                            else if($i->jenis_bayar == 1 AND $i->bukti_transfer <> "") {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
-                                            }
-                                            else if($i->jenis_bayar == 2) {
-                                                echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
-                                            }
-                                        }
-                                        else if($i->status == 1) {
-                                            echo "<span class='bg-success p-2 rounded'>Sudah Tervalidasi</span>";
-                                        }
-                                        else if($i->status == 2) {
-                                            echo "<span class='bg-danger p-2 rounded'>Dibatalkan</span>";
-                                        }
-                                        else if($i->status == 3) {
-                                            echo "<span class='bg-primary p-2 rounded'>Selesai</span>";
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        $tgl_invoice = date("d",strtotime($i->waktu_ditambahkan));
-                                        $bln_invoice = date("m",strtotime($i->waktu_ditambahkan));
-                                        $thn_invoice = date("Y",strtotime($i->waktu_ditambahkan));
-                                        $waktu_invoice = date("H:i:s",strtotime($i->waktu_ditambahkan));
+                                    <tr>
+                                        <td><?= $no++."."; ?></td>
+                                        <td><?= $i->no_invoice; ?></td>
+                                        <td><?= $i->user_nama; ?></td>
+                                        <td>
+                                            <?php
+                                                if($i->cara_bayar == 1) {
+                                                    echo "Di Toko";
+                                                }
+                                                else {
+                                                    echo "Di Tempat";
+                                                }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                                if($i->jenis_bayar == 1) {
+                                                    echo "Transfer";
+                                                }
+                                                else {
+                                                    echo "Tunai";
+                                                }
+                                            ?>    
+                                        </td>
+                                        <td><?= "Rp. ".number_format($i->total_bayar); ?></td>
+                                        <td><?= "Rp. ".number_format($i->dibayar); ?></td>
+                                        <td>
+                                            <?php
+                                                if($i->status == 0) {
+                                                    if($i->jenis_bayar == 1 AND $i->bukti_transfer == "") {
+                                                        echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Dibayar</font></span>";
+                                                    }
+                                                    else if($i->jenis_bayar == 1 AND $i->bukti_transfer <> "") {
+                                                        echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
+                                                    }
+                                                    else if($i->jenis_bayar == 2) {
+                                                        echo "<span class='bg-warning p-2 rounded'><font class='text-white'>Belum Divalidasi</font></span>";
+                                                    }
+                                                }
+                                                else if($i->status == 1) {
+                                                    echo "<span class='bg-success p-2 rounded'>Sudah Tervalidasi</span>";
+                                                }
+                                                else if($i->status == 2) {
+                                                    echo "<span class='bg-danger p-2 rounded'>Dibatalkan</span>";
+                                                }
+                                                else if($i->status == 3) {
+                                                    echo "<span class='bg-primary p-2 rounded'>Selesai</span>";
+                                                }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                                $tgl_invoice = date("d",strtotime($i->waktu_ditambahkan));
+                                                $bln_invoice = date("m",strtotime($i->waktu_ditambahkan));
+                                                $thn_invoice = date("Y",strtotime($i->waktu_ditambahkan));
+                                                $waktu_invoice = date("H:i:s",strtotime($i->waktu_ditambahkan));
 
-                                        if($bln_invoice == "01") {
-                                            $bln_invoice = "Januari";
-                                        }
-                                        else if($bln_invoice == "02") {
-                                            $bln_invoice = "Februari";
-                                        }
-                                        else if($bln_invoice == "03") {
-                                            $bln_invoice = "Maret";
-                                        }
-                                        else if($bln_invoice == "04") {
-                                            $bln_invoice = "April";
-                                        }
-                                        else if($bln_invoice == "05") {
-                                            $bln_invoice = "Mei";
-                                        }
-                                        else if($bln_invoice == "06") {
-                                            $bln_invoice = "Juni";
-                                        }
-                                        else if($bln_invoice == "07") {
-                                            $bln_invoice = "Juli";
-                                        }
-                                        else if($bln_invoice == "08") {
-                                            $bln_invoice = "Agustus";
-                                        }
-                                        else if($bln_invoice == "09") {
-                                            $bln_invoice = "September";
-                                        }
-                                        else if($bln_invoice == "10") {
-                                            $bln_invoice = "Oktober";
-                                        }
-                                        else if($bln_invoice == "11") {
-                                            $bln_invoice = "November";
-                                        }
-                                        else if($bln_invoice == "12") {
-                                            $bln_invoice = "Desember";
-                                        }
+                                                if($bln_invoice == "01") {
+                                                    $bln_invoice = "Januari";
+                                                }
+                                                else if($bln_invoice == "02") {
+                                                    $bln_invoice = "Februari";
+                                                }
+                                                else if($bln_invoice == "03") {
+                                                    $bln_invoice = "Maret";
+                                                }
+                                                else if($bln_invoice == "04") {
+                                                    $bln_invoice = "April";
+                                                }
+                                                else if($bln_invoice == "05") {
+                                                    $bln_invoice = "Mei";
+                                                }
+                                                else if($bln_invoice == "06") {
+                                                    $bln_invoice = "Juni";
+                                                }
+                                                else if($bln_invoice == "07") {
+                                                    $bln_invoice = "Juli";
+                                                }
+                                                else if($bln_invoice == "08") {
+                                                    $bln_invoice = "Agustus";
+                                                }
+                                                else if($bln_invoice == "09") {
+                                                    $bln_invoice = "September";
+                                                }
+                                                else if($bln_invoice == "10") {
+                                                    $bln_invoice = "Oktober";
+                                                }
+                                                else if($bln_invoice == "11") {
+                                                    $bln_invoice = "November";
+                                                }
+                                                else if($bln_invoice == "12") {
+                                                    $bln_invoice = "Desember";
+                                                }
 
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
-                                    ?>
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $i->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button>
-                                        <?php if($i->status == 3) { ?>
-                                        <button class="btn btn-success" type="button" onclick="cetakStruk(event);" data-no_invoice="<?= $i->no_invoice; ?>"><i class="fas fa-print"></i> Cetak Struk</button>
-                                        <?php } ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                                                echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $i->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button>
+                                                <?php if($i->status == 3) { ?>
+                                                <button class="btn btn-success" type="button" onclick="cetakStruk(event);" data-no_invoice="<?= $i->no_invoice; ?>"><i class="fas fa-print"></i> Cetak Struk</button>
+                                                <?php } ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

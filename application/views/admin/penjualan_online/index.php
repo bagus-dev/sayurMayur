@@ -12,9 +12,10 @@
                                 <th>No.</th>
                                 <th>No. Invoice</th>
                                 <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
+                                <th>Cara Bayar</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Total Tagihan</th>
+                                <th>Total Dibayar</th>
                                 <th>Tanggal Pembuatan Invoice</th>
                                 <th>Tombol Aksi</th>
                             </tr>
@@ -30,11 +31,11 @@
                                 <td><?= $ds->user_nama; ?></td>
                                 <td>
                                     <?php
-                                        if($ds->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
+                                        if($ds->cara_bayar == 1) {
+                                            echo "Di Toko";
                                         }
                                         else {
-                                            echo "Ambil di tempat";
+                                            echo "Di Tempat";
                                         }
                                     ?>
                                 </td>
@@ -49,6 +50,7 @@
                                     ?>    
                                 </td>
                                 <td><?= "Rp. ".number_format($ds->total_bayar); ?></td>
+                                <td><?= "Rp. ".number_format($ds->dibayar); ?></td>
                                 <td>
                                     <?php
                                         $tgl_invoice = date("d",strtotime($ds->waktu_ditambahkan));
@@ -113,7 +115,7 @@
                                 <th>No.</th>
                                 <th>No. Invoice</th>
                                 <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
+                                <th>Cara Bayar</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
@@ -131,11 +133,11 @@
                                 <td><?= $dv->user_nama; ?></td>
                                 <td>
                                     <?php
-                                        if($dv->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
+                                        if($dv->cara_bayar == 1) {
+                                            echo "Di Toko";
                                         }
                                         else {
-                                            echo "Ambil di tempat";
+                                            echo "Di Tempat";
                                         }
                                     ?>
                                 </td>
@@ -214,7 +216,7 @@
                                 <th>No.</th>
                                 <th>No. Invoice</th>
                                 <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
+                                <th>Cara Bayar</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
@@ -233,11 +235,11 @@
                                 <td><?= $di->user_nama; ?></td>
                                 <td>
                                     <?php
-                                        if($di->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
+                                        if($di->cara_bayar == 1) {
+                                            echo "Di Toko";
                                         }
                                         else {
-                                            echo "Ambil di tempat";
+                                            echo "Di Tempat";
                                         }
                                     ?>
                                 </td>
@@ -316,107 +318,6 @@
 
             <div class="card mt-3">
                 <div class="card-body">
-                    <h3 class="pb-3 mb-3 border-bottom">Status <span class="text-warning">Belum<small>Bayar</small></h3>
-                    <table class="table table-bordered table-striped datable dt-responsive nowrap">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>No. Invoice</th>
-                                <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
-                                <th>Jenis Pembayaran</th>
-                                <th>Total Tagihan</th>
-                                <th>Tanggal Pembuatan Invoice</th>
-                                <th>Tombol Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $no = 1;
-                                foreach($detail_invoice_belum_bayar->result() as $du) {
-                            ?>
-                            <tr>
-                                <td><?= $no++."."; ?></td>
-                                <td><?= $du->no_invoice; ?></td>
-                                <td><?= $du->user_nama; ?></td>
-                                <td>
-                                    <?php
-                                        if($du->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
-                                        }
-                                        else {
-                                            echo "Ambil di tempat";
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        if($du->jenis_bayar == 1) {
-                                            echo "Transfer";
-                                        }
-                                        else {
-                                            echo "Tunai";
-                                        }
-                                    ?>    
-                                </td>
-                                <td><?= "Rp. ".number_format($du->total_bayar); ?></td>
-                                <td>
-                                    <?php
-                                        $tgl_invoice = date("d",strtotime($du->waktu_ditambahkan));
-                                        $bln_invoice = date("m",strtotime($du->waktu_ditambahkan));
-                                        $thn_invoice = date("Y",strtotime($du->waktu_ditambahkan));
-                                        $waktu_invoice = date("H:i:s",strtotime($du->waktu_ditambahkan));
-
-                                        if($bln_invoice == "01") {
-                                            $bln_invoice = "Januari";
-                                        }
-                                        else if($bln_invoice == "02") {
-                                            $bln_invoice = "Februari";
-                                        }
-                                        else if($bln_invoice == "03") {
-                                            $bln_invoice = "Maret";
-                                        }
-                                        else if($bln_invoice == "04") {
-                                            $bln_invoice = "April";
-                                        }
-                                        else if($bln_invoice == "05") {
-                                            $bln_invoice = "Mei";
-                                        }
-                                        else if($bln_invoice == "06") {
-                                            $bln_invoice = "Juni";
-                                        }
-                                        else if($bln_invoice == "07") {
-                                            $bln_invoice = "Juli";
-                                        }
-                                        else if($bln_invoice == "08") {
-                                            $bln_invoice = "Agustus";
-                                        }
-                                        else if($bln_invoice == "09") {
-                                            $bln_invoice = "September";
-                                        }
-                                        else if($bln_invoice == "10") {
-                                            $bln_invoice = "Oktober";
-                                        }
-                                        else if($bln_invoice == "11") {
-                                            $bln_invoice = "November";
-                                        }
-                                        else if($bln_invoice == "12") {
-                                            $bln_invoice = "Desember";
-                                        }
-
-                                        echo $tgl_invoice." ".$bln_invoice." ".$thn_invoice." - ".$waktu_invoice." WIB";
-                                    ?>
-                                </td>
-                                <td><button class="btn btn-primary" type="button" onclick="lihatDetail(event);" data-no_invoice="<?= $du->no_invoice; ?>"><i class="fas fa-list"></i> Lihat Detail</button></td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="card mt-3">
-                <div class="card-body">
                     <h3 class="pb-3 mb-3 border-bottom">Status <small class="text-danger">Dibatalkan</small></h3>
                     <table class="table table-bordered table-striped datable dt-responsive nowrap">
                         <thead>
@@ -424,7 +325,7 @@
                                 <th>No.</th>
                                 <th>No. Invoice</th>
                                 <th>Nama Pemesan</th>
-                                <th>Jenis Pengiriman</th>
+                                <th>Cara Bayar</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Total Tagihan</th>
                                 <th>Tanggal Pembuatan Invoice</th>
@@ -442,11 +343,11 @@
                                 <td><?= $db->user_nama; ?></td>
                                 <td>
                                     <?php
-                                        if($db->jenis_kirim == 1) {
-                                            echo "Antar ke rumah";
+                                        if($db->cara_bayar == 1) {
+                                            echo "Di Toko";
                                         }
                                         else {
-                                            echo "Ambil di tempat";
+                                            echo "Di Tempat";
                                         }
                                     ?>
                                 </td>

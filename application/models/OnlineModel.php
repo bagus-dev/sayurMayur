@@ -30,16 +30,6 @@
             return $this->db->get();
         }
 
-        function get_detail_invoice_belum_bayar() {
-            $this->db->select("*");
-            $this->db->from("tbl_invoice");
-            $this->db->where(array("status" => 0, "jenis_bayar" => 1, "bukti_transfer" => ""));
-            $this->db->order_by("waktu_ditambahkan", "DESC");
-            $this->db->join("tbl_user","tbl_user.user_id = tbl_invoice.user_id");
-            
-            return $this->db->get();
-        }
-
         function get_detail_invoice_batal() {
             $this->db->select("*");
             $this->db->from("tbl_invoice");
@@ -71,10 +61,9 @@
         function get_user_invoice($no_invoice) {
             $get_invoice = $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice))->row();
 
-            $this->db->select("tbl_user.user_nama,tbl_user.user_alamat,tbl_user.user_nohp,tbl_user.user_email,tbl_ongkir.ongkir_lokasi,tbl_ongkir.ongkir_harga");
+            $this->db->select("tbl_user.user_nama,tbl_user.user_nohp,tbl_user.user_email");
             $this->db->from("tbl_user");
             $this->db->where(array("user_id" => $get_invoice->user_id));
-            $this->db->join("tbl_ongkir","tbl_ongkir.ongkir_id = tbl_user.ongkir_id");
 
             return $this->db->get();
         }
@@ -92,19 +81,37 @@
         }
 
         function change_status() {
+            date_default_timezone_set("Asia/Jakarta");
             $status = $this->input->post("status",true);
             $dibayar = $this->input->post("dibayar",true);
 
             if(isset($_POST["dibayar"])) {
-                $data = array(
-                    "status" => $status,
-                    "dibayar" => $dibayar
-                );
+                if($status == "1") {
+                    $data = array(
+                        "waktu_validasi" => date("Y-m-d H:i:s"),
+                        "status" => $status,
+                        "dibayar" => $dibayar
+                    );
+                }
+                else {
+                    $data = array(
+                        "status" => $status,
+                        "dibayar" => $dibayar
+                    );
+                }
             }
             else {
-                $data = array(
-                    "status" => $status
-                );
+                if($status == "1") {
+                    $data = array(
+                        "waktu_validasi" => date("Y-m-d H:i:s"),
+                        "status" => $status
+                    );
+                }
+                else {
+                    $data = array(
+                        "status" => $status
+                    );
+                }
             }
 
             if($this->db->update("tbl_invoice",$data,array("no_invoice" => $this->input->post("no_invoice",true)))) {
@@ -148,7 +155,7 @@
             $date2 = date_create();
 
             foreach ($invoice->result() as $i) {
-                if($i->status == 1) {
+                if($i->status == 1 AND $i->cara_bayar == 1 AND $i->jenis_bayar == 2) {
                     $tgl_validasi = date("d",strtotime($i->waktu_validasi));
                     $bln_validasi = date("m",strtotime($i->waktu_validasi));
                     $thn_validasi = date("Y",strtotime($i->waktu_validasi));
@@ -163,13 +170,34 @@
 
                     if($diff->format("%a") >= 1) {
                         $data = array(
-                            "status" => 2
+                            "status" => 2,
+                            "waktu_batal" => date("Y-m-d H:i:s")
                         );
 
                         $this->db->update("tbl_invoice",$data,array("no_invoice" => $i->no_invoice));
                     }
                 }
             }
+        }
+
+        function get_waktu($no_invoice) {
+            $invoice = $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice))->row();
+            return $this->db->get_where("tbl_waktu",array("waktu_id" => $invoice->waktu_kirim));
+        }
+
+        function get_ongkir($no_invoice) {
+            $invoice = $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice))->row();
+            return $this->db->get_where("tbl_ongkir",array("ongkir_id" => $invoice->tempat_kirim));
+        }
+
+        function get_detail_invoice_by_tgl($tgl_awal,$tgl_akhir) {
+            $this->db->select("*");
+            $this->db->from("tbl_invoice");
+            $this->db->where(array("waktu_ditambahkan >=" => $tgl_awal,"waktu_ditambahkan <=" => $tgl_akhir));
+            $this->db->join("tbl_user","tbl_user.user_id = tbl_invoice.user_id");
+            $this->db->order_by("tbl_invoice.no_invoice","ASC");
+
+            return $this->db->get();
         }
     }
 ?>
