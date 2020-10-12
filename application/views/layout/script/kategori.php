@@ -17,7 +17,7 @@
             const kategori_id = $(this).data('kategori_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/kategori/show',
+                url: '<?= base_url(); ?>/kategori/show',
                 data: {
                     kategori_id: kategori_id
                 },
@@ -39,7 +39,7 @@
             const kategori_id = $(this).data('kategori_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/kategori/show',
+                url: '<?= base_url(); ?>/kategori/show',
                 data: {
                     kategori_id: kategori_id
                 },

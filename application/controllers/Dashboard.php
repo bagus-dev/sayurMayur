@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['barangs'] = $this->barang->getBarang(null, 10);
+        $data['barangs'] = $this->barang->getBarang(null);
 
         $this->load->view('layout/dashboard/header', $data);
         $this->load->view('admin/dashboard/index');

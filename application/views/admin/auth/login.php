@@ -1,6 +1,6 @@
 <!-- Login-Box -->
 <a href="<?= base_url(); ?>">
-    <h1 class="text-dark" align="center">Sayur<small class="text-danger">Mayur</small></h1>
+    <h1 class="text-dark" align="center">Radja<small class="text-danger">Sayur</small></h1>
 </a>
 <div class="login-box mx-auto">
     <div class="row">

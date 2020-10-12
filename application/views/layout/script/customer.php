@@ -6,7 +6,7 @@
             const user_id = $(this).data('user_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/customer/show',
+                url: '<?= base_url(); ?>/customer/show',
                 data: {
                     user_id: user_id
                 },
@@ -41,7 +41,7 @@
             const customer_id = $(this).data('customer_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/customer/show2',
+                url: '<?= base_url(); ?>/customer/show2',
                 data: {
                     customer_id: customer_id
                 },
@@ -64,7 +64,7 @@
             const customer_id = $(this).data('customer_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/customer/show2',
+                url: '<?= base_url(); ?>/customer/show2',
                 data: {
                     customer_id: customer_id
                 },

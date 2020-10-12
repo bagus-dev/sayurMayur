@@ -238,26 +238,26 @@ class BarangModel extends CI_Model
         $date2 = date_create();
 
         foreach ($invoice->result() as $i) {
-            if($i->status == 1 AND $i->cara_bayar == 1 AND $i->jenis_bayar == 2) {
-                $tgl_validasi = date("d",strtotime($i->waktu_validasi));
-                $bln_validasi = date("m",strtotime($i->waktu_validasi));
-                $thn_validasi = date("Y",strtotime($i->waktu_validasi));
-                $waktu_validasi = $thn_validasi."-".$bln_validasi."-".$tgl_validasi;
+            if ($i->status == 1 and $i->cara_bayar == 1 and $i->jenis_bayar == 2) {
+                $tgl_validasi = date("d", strtotime($i->waktu_validasi));
+                $bln_validasi = date("m", strtotime($i->waktu_validasi));
+                $thn_validasi = date("Y", strtotime($i->waktu_validasi));
+                $waktu_validasi = $thn_validasi . "-" . $bln_validasi . "-" . $tgl_validasi;
 
-                $waktu = $this->db->get_where("tbl_waktu",array("waktu_id" => $i->waktu_kirim))->row();
-                $waktu_kirim = $waktu->waktu_akhir.":00";
-                $date = $waktu_validasi." ".$waktu_kirim;
+                $waktu = $this->db->get_where("tbl_waktu", array("waktu_id" => $i->waktu_kirim))->row();
+                $waktu_kirim = $waktu->waktu_akhir . ":00";
+                $date = $waktu_validasi . " " . $waktu_kirim;
 
                 $date1 = date_create($date);
-                $diff = date_diff($date1,$date2);
+                $diff = date_diff($date1, $date2);
 
-                if($diff->format("%a") >= 1) {
+                if ($diff->format("%a") >= 1) {
                     $data = array(
                         "status" => 2,
                         "waktu_batal" => date("Y-m-d H:i:s")
                     );
 
-                    $this->db->update("tbl_invoice",$data,array("no_invoice" => $i->no_invoice));
+                    $this->db->update("tbl_invoice", $data, array("no_invoice" => $i->no_invoice));
                 }
             }
         }
@@ -357,13 +357,15 @@ class BarangModel extends CI_Model
         echo json_encode($json);
     }
 
-    function get_ongkir($no_invoice) {
-        $invoice = $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice))->row();
-        return $this->db->get_where("tbl_ongkir",array("ongkir_id" => $invoice->tempat_kirim));
+    function get_ongkir($no_invoice)
+    {
+        $invoice = $this->db->get_where("tbl_invoice", array("no_invoice" => $no_invoice))->row();
+        return $this->db->get_where("tbl_ongkir", array("ongkir_id" => $invoice->tempat_kirim));
     }
 
-    function get_waktu($no_invoice) {
-        $invoice = $this->db->get_where("tbl_invoice",array("no_invoice" => $no_invoice))->row();
-        return $this->db->get_where("tbl_waktu",array("waktu_id" => $invoice->waktu_kirim));
+    function get_waktu($no_invoice)
+    {
+        $invoice = $this->db->get_where("tbl_invoice", array("no_invoice" => $no_invoice))->row();
+        return $this->db->get_where("tbl_waktu", array("waktu_id" => $invoice->waktu_kirim));
     }
 }

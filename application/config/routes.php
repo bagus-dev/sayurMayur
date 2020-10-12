@@ -64,3 +64,5 @@ $route['penjualan-online/status/change'] = 'penjualanonline/change_status';
 $route['penjualan_online/laporan'] = 'penjualanonline/laporan';
 $route['penjualan_online/print_struk/(:any)'] = 'penjualanonline/cetak_struk/$1';
 $route['penjualan_online/cetak_laporan'] = 'penjualanonline/cetak_laporan';
+
+$route['penjualan/cetak_laporan'] = 'penjualan/cetak_laporan';
