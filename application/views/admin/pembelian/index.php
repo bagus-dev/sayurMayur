@@ -70,13 +70,18 @@
                         <input type="hidden" id="c_beli_barang_harpok">
                         <input type="hidden" id="c_beli_barang_harjul">
                         <input type="hidden" id="c_beli_barang_harjul_grosir">
-                        <input type="hidden" id="stok">
                         <input type="hidden" id="stok_cart">
 
                         <input type="text" class="form-control" placeholder="Kode Barang" id="c_beli_barang_id" readonly>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-search"></i></button>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="c_jual_qty" class="col-sm-4 col-form-label">Stok</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="stok" value="0" readonly>
                     </div>
                 </div>
                 <div class="form-group row">

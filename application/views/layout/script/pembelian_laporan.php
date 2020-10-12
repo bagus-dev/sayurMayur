@@ -6,7 +6,7 @@
             const beli_id = $(this).data('beli_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/pembelian/show2',
+                url: '<?= base_url(); ?>/pembelian/show2',
                 data: {
                     beli_id: beli_id
                 },

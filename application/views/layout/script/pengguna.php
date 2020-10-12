@@ -20,7 +20,7 @@
             const user_id = $(this).data('user_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/pengguna/show',
+                url: '<?= base_url(); ?>/pengguna/show',
                 data: {
                     user_id: user_id
                 },
@@ -39,6 +39,9 @@
                     } else {
                         $('#user_role_id').val(data.user_role_id).attr('disabled', false);
                     }
+                },
+                error: function(data) {
+                    console.log(data);
                 }
             });
         });
@@ -49,7 +52,7 @@
             const user_id = $(this).data('user_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/pengguna/show',
+                url: '<?= base_url(); ?>/pengguna/show',
                 data: {
                     user_id: user_id
                 },

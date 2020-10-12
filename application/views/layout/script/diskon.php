@@ -15,7 +15,7 @@
             const diskon_id = $(this).data('diskon_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/diskon/show',
+                url: '<?= base_url(); ?>/diskon/show',
                 data: {
                     diskon_id: diskon_id
                 },
@@ -37,7 +37,7 @@
             const diskon_id = $(this).data('diskon_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/diskon/show',
+                url: '<?= base_url(); ?>/diskon/show',
                 data: {
                     diskon_id: diskon_id
                 },

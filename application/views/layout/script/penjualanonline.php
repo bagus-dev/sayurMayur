@@ -1,20 +1,20 @@
-<?php if(isset($_GET["change_status"])) { ?>
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 4000,
-        onClose: () => {
-            window.history.replaceState({}, document.title, "/" + "sayurMayur/penjualan-online")
-        }
-    });
+<?php if (isset($_GET["change_status"])) { ?>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            onClose: () => {
+                window.history.replaceState({}, document.title, "/" + "sayurMayur/penjualan-online")
+            }
+        });
 
-    Toast.fire({
-        icon: 'success',
-        title: 'Berhasil Mengubah Status Pesanan.'
-    });
-</script>
+        Toast.fire({
+            icon: 'success',
+            title: 'Berhasil Mengubah Status Pesanan.'
+        });
+    </script>
 <?php } ?>
 
 <script>
@@ -24,10 +24,10 @@
 
         $.ajax({
             type: "POST",
-            url: "<?= base_url().'page/get_bukti_trf'; ?>",
-            data: "no_invoice="+no_invoice,
+            url: "<?= base_url() . 'page/get_bukti_trf'; ?>",
+            data: "no_invoice=" + no_invoice,
             success: function(response) {
-                $("html").css("overflow-y","hidden");
+                $("html").css("overflow-y", "hidden");
 
                 $("#warningModal").html(response);
             }
@@ -35,12 +35,12 @@
     });
 
     $("#modalWarning").on("hide.bs.modal", function(e) {
-        $("html").css("overflow-y","auto");
+        $("html").css("overflow-y", "auto");
     });
 
     function lihatDetail(e) {
         var no_invoice = e.target.dataset.no_invoice;
 
-        window.open('<?= base_url()."penjualan-online/"; ?>' + no_invoice + '','_self');
+        window.open('<?= base_url() . "penjualan-online/"; ?>' + no_invoice + '', '_self');
     }
 </script>

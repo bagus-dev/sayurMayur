@@ -174,4 +174,15 @@ class PenjualanModel extends CI_Model
             $this->db->query("DELETE FROM tbl_cart_jual WHERE c_jual_user_id='$c_jual_user_id'");
         }
     }
+
+    function get_detail_invoice_by_tgl($tgl_awal, $tgl_akhir)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_jual");
+        $this->db->where(array("jual_tanggal >=" => $tgl_awal, "jual_tanggal <=" => $tgl_akhir));
+        $this->db->join("tbl_user", "tbl_user.user_id = tbl_jual.jual_user_id");
+        $this->db->order_by("tbl_jual.jual_nofak", "ASC");
+
+        return $this->db->get();
+    }
 }

@@ -1,5 +1,5 @@
 <div class="container" id="container-checkout" style="margin-top: 100px;">
-    <h1 class="text-dark" align="center">Sayur<small class="text-danger">Mayur</small></h1>
+    <h1 class="text-dark" align="center">Radja<small class="text-danger">Sayur</small></h1>
     <div class="card">
         <div class="card-body">
             <h1 class="pb-1 border-bottom title-page">Checkout<small>Barang</small></h1>
@@ -9,8 +9,8 @@
                     <div class="text-bold pt-2">&nbsp; Loading...</div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <h4 class="pb-2">Detail Barang</h4>
+                    <div class="col mt-4">
+                        <h4 class="pb-2 text-center text-md-left border-bottom border-primary">Detail Barang</h4>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -22,30 +22,30 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $no = 1;
-                                    foreach($keranjang->result() as $k) {
+                                $no = 1;
+                                foreach ($keranjang->result() as $k) {
                                 ?>
-                                <tr>
-                                    <td><?= $no++."."; ?></td>
-                                    <td><?= $k->barang_nama; ?></td>
-                                    <td><?= $k->total_kuantitas; ?></td>
-                                    <td class="text-right"><?= "Rp. ".number_format($k->total_harga); ?></td>
-                                </tr>
+                                    <tr>
+                                        <td><?= $no++ . "."; ?></td>
+                                        <td><?= $k->barang_nama; ?></td>
+                                        <td><?= $k->total_kuantitas; ?></td>
+                                        <td class="text-right"><?= "Rp. " . number_format($k->total_harga); ?></td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                             <tfoot>
                                 <?php
-                                    foreach($total_harga_keranjang->result() as $t) {
+                                foreach ($total_harga_keranjang->result() as $t) {
                                 ?>
-                                <tr>
-                                    <th colspan="3" class="text-right">Total Harga Belanja:</th>
-                                    <th class="text-right"><?= 'Rp. '.number_format($t->total_harga); ?></th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-right">Total Harga Belanja:</th>
+                                        <th class="text-right"><?= 'Rp. ' . number_format($t->total_harga); ?></th>
+                                    </tr>
                                 <?php } ?>
                             </tfoot>
                         </table>
                         <hr>
-                        <h4 class="pb-2">Cara Bayar</h4>
+                        <h4 class="pb-2 mt-5 mb-3 border-bottom border-primary text-center text-md-left">Cara Bayar</h4>
                         <form name="form" id="form" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-2 col-12">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <h4 class="pb-2">Detail Pengiriman</h4>
+                            <h4 class="pb-2 text-center text-md-left mt-4 mb-3 border-bottom border-primary">Detail Pengiriman</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -78,9 +78,9 @@
                                         </div>
                                         <div class="col-md-7">
                                             <?php
-                                                foreach($user->result() as $u) {
-                                                    echo $u->user_nama;
-                                                }
+                                            foreach ($user->result() as $u) {
+                                                echo $u->user_nama;
+                                            }
                                             ?>
                                         </div>
                                         <div class="col-md-5 mt-2">
@@ -93,7 +93,7 @@
                                             <b>Alamat Email Penerima:</b>
                                         </div>
                                         <div class="col-md-7 no-mt-xs">
-                                         <?= $u->user_email; ?>
+                                            <?= $u->user_email; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -103,45 +103,47 @@
                                             <b>Tempat Pengiriman:</b>
                                         </div>
                                         <div class="col-md-8 col-cod" style="display:none">
-                                        <?php foreach($ongkir_1->result() as $o1) { ?>
-                                            <button class="btn btn-default py-2 px-5 btn-ongkir" id="ongkir_1" data-ongkir_id="<?= $o1->ongkir_id; ?>" data-ongkir_harga ="<?= $o1->ongkir_harga; ?>" type="button">
-                                                <span class="select-pilih bg-info p-1 rounded" style="display:none;" id="span_ongkir_1">
-                                                    <i class="fas fa-check"></i> Dipilih
-                                                </span>
-                                                <?= $o1->ongkir_lokasi." - Rp. ".number_format($o1->ongkir_harga); ?>
-                                            </button>
+                                            <?php foreach ($ongkir_1->result() as $o1) { ?>
+                                                <button class="btn btn-default py-2 px-5 btn-ongkir" id="ongkir_1" data-ongkir_id="<?= $o1->ongkir_id; ?>" data-ongkir_harga="<?= $o1->ongkir_harga; ?>" type="button">
+                                                    <span class="select-pilih bg-info p-1 rounded" style="display:none;" id="span_ongkir_1">
+                                                        <i class="fas fa-check"></i> Dipilih
+                                                    </span>
+                                                    <?= $o1->ongkir_lokasi . " - Rp. " . number_format($o1->ongkir_harga); ?>
+                                                </button>
                                         </div>
-                                        <?php
+                                    <?php
                                             }
                                             $no_ongkir = 2;
-                                            foreach($ongkir_2->result() as $o2) { ?>
-                                                <div class="col-md-4 col-cod" style="display:none"></div>
-                                                <div class="col-md-8 col-cod" style="display:none">
-                                                    <button class="btn btn-default py-2 px-5 mt-1 btn-ongkir" id="<?= 'ongkir_'.$no_ongkir; ?>" data-ongkir_id="<?= $o2->ongkir_id; ?>" data-ongkir_harga ="<?= $o2->ongkir_harga; ?>" type="button">
-                                                        <span class="select-pilih-3 bg-info p-1 rounded" style="display:none;" id="<?= 'span_ongkir_'.$no_ongkir; ?>">
-                                                            <i class="fas fa-check"></i> Dipilih
-                                                        </span>
-                                                        <?= $o2->ongkir_lokasi." - Rp. ".number_format($o2->ongkir_harga); ?>
-                                                    </button>
-                                                </div>
-                                        <?php $no_ongkir++; } ?>
-                                        <div class="col-md-4 col-waktu-kirim" id="col-waktu-kirim-1">
-                                            <b>Waktu Pengiriman / Pengambilan:</b>
+                                            foreach ($ongkir_2->result() as $o2) { ?>
+                                        <div class="col-md-4 col-cod" style="display:none"></div>
+                                        <div class="col-md-8 col-cod" style="display:none">
+                                            <button class="btn btn-default py-2 px-5 mt-1 btn-ongkir" id="<?= 'ongkir_' . $no_ongkir; ?>" data-ongkir_id="<?= $o2->ongkir_id; ?>" data-ongkir_harga="<?= $o2->ongkir_harga; ?>" type="button">
+                                                <span class="select-pilih-3 bg-info p-1 rounded" style="display:none;" id="<?= 'span_ongkir_' . $no_ongkir; ?>">
+                                                    <i class="fas fa-check"></i> Dipilih
+                                                </span>
+                                                <?= $o2->ongkir_lokasi . " - Rp. " . number_format($o2->ongkir_harga); ?>
+                                            </button>
                                         </div>
-                                        <div class="col-md-8 col-waktu-kirim" id="col-waktu-kirim-2">
-                                            <?php $no_waktu = 1; foreach($waktu->result() as $w) { ?>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" name="waktu_kirim" id="<?= 'waktu_kirim'.$no_waktu; ?>" class="custom-control-input radio-waktu-kirim" value="<?= $w->waktu_id; ?>">
-                                                    <label for="<?= 'waktu_kirim'.$no_waktu++; ?>" class="custom-control-label font-weight-normal"><?= $w->waktu_nama.'&emsp; Jam '.$w->waktu_awal.' s/d '.$w->waktu_akhir; ?></label>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                        <div class="col-md-4 mt-3 col-cod" style="display:none">
-                                            <b>Detail Tujuan Pengiriman:</b>
-                                        </div>
-                                        <div class="col-md-8 no-mt-xs-2 col-cod" style="display:none">
-                                            <textarea name="tujuan_kirim" rows="3" class="form-control" id="detail_kirim" placeholder="Isi Detail Tujuan Pengiriman" onkeyup="checkForm(event);"></textarea>
-                                        </div>
+                                    <?php $no_ongkir++;
+                                            } ?>
+                                    <div class="col-md-4 col-waktu-kirim" id="col-waktu-kirim-1">
+                                        <b>Waktu Pengiriman / Pengambilan:</b>
+                                    </div>
+                                    <div class="col-md-8 col-waktu-kirim" id="col-waktu-kirim-2">
+                                        <?php $no_waktu = 1;
+                                        foreach ($waktu->result() as $w) { ?>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" name="waktu_kirim" id="<?= 'waktu_kirim' . $no_waktu; ?>" class="custom-control-input radio-waktu-kirim" value="<?= $w->waktu_id; ?>">
+                                                <label for="<?= 'waktu_kirim' . $no_waktu++; ?>" class="custom-control-label font-weight-normal"><?= $w->waktu_nama . '&emsp; Jam ' . $w->waktu_awal . ' s/d ' . $w->waktu_akhir; ?></label>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="col-md-4 mt-3 col-cod" style="display:none">
+                                        <b>Detail Tujuan Pengiriman:</b>
+                                    </div>
+                                    <div class="col-md-8 no-mt-xs-2 col-cod" style="display:none">
+                                        <textarea name="tujuan_kirim" rows="3" class="form-control" id="detail_kirim" placeholder="Isi Detail Tujuan Pengiriman" onkeyup="checkForm(event);"></textarea>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="col-md-9 col-8 text-right border-top pt-3 mt-3">
@@ -150,7 +152,7 @@
                                 <div class="col-md-3 col-4 text-right border-top pt-3 mt-3 pr-4"><b>Rp. <span id="ongkir">0</span></b></div>
                             </div>
                             <hr>
-                            <h4 class="pb-2">Detail Pembayaran</h4>
+                            <h4 class="pb-2 mt-4 mb-3 text-center text-md-left border-bottom border-primary">Detail Pembayaran</h4>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="row">
@@ -173,7 +175,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <b>Unggah Bukti Transfer</b>
-                                            <p class="small text-muted">Silakan lakukan transaksi ke Nomor Rekening: <b>01029492 Bank BRI a/n SayurMayur</b>, kemudian unggah bukti transaksi di bawah ini. Pastikan gambar bukti transaksi dapat dilihat dengan jelas.</p>
+                                            <p class="small text-muted">Silakan lakukan transaksi ke Nomor Rekening: <b>01029492 Bank BRI a/n RadjaSayur</b>, kemudian unggah bukti transaksi di bawah ini. Pastikan gambar bukti transaksi dapat dilihat dengan jelas.</p>
                                             <p class="small text-danger">File yang didukung adalah: <b>JPG</b>, <b>JPEG</b>, dan <b>PNG</b>. Maksimal ukuran file adalah <b>500 KB</b>.</p>
                                             <div class="custom-file">
                                                 <input type="file" name="bukti_trf" id="bukti_trf" class="custom-file-input" accept=".jpg,.jpeg,.png" onchange="checkTrf(event);">
@@ -189,7 +191,7 @@
                                     <b>Total Harga Belanja:</b>
                                 </div>
                                 <div class="col-md-3 col-4 text-right border-top pt-3 mt-3 pr-4">
-                                    <b><?= 'Rp. '.number_format($t->total_harga); ?></b>
+                                    <b><?= 'Rp. ' . number_format($t->total_harga); ?></b>
                                 </div>
                                 <div class="col-md-3 offset-md-6 offset-3 col-5 text-right border-top pt-3 mt-3">
                                     <b>Total Ongkos Kirim:</b>
@@ -203,9 +205,9 @@
                                 <div class="col-md-3 col-4 text-right border-top pt-3 mt-3 pr-4 pb-3 border-bottom">
                                     <h5 class="font-weight-bold text-danger">
                                         <?php
-                                            foreach($total_harga_keranjang->result() as $t) {
-                                                echo 'Rp. <span id="total_bayar">'.number_format($t->total_harga).'</span>';
-                                            }
+                                        foreach ($total_harga_keranjang->result() as $t) {
+                                            echo 'Rp. <span id="total_bayar">' . number_format($t->total_harga) . '</span>';
+                                        }
                                         ?>
                                     </h5>
                                 </div>

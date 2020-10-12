@@ -44,7 +44,8 @@ class Auth extends CI_Controller
         }
     }
 
-    function register() {
+    function register()
+    {
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', [
             'required' => $this->required
         ]);

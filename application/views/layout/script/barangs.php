@@ -6,16 +6,15 @@
         function displayWindowSize() {
             let myWidth = window.innerWidth;
 
-            if(myWidth > 767) {
+            if (myWidth > 767) {
                 $(window).scroll(function() {
-                    if($(this).scrollTop() > 150 && myWidth > 767) {
+                    if ($(this).scrollTop() > 150 && myWidth > 767) {
                         $("#cart-right").removeClass("cart-right");
                         $("#cart-right").addClass("fix-cart");
-                        
+
                         var parentCart = $("#parent-cart").width();
                         $("#cart-right").css("width", parentCart + "px");
-                    }
-                    else if($(this).scrollTop() <= 150 && myWidth > 767) {
+                    } else if ($(this).scrollTop() <= 150 && myWidth > 767) {
                         $("#cart-right").removeClass("fix-cart");
                         $("#cart-right").addClass("cart-right");
                     }
@@ -26,8 +25,7 @@
                 $(".title-kategori").addClass("pb-3");
                 $(".title-kategori").removeClass("pb-4");
                 $("#parent-cart").removeClass("mt-3");
-            }
-            else {
+            } else {
                 $("#kat_1").addClass("btn-xs");
                 $("#kat_2").addClass("btn-xs");
                 $(".title-kategori").removeClass("pb-3");
@@ -38,11 +36,11 @@
     })();
 
     $("#kat_1").click(function() {
-        window.open('<?= base_url(); ?>','_self');
+        window.open('<?= base_url(); ?>', '_self');
     });
 
     $("#kat_2").click(function() {
-        window.open('<?= base_url()."kategori/bumbu"; ?>','_self');
+        window.open('<?= base_url() . "kategori/bumbu"; ?>', '_self');
     });
 
     function qtyInput(e) {
@@ -52,23 +50,21 @@
         var no = e.target.dataset.no;
         var stok = $("#stok-" + no).text();
 
-        if(key !== "Backspace" && key !== "Delete") {
-            if((/^[0-9]+$/.test(value.trim()))) {
-                if(value >= 1) {
-                    if(value > parseInt(stok)) {
+        if (key !== "Backspace" && key !== "Delete") {
+            if ((/^[0-9]+$/.test(value.trim()))) {
+                if (value >= 1) {
+                    if (value > parseInt(stok)) {
                         e.target.value = stok;
                     }
 
                     $("#btn-simpan-" + id).removeAttr("disabled");
-                }
-                else {
-                    $("#btn-simpan-" + id).attr("disabled","disabled");
+                } else {
+                    $("#btn-simpan-" + id).attr("disabled", "disabled");
                 }
             }
-        }
-        else if(key == "Backspace" || key == "Delete") {
-            if(value.trim() == "" || value.trim() < 1) {
-                $("#btn-simpan-" + id).attr("disabled","disabled");
+        } else if (key == "Backspace" || key == "Delete") {
+            if (value.trim() == "" || value.trim() < 1) {
+                $("#btn-simpan-" + id).attr("disabled", "disabled");
             }
         }
     }
@@ -79,15 +75,14 @@
         var no = e.target.dataset.no;
         var stok = $("#stok-" + no).text();
 
-        if(value >= 1) {
-            if(value > parseInt(stok)) {
+        if (value >= 1) {
+            if (value > parseInt(stok)) {
                 e.target.value = stok;
             }
 
             $("#btn-simpan-" + id).removeAttr("disabled");
-        }
-        else {
-            $("#btn-simpan-" + id).attr("disabled","disabled");
+        } else {
+            $("#btn-simpan-" + id).attr("disabled", "disabled");
         }
     }
 
@@ -101,33 +96,44 @@
 
         $.ajax({
             type: "POST",
-            url: "<?= base_url().'page/insert_cart'; ?>",
-            data: {barang_id: id, total_kuantitas: total_kuantitas, total_harga: total_harga},
+            url: "<?= base_url() . 'page/insert_cart'; ?>",
+            data: {
+                barang_id: id,
+                total_kuantitas: total_kuantitas,
+                total_harga: total_harga
+            },
             dataType: "json",
             beforeSend: function() {
                 $("#loading-section2").removeAttr("style");
             },
             success: function(response) {
-                if(response.status == 1) {
+                if (response.status == 1) {
                     var cek = $("#barang_cart_right").find('.text-center');
-                    if(cek.length > 0) {
+                    if (cek.length > 0) {
                         $("#barang_cart_right").html(
-                            $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
-                                $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
-                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                $("<td>").html('<span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                            $("<tr>").addClass("text-left").attr({
+                                id: "cart_row_" + response.id
+                            }).append(
+                                $("<td>").attr({
+                                    id: "nama-" + response.id
+                                }).text(barang_nama),
+                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
+                                $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
                                 $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
                             )
                         );
 
                         $("#btn-cekout").removeAttr("disabled");
-                    }
-                    else {
+                    } else {
                         $("#barang_cart_right").append(
-                            $("<tr>").addClass("text-left").attr({ id: "cart_row_" + response.id }).append(
-                                $("<td>").attr({ id: "nama-" + response.id }).text(barang_nama),
-                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' +response.id+ '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                $("<td>").html('<span id="subtotal-'+ response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                            $("<tr>").addClass("text-left").attr({
+                                id: "cart_row_" + response.id
+                            }).append(
+                                $("<td>").attr({
+                                    id: "nama-" + response.id
+                                }).text(barang_nama),
+                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
+                                $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
                                 $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
                             )
                         );
@@ -139,7 +145,7 @@
                     $("#total_harga_cart_right").text(numberWithCommas(fix_harga_cur));
                     $("#badge_cart").text(response.num_rows);
                     $("#qty_input_" + id).val("");
-                    $("#btn-simpan-" + id).attr("disabled","disabled");
+                    $("#btn-simpan-" + id).attr("disabled", "disabled");
 
                     const Toast = Swal.mixin({
                         toast: true,
@@ -153,8 +159,7 @@
                         icon: "success",
                         title: "Barang Berhasil Ditambah ke Keranjang"
                     })
-                }
-                else {
+                } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',
@@ -163,7 +168,7 @@
                 }
             },
             complete: function() {
-                $("#loading-section2").attr("style","display:none");
+                $("#loading-section2").attr("style", "display:none");
             }
         })
     }
@@ -179,17 +184,17 @@
         var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
         var rightWidth = (maxLength - sideWidth * 2 - 2) >> 1;
 
-        if(totalPages <= maxLength) {
+        if (totalPages <= maxLength) {
             return range(1, totalPages);
         }
 
-        if(totalPages <= maxLength - sideWidth - 1 - rightWidth) {
+        if (totalPages <= maxLength - sideWidth - 1 - rightWidth) {
             return range(1, maxLength - sideWidth - 1)
                 .concat([0])
                 .concat(range(totalPages - sideWidth + 1, totalPages));
         }
 
-        if(page >= totalPages - sideWidth - 1 - rightWidth) {
+        if (page >= totalPages - sideWidth - 1 - rightWidth) {
             return range(1, sideWidth)
                 .concat([0])
                 .concat(
@@ -213,13 +218,13 @@
         var currentPage;
 
         function showPage(whichPage) {
-            if(whichPage < 1 || whichPage > totalPages) return false;
+            if (whichPage < 1 || whichPage > totalPages) return false;
             currentPage = whichPage;
             $("#row-data #col-data")
                 .hide()
                 .slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage)
                 .show();
-            
+
             $(".pagination li").slice(1, -1).remove();
             getPageList(totalPages, currentPage, paginationSize).forEach(item => {
                 $("<li>")
@@ -230,11 +235,11 @@
                     )
                     .append(
                         $("<a>")
-                            .addClass("page-link")
-                            .attr({
-                                href: "javascript:void(0)"
-                            })
-                            .text(item || "...")
+                        .addClass("page-link")
+                        .attr({
+                            href: "javascript:void(0)"
+                        })
+                        .text(item || "...")
                     )
                     .insertBefore("#next-page");
             });
@@ -242,21 +247,25 @@
         }
 
         $(".pagination").append(
-            $("<li>").addClass("page-item").attr({ id: "previous-page" }).append(
+            $("<li>").addClass("page-item").attr({
+                id: "previous-page"
+            }).append(
                 $("<a>")
-                    .addClass("page-link")
-                    .attr({
-                        href: "javascript:void(0)"
-                    })
-                    .text("Sebelumnya")
+                .addClass("page-link")
+                .attr({
+                    href: "javascript:void(0)"
+                })
+                .text("Sebelumnya")
             ),
-            $("<li>").addClass("page-item").attr({ id: "next-page" }).append(
+            $("<li>").addClass("page-item").attr({
+                id: "next-page"
+            }).append(
                 $("<a>")
-                    .addClass("page-link")
-                    .attr({
-                        href: "javascript:void(0)"
-                    })
-                    .text("Selanjutnya")
+                .addClass("page-link")
+                .attr({
+                    href: "javascript:void(0)"
+                })
+                .text("Selanjutnya")
             )
         );
 
@@ -273,7 +282,9 @@
             return showPage(currentPage - 1);
         });
         $(".pagination").on("click", function() {
-            $("#col-left").animate({ scrollTop: 0}, 50);
+            $("#col-left").animate({
+                scrollTop: 0
+            }, 50);
         });
     });
 
@@ -284,28 +295,30 @@
     function changeQtyCart(e) {
         const key = e.key;
 
-        if(key !== "Backspace" && key !== "Delete") {
+        if (key !== "Backspace" && key !== "Delete") {
             var value = e.target.value;
-            
-            if((/^[0-9]+$/.test(value.trim()))) {
+
+            if ((/^[0-9]+$/.test(value.trim()))) {
                 var id = e.target.dataset.cart_id;
                 var subtotal = document.getElementById("subtotal-" + id);
 
-                if(value >= 1) {
+                if (value >= 1) {
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url().'page/change_kuantitas'; ?>",
-                        data: {"total_kuantitas": value,"id": id},
+                        url: "<?= base_url() . 'page/change_kuantitas'; ?>",
+                        data: {
+                            "total_kuantitas": value,
+                            "id": id
+                        },
                         dataType: "json",
                         beforeSend: function() {
                             $("#loading-section").removeAttr("style");
                         },
                         success: function(response) {
-                            if(response.status == 1) {
+                            if (response.status == 1) {
                                 subtotal.innerHTML = numberWithCommas(response.subtotal);
                                 $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
-                            }
-                            else if(response.status = 2) {
+                            } else if (response.status = 2) {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
@@ -315,8 +328,7 @@
                                 e.target.value = response.stok;
                                 subtotal.innerHTML = numberWithCommas(response.subtotal);
                                 $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
-                            }
-                            else {
+                            } else {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
@@ -325,11 +337,10 @@
                             }
                         },
                         complete: function() {
-                            $("#loading-section").css("display","none");
+                            $("#loading-section").css("display", "none");
                         }
                     })
-                }
-                else {
+                } else {
                     var barang_nama = document.getElementById("nama-" + id);
 
                     Swal.fire({
@@ -344,9 +355,9 @@
                         showLoaderOnConfirm: true,
                         allowOutsideClick: () => !Swal.isLoading(),
                         preConfirm: () => {
-                            return fetch(`<?= base_url().'page/delete_cart/'; ?>` + id)
+                            return fetch(`<?= base_url() . 'page/delete_cart/'; ?>` + id)
                                 .then(response => {
-                                    if(!response.ok) {
+                                    if (!response.ok) {
                                         throw new Error(response.statusText)
                                     }
                                     return response.json()
@@ -358,19 +369,23 @@
                                 })
                         }
                     }).then((result) => {
-                        if(result.value) {
+                        if (result.value) {
                             $("#cart_row_" + id).remove();
                             $("#total_harga_cart_right").text(numberWithCommas(result.value.total_harga));
                             $("#badge_cart").text(result.value.num_rows);
 
-                            if(result.value.total_harga == 0) {
+                            if (result.value.total_harga == 0) {
                                 $("#barang_cart_right").html(
                                     $("<tr>").addClass("text-center").append(
-                                        $("<td>").attr({ colspan: "4" }).html("<b>Keranjang Kosong...</b>")
+                                        $("<td>").attr({
+                                            colspan: "4"
+                                        }).html("<b>Keranjang Kosong...</b>")
                                     )
                                 );
 
-                                $("#btn-cekout").attr({ disabled: "disabled" });
+                                $("#btn-cekout").attr({
+                                    disabled: "disabled"
+                                });
                             }
 
                             const Toast = Swal.mixin({
@@ -385,14 +400,16 @@
                                 icon: "success",
                                 title: "Barang Berhasil Dihapus"
                             })
-                        }
-                        else if(result.dismiss === Swal.DismissReason.cancel) {
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
                             var qty = 1;
 
                             $.ajax({
                                 type: "POST",
-                                url: "<?= base_url().'page/change_kuantitas'; ?>",
-                                data: {"total_kuantitas": qty,"id": id},
+                                url: "<?= base_url() . 'page/change_kuantitas'; ?>",
+                                data: {
+                                    "total_kuantitas": qty,
+                                    "id": id
+                                },
                                 dataType: "json",
                                 beforeSend: function() {
                                     $("#loading-section").removeAttr("style");
@@ -403,7 +420,7 @@
                                     $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                                 },
                                 complete: function() {
-                                    $("#loading-section").css("display","none");
+                                    $("#loading-section").css("display", "none");
                                 }
                             });
                         }
@@ -418,21 +435,23 @@
         var id = e.target.dataset.cart_id;
         var subtotal = document.getElementById("subtotal-" + id);
 
-        if(value >= 1) {
+        if (value >= 1) {
             $.ajax({
                 type: "POST",
-                url: "<?= base_url().'page/change_kuantitas'; ?>",
-                data: {"total_kuantitas": value,"id": id},
+                url: "<?= base_url() . 'page/change_kuantitas'; ?>",
+                data: {
+                    "total_kuantitas": value,
+                    "id": id
+                },
                 dataType: "json",
                 beforeSend: function() {
                     $("#loading-section").removeAttr("style");
                 },
                 success: function(response) {
-                    if(response.status == 1) {
+                    if (response.status == 1) {
                         subtotal.innerHTML = numberWithCommas(response.subtotal);
                         $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
-                    }
-                    else if(response.status = 2) {
+                    } else if (response.status = 2) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal',
@@ -442,8 +461,7 @@
                         e.target.value = response.stok;
                         subtotal.innerHTML = numberWithCommas(response.subtotal);
                         $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
-                    }
-                    else {
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal',
@@ -452,11 +470,10 @@
                     }
                 },
                 complete: function() {
-                    $("#loading-section").css("display","none");
+                    $("#loading-section").css("display", "none");
                 }
             })
-        }
-        else {
+        } else {
             var barang_nama = document.getElementById("nama-" + id);
 
             Swal.fire({
@@ -471,9 +488,9 @@
                 showLoaderOnConfirm: true,
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
-                    return fetch(`<?= base_url().'page/delete_cart/'; ?>` + id)
+                    return fetch(`<?= base_url() . 'page/delete_cart/'; ?>` + id)
                         .then(response => {
-                            if(!response.ok) {
+                            if (!response.ok) {
                                 throw new Error(response.statusText)
                             }
                             return response.json()
@@ -485,19 +502,23 @@
                         })
                 }
             }).then((result) => {
-                if(result.value) {
+                if (result.value) {
                     $("#cart_row_" + id).remove();
                     $("#total_harga_cart_right").text(numberWithCommas(result.value.total_harga));
                     $("#badge_cart").text(result.value.num_rows);
 
-                    if(result.value.total_harga == 0) {
+                    if (result.value.total_harga == 0) {
                         $("#barang_cart_right").html(
                             $("<tr>").addClass("text-center").append(
-                                $("<td>").attr({ colspan: "4" }).html("<b>Keranjang Kosong...</b>")
+                                $("<td>").attr({
+                                    colspan: "4"
+                                }).html("<b>Keranjang Kosong...</b>")
                             )
                         );
 
-                        $("#btn-cekout").attr({ disabled: "disabled" });
+                        $("#btn-cekout").attr({
+                            disabled: "disabled"
+                        });
                     }
 
                     const Toast = Swal.mixin({
@@ -512,14 +533,16 @@
                         icon: "success",
                         title: "Barang Berhasil Dihapus"
                     })
-                }
-                else if(result.dismiss === Swal.DismissReason.cancel) {
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
                     var qty = 1;
-                            
+
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url().'page/change_kuantitas'; ?>",
-                        data: {"total_kuantitas": qty,"id": id},
+                        url: "<?= base_url() . 'page/change_kuantitas'; ?>",
+                        data: {
+                            "total_kuantitas": qty,
+                            "id": id
+                        },
                         dataType: "json",
                         beforeSend: function() {
                             $("#loading-section").removeAttr("style");
@@ -530,7 +553,7 @@
                             $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
                         },
                         complete: function() {
-                            $("#loading-section").css("display","none");
+                            $("#loading-section").css("display", "none");
                         }
                     });
                 }
@@ -554,9 +577,9 @@
             showLoaderOnConfirm: true,
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
-                return fetch(`<?= base_url().'page/delete_cart/'; ?>` + id)
+                return fetch(`<?= base_url() . 'page/delete_cart/'; ?>` + id)
                     .then(response => {
-                        if(!response.ok) {
+                        if (!response.ok) {
                             throw new Error(response.statusText)
                         }
                         return response.json()
@@ -568,19 +591,23 @@
                     })
             }
         }).then((result) => {
-            if(result.value) {
+            if (result.value) {
                 $("#cart_row_" + id).remove();
                 $("#total_harga_cart_right").text(numberWithCommas(result.value.total_harga));
                 $("#badge_cart").text(result.value.num_rows);
 
-                if(result.value.total_harga == 0) {
+                if (result.value.total_harga == 0) {
                     $("#barang_cart_right").html(
                         $("<tr>").addClass("text-center").append(
-                            $("<td>").attr({ colspan: "4" }).html("<b>Keranjang Kosong...</b>")
+                            $("<td>").attr({
+                                colspan: "4"
+                            }).html("<b>Keranjang Kosong...</b>")
                         )
                     );
 
-                    $("#btn-cekout").attr({ disabled: "disabled" });
+                    $("#btn-cekout").attr({
+                        disabled: "disabled"
+                    });
                 }
 
                 const Toast = Swal.mixin({
@@ -600,63 +627,64 @@
     }
 
     $("#btn-login").click(function() {
-        window.open('<?= base_url()."auth"; ?>', '_self');
+        window.open('<?= base_url() . "auth"; ?>', '_self');
     });
 
     $("#btn-cekout").click(function() {
-        window.open('<?= base_url()."checkout"; ?>', '_self');
+        window.open('<?= base_url() . "checkout"; ?>', '_self');
     });
 </script>
 <?php
-    if($this->uri->segment(2) == "") {
+if ($this->uri->segment(2) == "") {
 ?>
-<script>
-    function updateStock() {
-        var barang_kategori_id = 1;
+    <script>
+        function updateStock() {
+            var barang_kategori_id = 1;
 
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url().'page/update_stock'; ?>",
-            data: "barang_kategori_id="+barang_kategori_id,
-            dataType: "json",
-            success: function(response) {
-                var ii = 1;
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url() . 'page/update_stock'; ?>",
+                data: "barang_kategori_id=" + barang_kategori_id,
+                dataType: "json",
+                success: function(response) {
+                    var ii = 1;
 
-                for(var i = 0; i < response.data.length; i++) {
-                    $("#stok-" + ii++).text(response.data[i].stok);
+                    for (var i = 0; i < response.data.length; i++) {
+                        $("#stok-" + ii++).text(response.data[i].stok);
+                    }
                 }
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 <?php
-    }
-    elseif($this->uri->segment(2) == "bumbu") {
+} elseif ($this->uri->segment(2) == "bumbu") {
 ?>
-<script>
-    function updateStock() {
-        var barang_kategori_id = 2;
+    <script>
+        function updateStock() {
+            var barang_kategori_id = 2;
 
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url().'page/update_stock'; ?>",
-            data: "barang_kategori_id="+barang_kategori_id,
-            dataType: "json",
-            success: function(response) {
-                var ii = 1;
-                for(var i = 0; i < response.data.length; i++) {
-                    $("#stok-" + ii++).text(response.data[i].stok);
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url() . 'page/update_stock'; ?>",
+                data: "barang_kategori_id=" + barang_kategori_id,
+                dataType: "json",
+                success: function(response) {
+                    var ii = 1;
+                    for (var i = 0; i < response.data.length; i++) {
+                        $("#stok-" + ii++).text(response.data[i].stok);
+                    }
                 }
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 <?php
-    }
+}
 ?>
 <script>
     $(document).ready(function() {
-        setInterval(function(){updateStock();}, 1000);
+        setInterval(function() {
+            updateStock();
+        }, 1000);
     });
 
     $("#btn-logout").click(function() {
@@ -670,8 +698,8 @@
             cancelButtonText: "Batal",
             cancelButtonColor: "#d33",
         }).then((result) => {
-            if(result.value) {
-                window.open('<?= base_url()."auth/logout"; ?>','_self')
+            if (result.value) {
+                window.open('<?= base_url() . "auth/logout"; ?>', '_self')
             }
         })
     });

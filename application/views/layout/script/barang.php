@@ -23,7 +23,7 @@
             const barang_id = $(this).data('barang_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/barang/show',
+                url: '<?= base_url(); ?>/barang/show',
                 data: {
                     barang_id: barang_id
                 },
@@ -53,7 +53,7 @@
             const barang_id = $(this).data('barang_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/barang/show',
+                url: '<?= base_url(); ?>/barang/show',
                 data: {
                     barang_id: barang_id
                 },

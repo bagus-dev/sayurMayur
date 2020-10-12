@@ -16,7 +16,7 @@
             const ongkir_id = $(this).data('ongkir_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/ongkir/show',
+                url: '<?= base_url(); ?>/ongkir/show',
                 data: {
                     ongkir_id: ongkir_id
                 },
@@ -38,7 +38,7 @@
             const ongkir_id = $(this).data('ongkir_id');
 
             $.ajax({
-                url: 'http://localhost/project/project-point-of-sale/ongkir/show',
+                url: '<?= base_url(); ?>/ongkir/show',
                 data: {
                     ongkir_id: ongkir_id
                 },
