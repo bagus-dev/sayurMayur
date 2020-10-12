@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Sep 2020 pada 09.16
+-- Waktu pembuatan: 17 Sep 2020 pada 15.00
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -47,7 +47,7 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 13, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
+('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 12, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
 ('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 9, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
 ('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 13, '2016-11-22 23:33:08', NULL, 1, 4, 1),
 ('BR000004', 'BR000004.jpg', 'Buncis', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 1, 4, 1),
@@ -142,6 +142,13 @@ CREATE TABLE `tbl_checkout` (
   `kuantitas` int(7) NOT NULL,
   `subtotal` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_checkout`
+--
+
+INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
+(1, 'SM000001', 'BR000001', 1, 20000);
 
 -- --------------------------------------------------------
 
@@ -294,6 +301,13 @@ CREATE TABLE `tbl_invoice` (
   `waktu_validasi` datetime NOT NULL,
   `waktu_batal` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_invoice`
+--
+
+INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `cara_bayar`, `tempat_kirim`, `waktu_kirim`, `detail_kirim`, `jenis_bayar`, `total_bayar`, `dibayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`, `waktu_validasi`, `waktu_batal`) VALUES
+('SM000001', 18, 1, 0, 2, '', 2, 20000, 20000, '', 3, '2020-09-17 19:55:30', '2020-09-17 19:56:03', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -633,7 +647,7 @@ ALTER TABLE `tbl_waktu`
 -- AUTO_INCREMENT untuk tabel `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_customer`
@@ -669,7 +683,7 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`
