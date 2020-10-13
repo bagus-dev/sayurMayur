@@ -169,4 +169,22 @@ class Pembelian extends CI_Controller
         $data['carts'] = $this->pembelian->getCart();
         $this->load->view('admin/pembelian/cart_data', $data);
     }
+
+    function cetak_laporan()
+    {
+        if ($this->session->userdata("user_role_id") == '1') {
+            $tgl_awal = $this->input->get("tgl_mulai", true);
+            $tgl_akhir = $this->input->get("tgl_akhir", true);
+            $date_awal = substr($tgl_awal, 6) . "-" . substr($tgl_awal, 3, 2) . "-" . substr($tgl_awal, 0, 2) . " 00:00:00";
+            $date_akhir = substr($tgl_akhir, 6) . "-" . substr($tgl_akhir, 3, 2) . "-" . substr($tgl_akhir, 0, 2) . " 23:59:59";
+
+            $data['detail_invoice'] = $this->pembelian->get_detail_invoice_by_tgl($date_awal, $date_akhir);
+            $data['tgl_awal'] = $date_awal;
+            $data['tgl_akhir'] = $date_akhir;
+
+            $this->load->view('admin/pembelian/cetak_laporan', $data);
+        } else {
+            redirect(site_url('auth'));
+        }
+    }
 }
