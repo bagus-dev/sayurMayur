@@ -174,4 +174,15 @@ class PembelianModel extends CI_Model
             $this->db->query("DELETE FROM tbl_cart_beli WHERE c_beli_user_id='$c_beli_user_id'");
         }
     }
+
+    function get_detail_invoice_by_tgl($tgl_awal, $tgl_akhir)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_beli");
+        $this->db->where(array("beli_tanggal >=" => $tgl_awal, "beli_tanggal <=" => $tgl_akhir));
+        $this->db->join("tbl_user", "tbl_user.user_id = tbl_beli.beli_user_id");
+        $this->db->order_by("tbl_beli.beli_nofak", "ASC");
+
+        return $this->db->get();
+    }
 }

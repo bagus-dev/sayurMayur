@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Laporan Penjualan Offline - RadjaSayur</title>
+    <title>Cetak Laporan Pembelian - RadjaSayur</title>
     <link rel="stylesheet" href="<?= base_url() . 'assets/pos/css/penjualan_online/print.css'; ?>">
     <script>
         window.onload = function() {
@@ -20,7 +20,7 @@
     <div class="book">
         <div class="page">
             <div class="subpage">
-                <h3>Laporan Penjualan Offline Radja<small style="color:#dc3545">Sayur</small></h3>
+                <h3>Laporan Pembelian Radja<small style="color:#dc3545">Sayur</small></h3>
                 <br>
                 <b>Kota Serang, Banten</b>
                 <br><br>
@@ -44,7 +44,7 @@
                             <th>No.</th>
                             <th>No. Invoice</th>
                             <th>Tanggal Invoice</th>
-                            <th>Customer</th>
+                            <th>Suplier</th>
                             <th>Total Harga</th>
                             <th>Total Pembayaran</th>
                             <th>Keterangan</th>
@@ -52,24 +52,24 @@
                     </thead>
                     <tbody>
                         <?php $total_tot = 0; ?>
-                        <?php foreach ($detail_invoice->result() as $index => $jual) : ?>
+                        <?php foreach ($detail_invoice->result() as $index => $beli) : ?>
                             <tr>
                                 <td><?= ++$index; ?></td>
-                                <td><?= $jual->jual_nofak; ?></td>
-                                <td><?= $jual->jual_tanggal; ?></td>
-                                <td><?= $jual->jual_customer_nama; ?></td>
-                                <td><?= 'Rp. ' . number_format($jual->jual_total); ?></td>
-                                <td><?= 'Rp. ' . number_format($jual->jual_jml_uang); ?></td>
-                                <td><?= $jual->jual_keterangan; ?></td>
+                                <td><?= $beli->beli_nofak; ?></td>
+                                <td><?= $beli->beli_tanggal; ?></td>
+                                <td><?= $beli->beli_suplier_nama; ?></td>
+                                <td><?= 'Rp. ' . number_format($beli->beli_total); ?></td>
+                                <td><?= 'Rp. ' . number_format($beli->beli_jml_uang); ?></td>
+                                <td><?= $beli->beli_keterangan; ?></td>
                             </tr>
-                            <?php $total_tot += $jual->jual_total; ?>
+                            <?php $total_tot += $beli->beli_total; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
                 <br>
 
-                <h3 style="float:right">Total Keuntungan: Rp. <?= number_format($total_tot); ?></h3>
+                <h3 style="float:right">Total Pengeluaran: Rp. <?= number_format($total_tot); ?></h3>
             </div>
         </div>
     </div>
