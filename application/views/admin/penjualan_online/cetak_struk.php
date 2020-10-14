@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" moznomarginboxes mozdisallowselectionprint>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,36 +47,37 @@
     </style>
 
 </head>
+
 <body>
     <div class="content">
         <div class="title">
-            <strong>SayurMayur</strong>
+            <strong>RadjaSayur</strong>
             <br>
-            Jl. bla bla bla
+            Kota Serang, Banten
         </div>
 
         <div class="head">
-            <?php foreach($detail_invoice->result() as $i) { ?>
-            <table cellspacing="0" cellpadding="0">
-                <tr>
-                    <td style="width:140px"><?= date("d/m/Y H:i:s",strtotime($i->waktu_ditambahkan))." WIB"; ?></td>
-                    <td>Kasir</td>
-                    <td style="text-align:center; width:10px"></td>
-                    <td style="text-align:right;"><?= ucfirst($this->session->userdata('user_nama')); ?></td>
-                </tr>
-                <tr>
-                    <td><?= $i->no_invoice; ?></td>
-                    <td>Customer</td>
-                    <td style="text-align:center;"></td>
-                    <td style="text-align:right;">
-                        <?php
-                            foreach($user->result() as $u) {
+            <?php foreach ($detail_invoice->result() as $i) { ?>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="width:140px"><?= date("d/m/Y H:i:s", strtotime($i->waktu_ditambahkan)) . " WIB"; ?></td>
+                        <td>Kasir</td>
+                        <td style="text-align:center; width:10px"></td>
+                        <td style="text-align:right;"><?= ucfirst($this->session->userdata('user_nama')); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= $i->no_invoice; ?></td>
+                        <td>Customer</td>
+                        <td style="text-align:center;"></td>
+                        <td style="text-align:right;">
+                            <?php
+                            foreach ($user->result() as $u) {
                                 echo $u->user_nama;
                             }
-                        ?>
-                    </td>
-                </tr>
-            </table>
+                            ?>
+                        </td>
+                    </tr>
+                </table>
             <?php } ?>
         </div>
 
@@ -88,36 +90,49 @@
                     <th style="text-align:right; width:70px">Subtotal</th>
                 </tr>
                 <?php
-                    $no = 1;
-                    foreach($checkout->result() as $c) { ?>
-                <tr >
-                    <td><?= $c->barang_nama; ?></td>
-                    <td style="text-align:center;"><?= $c->kuantitas; ?></td>
-                    <td style="text-align:center;"><?= "Rp. ".number_format($c->barang_harjul); ?></td>
-                    <td style="text-align:right;"><?= "Rp. ".number_format($c->subtotal); ?></td>
-                </tr>
-                <?php $no++; } ?>
-                <?php if($i->cara_bayar == 2) { ?>
-                <tr>
-                    <td>
-                        <?php
-                            foreach($ongkir->result() as $o) {
-                                echo "Ongkos Kirim ".$o->ongkir_lokasi;
+                $no = 1;
+                foreach ($checkout->result() as $c) { ?>
+                    <tr>
+                        <td><?= $c->barang_nama; ?></td>
+                        <td style="text-align:center;">
+                            <?php
+                            if ($c->kuantitas >= 1) {
+                                echo $c->kuantitas;
+                            } else if ($c->kuantitas == 0.25) {
+                                echo "1/4";
+                            } else if ($c->kuantitas == 0.5) {
+                                echo "1/2";
+                            } else if ($c->kuantitas == 0.75) {
+                                echo "3/4";
                             }
-                        ?>
-                    </td>
-                    <td style="text-align:center">1</td>
-                    <td style="text-align:center">
-                        <?php
-                            echo "Rp. ".number_format($o->ongkir_harga);
-                        ?>
-                    </td>
-                    <td style="text-align:right">
-                        <?php
-                            echo "Rp. ".number_format($o->ongkir_harga);
-                        ?>
-                    </td>
-                </tr>
+                            ?>
+                        </td>
+                        <td style="text-align:center;"><?= "Rp. " . number_format($c->barang_harjul); ?></td>
+                        <td style="text-align:right;"><?= "Rp. " . number_format($c->subtotal); ?></td>
+                    </tr>
+                <?php $no++;
+                } ?>
+                <?php if ($i->cara_bayar == 2) { ?>
+                    <tr>
+                        <td>
+                            <?php
+                            foreach ($ongkir->result() as $o) {
+                                echo "Ongkos Kirim " . $o->ongkir_lokasi;
+                            }
+                            ?>
+                        </td>
+                        <td style="text-align:center">1</td>
+                        <td style="text-align:center">
+                            <?php
+                            echo "Rp. " . number_format($o->ongkir_harga);
+                            ?>
+                        </td>
+                        <td style="text-align:right">
+                            <?php
+                            echo "Rp. " . number_format($o->ongkir_harga);
+                            ?>
+                        </td>
+                    </tr>
                 <?php } ?>
                 <tr>
                     <td colspan="4" style="border-bottom:1px dashed; padding-top:5px;"></td>
@@ -132,15 +147,15 @@
                 <tr>
                     <td colspan="2"></td>
                     <th style="border-top:1px dashed; text-align: center;">Paid</th>
-                    <td style="border-top:1px dashed; text-align: right; padding-top:5px;"><?= "Rp. ".number_format($i->dibayar); ?></td>
+                    <td style="border-top:1px dashed; text-align: right; padding-top:5px;"><?= "Rp. " . number_format($i->dibayar); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <th style="border-top:1px dashed; text-align: center;">Change</th>
                     <td style="border-top:1px dashed; text-align: right; padding-top:5px;">
                         <?php
-                            $kembalian = $i->dibayar - $i->total_bayar;
-                            echo "Rp. ".number_format($kembalian);
+                        $kembalian = $i->dibayar - $i->total_bayar;
+                        echo "Rp. " . number_format($kembalian);
                         ?>
                     </td>
                 </tr>
@@ -149,15 +164,18 @@
         <div class="thanks">
             --- Thank You ---
             <br>
-            SayurMayur
+            RadjaSayur
         </div>
     </div>
 
     <script>
-        window.onload = function () {
+        window.onload = function() {
             window.print();
-            setTimeout(function (){window.close();}, 1);
+            setTimeout(function() {
+                window.close();
+            }, 1);
         }
     </script>
 </body>
+
 </html>

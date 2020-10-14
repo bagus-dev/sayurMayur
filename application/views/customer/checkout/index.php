@@ -26,10 +26,24 @@
                                 foreach ($keranjang->result() as $k) {
                                 ?>
                                     <tr>
-                                        <td><?= $no++ . "."; ?></td>
-                                        <td><?= $k->barang_nama; ?></td>
-                                        <td><?= $k->total_kuantitas; ?></td>
-                                        <td class="text-right"><?= "Rp. " . number_format($k->total_harga); ?></td>
+                                        <td style="vertical-align:middle"><?= $no++ . "."; ?></td>
+                                        <td style="vertical-align:middle">
+                                            <?= $k->barang_nama . ' <img src="' . base_url() . 'assets/source/images/barang/' . $k->barang_gambar . '" width="50" height="50">'; ?>
+                                        </td>
+                                        <td style="vertical-align:middle">
+                                            <?php
+                                            if ($k->total_kuantitas >= 1) {
+                                                echo $k->total_kuantitas . " " . $k->satuan_nama;
+                                            } else if ($k->total_kuantitas == 0.25) {
+                                                echo "1/4" . " " . $k->satuan_nama;
+                                            } else if ($k->total_kuantitas == 0.5) {
+                                                echo "1/2" . " " . $k->satuan_nama;
+                                            } else if ($k->total_kuantitas == 0.75) {
+                                                echo "3/4" . " " . $k->satuan_nama;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="text-right" style="vertical-align:middle"><?= "Rp. " . number_format($k->total_harga); ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

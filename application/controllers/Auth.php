@@ -50,6 +50,10 @@ class Auth extends CI_Controller
             'required' => $this->required
         ]);
 
+        $this->form_validation->set_rules('alamat', 'Alamat Lengkap', 'required|trim', [
+            'required' => $this->required
+        ]);
+
         $this->form_validation->set_rules('nohp', 'Nomor HP', 'required|trim|numeric|min_length[10]|max_length[13]', [
             'required' => $this->required,
             'numeric' => $this->numeric,
@@ -86,13 +90,14 @@ class Auth extends CI_Controller
             $this->load->view('layout/auth/footer');
         } else {
             $nama = htmlspecialchars($this->input->post('nama', true));
+            $alamat = htmlspecialchars($this->input->post('alamat', true));
             $nohp = htmlspecialchars($this->input->post('nohp', true));
             $email = htmlspecialchars($this->input->post('email', true));
             $username = htmlspecialchars($this->input->post('username', true));
             $password = htmlspecialchars($this->input->post('password', true));
             $repassword = htmlspecialchars($this->input->post('repassword', true));
 
-            $this->auth->proses_register($nama, $nohp, $email, $username, $password, $repassword);
+            $this->auth->proses_register($nama, $alamat, $nohp, $email, $username, $password, $repassword);
         }
     }
 

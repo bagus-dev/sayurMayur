@@ -20,7 +20,7 @@
     <div class="book">
         <div class="page">
             <div class="subpage">
-                <h3>Laporan Penjualan Online Sayur<small style="color:#dc3545">Mayur</small></h3>
+                <h3>Laporan Penjualan Online Radja<small style="color:#dc3545">Sayur</small></h3>
                 <br>
                 <b>Kota Serang, Banten</b>
                 <br><br>

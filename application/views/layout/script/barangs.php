@@ -79,7 +79,7 @@
         if (key !== "Backspace" && key !== "Delete") {
             if ((/^[0-9]+$/.test(value.trim()))) {
                 if (value >= 1) {
-                    if (value > parseInt(stok)) {
+                    if (value > parseFloat(stok)) {
                         e.target.value = stok;
                     }
 
@@ -96,13 +96,13 @@
     }
 
     function qtyInput2(e) {
-        var value = parseInt(e.target.value);
+        var value = parseFloat(e.target.value);
         var id = e.target.dataset.barang_id;
         var no = e.target.dataset.no;
         var stok = $("#stok-" + no).text();
 
         if (value >= 1) {
-            if (value > parseInt(stok)) {
+            if (value > parseFloat(stok)) {
                 e.target.value = stok;
             }
 
@@ -125,15 +125,14 @@
             kuantitas = $("#select_qty_" + id).val();
         }
 
-        var total_kuantitas = parseInt(kuantitas);
-        var total_harga = parseInt(barang_harjul) * total_kuantitas;
+        var total_harga = barang_harjul * kuantitas;
 
         $.ajax({
             type: "POST",
             url: "<?= base_url() . 'page/insert_cart'; ?>",
             data: {
                 barang_id: id,
-                total_kuantitas: total_kuantitas,
+                total_kuantitas: kuantitas,
                 total_harga: total_harga
             },
             dataType: "json",
@@ -143,38 +142,170 @@
             success: function(response) {
                 if (response.status == 1) {
                     var cek = $("#barang_cart_right").find('.text-center');
+                    var select = $("#select_qty_" + id).val();
+
                     if (cek.length > 0) {
-                        $("#barang_cart_right").html(
-                            $("<tr>").addClass("text-left").attr({
-                                id: "cart_row_" + response.id
-                            }).append(
-                                $("<td>").attr({
-                                    id: "nama-" + response.id
-                                }).text(barang_nama),
-                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
-                            )
-                        );
+                        if (select == "lainnya") {
+                            $("#barang_cart_right").html(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" data-cart_id="' + response.id + '" min="1" style="width:50px" value="' + kuantitas + '">'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+                        } else if (select == "0.25") {
+                            $("#barang_cart_right").html(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25" selected>1/4</option>' +
+                                        '<option value="0.5">1/2</option>' +
+                                        '<option value="0.75">3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        } else if (select == "0.5") {
+                            $("#barang_cart_right").html(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25">1/4</option>' +
+                                        '<option value="0.5" selected>1/2</option>' +
+                                        '<option value="0.75">3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        } else if (select == "0.75") {
+                            $("#barang_cart_right").html(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25">1/4</option>' +
+                                        '<option value="0.5">1/2</option>' +
+                                        '<option value="0.75" selected>3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        }
 
                         $("#btn-cekout").removeAttr("disabled");
                     } else {
-                        $("#barang_cart_right").append(
-                            $("<tr>").addClass("text-left").attr({
-                                id: "cart_row_" + response.id
-                            }).append(
-                                $("<td>").attr({
-                                    id: "nama-" + response.id
-                                }).text(barang_nama),
-                                $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" data-cart_id="' + response.id + '" style="width:50px" value="' + total_kuantitas + '">'),
-                                $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
-                                $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
-                            )
-                        );
+                        if (select == "lainnya") {
+                            $("#barang_cart_right").append(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<input type="number" class="qty_input" onkeyup="changeQtyCart2(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + response.id + '" min="1" data-cart_id="' + response.id + '" style="width:50px" value="' + kuantitas + '">'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+                        } else if (select == "0.25") {
+                            $("#barang_cart_right").append(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25" selected>1/4</option>' +
+                                        '<option value="0.5">1/2</option>' +
+                                        '<option value="0.75">3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        } else if (select == "0.5") {
+                            $("#barang_cart_right").append(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25">1/4</option>' +
+                                        '<option value="0.5" selected>1/2</option>' +
+                                        '<option value="0.75">3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        } else if (select == "0.75") {
+                            $("#barang_cart_right").append(
+                                $("<tr>").addClass("text-left").attr({
+                                    id: "cart_row_" + response.id
+                                }).append(
+                                    $("<td>").attr({
+                                        id: "nama-" + response.id
+                                    }).text(barang_nama),
+                                    $("<td>").html('<div id="container_' + response.id + '">' +
+                                        '<select name="select_qty_cart" id="select_qty_cart_' + response.id + '" onchange="changeQtyCart2(event);" data-cart_id="' + response.id + '" style="width:50px">' +
+                                        '<option value="0.25">1/4</option>' +
+                                        '<option value="0.5">1/2</option>' +
+                                        '<option value="0.75" selected>3/4</option>' +
+                                        '<option value="lainnya">Lainnya</option>' +
+                                        '</select></div>'),
+                                    $("<td>").html('<span id="subtotal-' + response.id + '">' + numberWithCommas(total_harga) + '</span>'),
+                                    $("<td>").html('<button class="btn btn-xs btn-danger text-white" data-id="' + response.id + '" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button>')
+                                )
+                            );
+
+                            $("#select_qty_" + id).val("0");
+                        }
                     }
 
                     var harga_cur = document.getElementById("total_harga_cart_right").innerHTML;
-                    var total_harga_cur = parseInt(harga_cur.replace(/,/g, ''));
+                    var total_harga_cur = parseFloat(harga_cur.replace(/,/g, ''));
                     var fix_harga_cur = total_harga_cur + total_harga;
                     $("#total_harga_cart_right").text(numberWithCommas(fix_harga_cur));
                     $("#badge_cart").text(response.num_rows);
@@ -201,10 +332,19 @@
                     });
                 }
             },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            },
             complete: function() {
                 $("#loading-section2").attr("style", "display:none");
             }
         })
+    }
+
+    function focusVal(e) {
+        var value = e.target.value;
+
+        $(this).val(value);
     }
 
     function getPageList(totalPages, page, maxLength) {
@@ -465,11 +605,13 @@
     }
 
     function changeQtyCart2(e) {
-        var value = parseInt(e.target.value);
+        var value = e.target.value;
         var id = e.target.dataset.cart_id;
         var subtotal = document.getElementById("subtotal-" + id);
 
-        if (value >= 1) {
+        if (value !== "lainnya") {
+            value = parseFloat(value);
+
             $.ajax({
                 type: "POST",
                 url: "<?= base_url() . 'page/change_kuantitas'; ?>",
@@ -507,91 +649,72 @@
                     $("#loading-section").css("display", "none");
                 }
             })
-        } else {
-            var barang_nama = document.getElementById("nama-" + id);
-
-            Swal.fire({
-                icon: "question",
-                title: "Hapus Barang dari Keranjang",
-                text: "Yakin menghapus " + barang_nama.innerHTML + " ?",
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Ya, Hapus",
-                cancelButtonText: "Batal",
-                cancelButtonColor: "#d33",
-                showLoaderOnConfirm: true,
-                allowOutsideClick: () => !Swal.isLoading(),
-                preConfirm: () => {
-                    return fetch(`<?= base_url() . 'page/delete_cart/'; ?>` + id)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
-                            }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Request Failed: ${error}`
-                            )
-                        })
-                }
-            }).then((result) => {
-                if (result.value) {
-                    $("#cart_row_" + id).remove();
-                    $("#total_harga_cart_right").text(numberWithCommas(result.value.total_harga));
-                    $("#badge_cart").text(result.value.num_rows);
-
-                    if (result.value.total_harga == 0) {
-                        $("#barang_cart_right").html(
-                            $("<tr>").addClass("text-center").append(
-                                $("<td>").attr({
-                                    colspan: "4"
-                                }).html("<b>Keranjang Kosong...</b>")
-                            )
-                        );
-
-                        $("#btn-cekout").attr({
-                            disabled: "disabled"
-                        });
-                    }
-
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true
-                    })
-
-                    Toast.fire({
-                        icon: "success",
-                        title: "Barang Berhasil Dihapus"
-                    })
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    var qty = 1;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "<?= base_url() . 'page/change_kuantitas'; ?>",
-                        data: {
-                            "total_kuantitas": qty,
-                            "id": id
+        } else if (value == "lainnya") {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url() . 'page/cek_kuantitas'; ?>",
+                data: "id=" + id,
+                dataType: "json",
+                success: function(response) {
+                    Swal.fire({
+                        title: "Masukkan Jumlah yang Diinginkan",
+                        icon: "info",
+                        input: 'number',
+                        inputAttributes: {
+                            min: '1',
+                            max: response.total_kuantitas
                         },
-                        dataType: "json",
-                        beforeSend: function() {
-                            $("#loading-section").removeAttr("style");
+                        showCancelButton: true,
+                        confirmButtonText: 'OK',
+                        showLoaderOnConfirm: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Batal',
+                        preConfirm: (qty) => {
+                            return fetch(`<?= base_url() . 'page/change_kuantitas2/'; ?>` + id + `/${qty}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(response.statusText)
+                                    }
+                                    return response.json()
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                        `Request Failed: ${error}`
+                                    )
+                                })
                         },
-                        success: function(response) {
-                            $("#input_kuantitas_cart_" + id).val(1);
-                            subtotal.innerHTML = numberWithCommas(response.subtotal);
-                            $("#total_harga_cart_right").text(numberWithCommas(response.total_harga));
-                        },
-                        complete: function() {
-                            $("#loading-section").css("display", "none");
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= base_url() . 'page/get_value'; ?>",
+                                data: "id=" + id,
+                                dataType: "json",
+                                success: function(response) {
+                                    $("#container_" + id).html('<input type="number" class="qty_input" onkeyup="changeQtyCart(event);" onchange="changeQtyCart2(event);" id="input_kuantitas_cart_' + id + '" data-cart_id="' + id + '" style="width:50px" value="' + response.value + '">');
+                                    $("#subtotal-" + id).text(numberWithCommas(response.total_harga));
+                                    $("#total_harga_cart_right").text(numberWithCommas(response.total_harga_keranjang));
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log(xhr.responseText);
+                                }
+                            })
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= base_url() . 'page/get_value'; ?>",
+                                data: "id=" + id,
+                                dataType: "json",
+                                success: function(response) {
+                                    $("#select_qty_cart_" + id).val(response.value);
+                                }
+                            })
                         }
-                    });
+                    })
                 }
-            })
+            });
         }
     }
 

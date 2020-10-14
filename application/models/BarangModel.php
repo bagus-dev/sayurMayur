@@ -285,10 +285,11 @@ class BarangModel extends CI_Model
 
     function get_checkout($no_invoice)
     {
-        $this->db->select("tbl_checkout.barang_id,tbl_checkout.kuantitas,tbl_checkout.subtotal,tbl_barang.barang_nama,tbl_barang.barang_harjul");
+        $this->db->select("tbl_checkout.barang_id,tbl_checkout.kuantitas,tbl_checkout.subtotal,tbl_barang.barang_nama,tbl_barang.barang_harjul,tbl_satuan.satuan_nama");
         $this->db->from("tbl_checkout");
         $this->db->where(array("no_invoice" => $no_invoice));
         $this->db->join("tbl_barang", "tbl_barang.barang_id = tbl_checkout.barang_id");
+        $this->db->join("tbl_satuan", "tbl_satuan.satuan_id = tbl_barang.barang_satuan_id");
 
         return $this->db->get();
     }

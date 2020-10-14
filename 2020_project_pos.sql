@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Sep 2020 pada 15.00
+-- Waktu pembuatan: 14 Okt 2020 pada 10.54
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -34,7 +34,7 @@ CREATE TABLE `tbl_barang` (
   `barang_harpok` double DEFAULT NULL,
   `barang_harjul` double DEFAULT NULL,
   `barang_harjul_grosir` double DEFAULT NULL,
-  `barang_stok` int(11) DEFAULT 0,
+  `barang_stok` double DEFAULT 0,
   `barang_tgl_input` timestamp NULL DEFAULT current_timestamp(),
   `barang_tgl_last_update` datetime DEFAULT NULL,
   `barang_kategori_id` int(11) DEFAULT NULL,
@@ -47,14 +47,14 @@ CREATE TABLE `tbl_barang` (
 --
 
 INSERT INTO `tbl_barang` (`barang_id`, `barang_gambar`, `barang_nama`, `barang_harpok`, `barang_harjul`, `barang_harjul_grosir`, `barang_stok`, `barang_tgl_input`, `barang_tgl_last_update`, `barang_kategori_id`, `barang_satuan_id`, `barang_user_id`) VALUES
-('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 12, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
-('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 9, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
-('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 13, '2016-11-22 23:33:08', NULL, 1, 4, 1),
+('BR000001', 'BR000001.jpg', 'Bayam', 15000, 20000, 17000, 11, '2016-11-22 23:30:50', '2020-07-29 20:13:56', 1, 4, 1),
+('BR000002', 'BR000002.jpg', 'Kangkung', 16000, 20000, 18000, 8, '2016-11-22 23:32:02', '2020-07-29 20:14:12', 1, 4, 1),
+('BR000003', 'BR000003.jpg', 'Genjer', 16000, 22000, 18500, 12.5, '2016-11-22 23:33:08', NULL, 1, 4, 1),
 ('BR000004', 'BR000004.jpg', 'Buncis', 10000, 50000, 222, 1, '2020-07-29 05:36:35', '2020-07-29 20:09:45', 1, 4, 1),
 ('BR000005', 'BR000005.jpg', 'Timun', 22222, 2222, 2222, 1, '2020-07-30 12:37:06', NULL, 1, 4, 1),
 ('BR000006', 'BR000006.jpg', 'Merica', 33, 2, 2, 1, '2020-08-01 07:25:56', NULL, 2, 5, 1),
 ('BR000007', 'BR000007.jpg', 'Cabai', 2, 20000, 17000, 2, '2020-08-01 07:26:07', NULL, 2, 1, 1),
-('BR000008', 'BR000008.jpg', 'Jahe', 2, 3333, 33333, 222, '2020-08-01 07:26:19', NULL, 2, 4, 1),
+('BR000008', 'BR000008.jpg', 'Jahe', 2, 5000, 33333, 222, '2020-08-01 07:26:19', NULL, 2, 4, 1),
 ('BR000009', 'BR000009.jpg', 'Lengkuas', 33, 3333, 17000, 3, '2020-08-01 07:26:29', NULL, 2, 5, 1),
 ('BR000010', 'BR000010.jpg', 'Kunyit', 222, 22, 2, 1, '2020-08-01 07:26:42', NULL, 2, 1, 1),
 ('BR000011', 'BR000011.jpg', ' Singkong', 15000, 20000, 18000, 18, '2020-09-03 08:28:25', NULL, 1, 4, 1),
@@ -139,8 +139,8 @@ CREATE TABLE `tbl_checkout` (
   `id` int(11) NOT NULL,
   `no_invoice` varchar(20) NOT NULL,
   `barang_id` varchar(15) NOT NULL,
-  `kuantitas` int(7) NOT NULL,
-  `subtotal` int(10) NOT NULL
+  `kuantitas` double NOT NULL,
+  `subtotal` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -148,7 +148,9 @@ CREATE TABLE `tbl_checkout` (
 --
 
 INSERT INTO `tbl_checkout` (`id`, `no_invoice`, `barang_id`, `kuantitas`, `subtotal`) VALUES
-(1, 'SM000001', 'BR000001', 1, 20000);
+(1, 'SM000001', 'BR000001', 0.25, 5000),
+(2, 'SM000001', 'BR000003', 0.5, 11000),
+(3, 'SM000002', 'BR000001', 0.75, 15000);
 
 -- --------------------------------------------------------
 
@@ -293,8 +295,8 @@ CREATE TABLE `tbl_invoice` (
   `waktu_kirim` int(11) NOT NULL,
   `detail_kirim` text NOT NULL,
   `jenis_bayar` int(1) NOT NULL,
-  `total_bayar` int(10) NOT NULL,
-  `dibayar` int(10) NOT NULL,
+  `total_bayar` double NOT NULL,
+  `dibayar` double NOT NULL,
   `bukti_transfer` varchar(255) NOT NULL,
   `status` int(1) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL,
@@ -307,7 +309,8 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`no_invoice`, `user_id`, `cara_bayar`, `tempat_kirim`, `waktu_kirim`, `detail_kirim`, `jenis_bayar`, `total_bayar`, `dibayar`, `bukti_transfer`, `status`, `waktu_ditambahkan`, `waktu_validasi`, `waktu_batal`) VALUES
-('SM000001', 18, 1, 0, 2, '', 2, 20000, 20000, '', 3, '2020-09-17 19:55:30', '2020-09-17 19:56:03', '0000-00-00 00:00:00');
+('SM000001', 18, 1, 0, 1, '', 2, 16000, 16000, '', 3, '2020-10-14 14:41:06', '2020-10-14 14:49:01', '0000-00-00 00:00:00'),
+('SM000002', 18, 1, 0, 1, '', 2, 15000, 15000, '', 3, '2020-10-14 15:21:39', '2020-10-14 15:24:54', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -371,8 +374,8 @@ INSERT INTO `tbl_kategori` (`kategori_id`, `kategori_nama`) VALUES
 CREATE TABLE `tbl_keranjang` (
   `id` int(10) NOT NULL,
   `barang_id` varchar(15) NOT NULL,
-  `total_kuantitas` int(7) NOT NULL,
-  `total_harga` int(10) NOT NULL,
+  `total_kuantitas` double NOT NULL,
+  `total_harga` double NOT NULL,
   `ip_address` varchar(20) NOT NULL,
   `waktu_ditambahkan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -472,6 +475,7 @@ INSERT INTO `tbl_suplier` (`suplier_id`, `suplier_nama`, `suplier_alamat`, `supl
 CREATE TABLE `tbl_user` (
   `user_id` int(11) NOT NULL,
   `user_nama` varchar(35) DEFAULT NULL,
+  `user_alamat` text DEFAULT NULL,
   `user_nohp` varchar(13) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_username` varchar(30) DEFAULT NULL,
@@ -483,12 +487,12 @@ CREATE TABLE `tbl_user` (
 -- Dumping data untuk tabel `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `user_nama`, `user_nohp`, `user_email`, `user_username`, `user_password`, `user_role_id`) VALUES
-(1, 'Mochamad Natsir', '', '', 'superadmin', '$2y$10$afqzZuBiOvmCHJDjCE8Tc.oH2d7vZz9G1pHHcUdUuNRAjA/uyEYp6', 1),
-(3, 'Handoko Adji Pangestu', '', '', 'admin', '$2y$10$PssETE4hc5Njym9wudpTMu1F9kBe.kdkKXxLqKsTRLvdTmxITlXSi', 2),
-(11, 'zxc', '', '', 'zxc', '9bb319215b59ada160c2d56d14ddd677', 4),
-(17, 'Handoko Adji Pangestu', '089650574913', 'handokoadjipangestu@gmail.com', 'handoko', '$2y$10$qGdcqEniLEBP.DWVJC.CGOptRJheKVgj55Ird8WaZWVCJkH7DI5CO', 4),
-(18, 'Bagus Puji Rahardjo', '089507456916', 'bagus.rahardjo6@gmail.com', 'bagus', '$2y$10$rz7wKeDP1VRRVe3e.pwC.OOH.N6Lp/ByeXh3zuewznifqKhvNqhp6', 4);
+INSERT INTO `tbl_user` (`user_id`, `user_nama`, `user_alamat`, `user_nohp`, `user_email`, `user_username`, `user_password`, `user_role_id`) VALUES
+(1, 'Mochamad Natsir', NULL, '', '', 'superadmin', '$2y$10$afqzZuBiOvmCHJDjCE8Tc.oH2d7vZz9G1pHHcUdUuNRAjA/uyEYp6', 1),
+(3, 'Handoko Adji Pangestu', NULL, '', '', 'admin', '$2y$10$PssETE4hc5Njym9wudpTMu1F9kBe.kdkKXxLqKsTRLvdTmxITlXSi', 2),
+(11, 'zxc', NULL, '', '', 'zxc', '9bb319215b59ada160c2d56d14ddd677', 4),
+(17, 'Handoko Adji Pangestu', NULL, '089650574913', 'handokoadjipangestu@gmail.com', 'handoko', '$2y$10$qGdcqEniLEBP.DWVJC.CGOptRJheKVgj55Ird8WaZWVCJkH7DI5CO', 4),
+(18, 'Bagus Puji Rahardjo', NULL, '089507456916', 'bagus.rahardjo6@gmail.com', 'bagus', '$2y$10$rz7wKeDP1VRRVe3e.pwC.OOH.N6Lp/ByeXh3zuewznifqKhvNqhp6', 4);
 
 -- --------------------------------------------------------
 
@@ -647,7 +651,7 @@ ALTER TABLE `tbl_waktu`
 -- AUTO_INCREMENT untuk tabel `tbl_checkout`
 --
 ALTER TABLE `tbl_checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_customer`
@@ -683,7 +687,7 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ongkir`

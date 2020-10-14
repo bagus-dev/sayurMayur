@@ -1,7 +1,7 @@
 <footer class="my-4">
     <div class="row">
         <div class="col-lg-12">
-            <p style="text-align:center;">Copyright &copy; <?php echo '2020'; ?> by Mochamad Natsir</p>
+            <p style="text-align:center;">Copyright &copy; <?php echo '2020'; ?> by RadjaSayur</p>
         </div>
     </div>
     <!-- /.row -->

@@ -1,6 +1,6 @@
 <!-- Login-Box -->
 <a href="<?= base_url(); ?>">
-    <h1 class="text-dark mt-5" align="center">Sayur<small class="text-danger">Mayur</small></h1>
+    <h1 class="text-dark mt-5" align="center">Radja<small class="text-danger">Sayur</small></h1>
 </a>
 <div class="login-box mx-auto">
     <div class="row">
@@ -16,7 +16,7 @@
             <form action="" method="post">
                 <!-- Nama Lengkap -->
                 <div class="input-group">
-                    <input type="text" class="form-control b-left" placeholder="Nama Lengkap" name="nama" autofocus/>
+                    <input type="text" class="form-control b-left" placeholder="Nama Lengkap" name="nama" autofocus />
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-users"></span>
@@ -24,6 +24,17 @@
                     </div>
                 </div>
                 <?= form_error('nama', '<small class="text-danger">', '</small>'); ?>
+
+                <!-- Alamat Lengkap -->
+                <div class="input-group mt-3">
+                    <textarea name="alamat" rows="3" class="form-control b-left" placeholder="Alamat Lengkap"></textarea>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-map-marker-alt"></span>
+                        </div>
+                    </div>
+                </div>
+                <?= form_error('alamat', '<small class="text-danger">', '</small>'); ?>
 
                 <!-- No HP -->
                 <div class="input-group mt-3">
@@ -83,7 +94,7 @@
                 <!-- Button -->
                 <div class="row mt-3">
                     <div class="col-4">
-                        <a href="<?= base_url().'auth'; ?>" id="btn-register" class="btn btn-primary btn-block">
+                        <a href="<?= base_url() . 'auth'; ?>" id="btn-register" class="btn btn-primary btn-block">
                             Kembali
                         </a>
                     </div>

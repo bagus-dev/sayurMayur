@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <p><?= 'Rp. ' . number_format($barang->barang_harjul); ?></p>
+                                            <p><?= 'Rp. ' . number_format($barang->barang_harjul) . '<small>/' . $barang->satuan_nama . '</small>'; ?></p>
                                             <button class="btn btn-sm btn-primary" id="<?= 'btn-simpan-' . $barang->barang_id; ?>" onclick="simpan_barang(event);" data-barang_id="<?= $barang->barang_id; ?>" data-barang_nama="<?= $barang->barang_nama; ?>" data-barang_harjul="<?= $barang->barang_harjul; ?>" type="button" disabled><i class="fa fa-plus-circle"></i> Simpan</button>
                                         </div>
                                         <div class="col-12 text-center mt-3 mb-0">
@@ -94,7 +94,20 @@
                                 ?>
                                         <tr class="text-left" id="<?= 'cart_row_' . $k->id; ?>">
                                             <td id="<?= 'nama-' . $k->id; ?>"><?= $k->barang_nama; ?></td>
-                                            <td><input type="number" onkeyup="changeQtyCart(event);" class="qty_input" onchange="changeQtyCart2(event);" id="<?= 'input_kuantitas_cart_' . $k->id; ?>" data-cart_id="<?= $k->id; ?>" style="width:50px" value="<?= $k->total_kuantitas; ?>"></td>
+                                            <td>
+                                                <?php if ($k->total_kuantitas >= 1) { ?>
+                                                    <input type="number" onkeyup="changeQtyCart(event);" class="qty_input" onchange="changeQtyCart2(event);" id="<?= 'input_kuantitas_cart_' . $k->id; ?>" data-cart_id="<?= $k->id; ?>" min="1" style="width:50px" value="<?= $k->total_kuantitas; ?>">
+                                                <?php } else { ?>
+                                                    <div id="container_<?= $k->id; ?>">
+                                                        <select name="select_qty_cart" id="select_qty_cart_<?= $k->id; ?>" onchange="changeQtyCart2(event);" data-cart_id="<?= $k->id; ?>" style="width:50px">
+                                                            <option value="0.25" <?= ($k->total_kuantitas == "0.25") ? 'selected' : ''; ?>>1/4</option>
+                                                            <option value="0.5" <?= ($k->total_kuantitas == "0.5") ? 'selected' : ''; ?>>1/2</option>
+                                                            <option value="0.75" <?= ($k->total_kuantitas == "0.75") ? 'selected' : ''; ?>>3/4</option>
+                                                            <option value="lainnya">Lainnya</option>
+                                                        </select>
+                                                    </div>
+                                                <?php } ?>
+                                            </td>
                                             <td><?= "<span id='subtotal-" . $k->id . "'>" . number_format($k->total_harga) . "</span>"; ?></td>
                                             <td><button class="btn btn-xs btn-danger text-white" data-id="<?= $k->id; ?>" onclick="hapusCart(event);"><i class="fa fa-trash"></i> Hapus</button></td>
                                         </tr>

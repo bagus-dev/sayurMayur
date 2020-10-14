@@ -94,10 +94,16 @@ class Page extends CI_Controller
         if ($this->db->insert("tbl_keranjang", $data)) {
             $get_barang = $this->db->get_where("tbl_keranjang", array("barang_id" => $barang_id, "total_kuantitas" => $total_kuantitas, "total_harga" => $total_harga, "ip_address" => $ip_address, "waktu_ditambahkan" => $waktu_ditambahkan))->row();
             $get_num_rows = $this->db->get_where("tbl_keranjang", array("ip_address" => $ip_address))->num_rows();
+            $barang = $this->db->get_where("tbl_barang", array("barang_id" => $barang_id))->row();
 
             $response["status"] = 1;
             $response["id"] = $get_barang->id;
             $response["num_rows"] = $get_num_rows;
+
+            $data["id"] = $get_barang->id;
+            $data["kuantitas"] = $total_kuantitas;
+            $data["subtotal"] = $total_harga;
+            $data["nama_barang"] = $barang->barang_nama;
         } else {
             $response["status"] = 0;
         }
@@ -168,6 +174,74 @@ class Page extends CI_Controller
                 $response["status"] = 0;
             }
         }
+
+        echo json_encode($response);
+    }
+
+    function change_kuantitas2()
+    {
+        $id = $this->uri->segment(3);
+        $qty = $this->uri->segment(4);
+
+        $keranjang = $this->db->get_where("tbl_keranjang", array("id" => $id))->row();
+        $barang = $this->db->get_where("tbl_barang", array("barang_id" => $keranjang->barang_id))->row();
+        $total = $barang->barang_harjul * $qty;
+
+        $data = array(
+            "total_kuantitas" => $qty,
+            "total_harga" => $total
+        );
+
+        if ($this->db->update("tbl_keranjang", $data, array("id" => $id))) {
+            $response["ok"] = "ok";
+        } else {
+            $response["error"] = "error";
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_value()
+    {
+        $id = $this->input->post("id", true);
+        $keranjang = $this->db->get_where("tbl_keranjang", array("id" => $id))->row();
+
+        $response["value"] = $keranjang->total_kuantitas;
+        $response["total_harga"] = $keranjang->total_harga;
+
+        function get_client_ip()
+        {
+            $ipaddress = '';
+            if (isset($_SERVER['HTTP_CLIENT_IP']))
+                $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+            else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            else if (isset($_SERVER['HTTP_X_FORWARDED']))
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+            else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
+                $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+            else if (isset($_SERVER['HTTP_FORWARDED']))
+                $ipaddress = $_SERVER['HTTP_FORWARDED'];
+            else if (isset($_SERVER['REMOTE_ADDR']))
+                $ipaddress = $_SERVER['REMOTE_ADDR'];
+            else
+                $ipaddress = 'UNKNOWN';
+            return $ipaddress;
+        }
+        $ip_address = get_client_ip();
+        $total_harga_keranjang = $this->db->query("SELECT SUM(`total_harga`) AS total_harga FROM `tbl_keranjang` WHERE `ip_address` = '$ip_address'")->row();
+        $response["total_harga_keranjang"] = $total_harga_keranjang->total_harga;
+
+        echo json_encode($response);
+    }
+
+    function cek_kuantitas()
+    {
+        $id = $this->input->post("id", true);
+        $keranjang = $this->db->get_where("tbl_keranjang", array("id" => $id))->row();
+        $barang = $this->db->get_where("tbl_barang", array("barang_id" => $keranjang->barang_id))->row();
+
+        $response["total_kuantitas"] = $barang->barang_stok;
 
         echo json_encode($response);
     }
